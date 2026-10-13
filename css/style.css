@@ -1,10 +1,24 @@
-body.dark-mode {
-    --bg-color: #202020;
-    --surface-color: #2D2D2D;
-    --text-primary: #F5F5F7;
-    --text-secondary: #A1A1A6;
-    --nav-bg: rgba(32, 32, 32, 0.75);
-    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.5);
-    --border-color: rgba(255, 255, 255, 0.08);
+:root {
+    --bs-body-font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --accent-wood: #8B5A2B;
+    --status-open: #34C759;
+    --status-closed: #FF3B30;
 }
+
+html { scroll-behavior: smooth; }
+
+/* Navbar con efecto blur (se adapta solo al tema claro/oscuro) */
+.navbar-glass {
+    background-color: rgba(var(--bs-body-bg-rgb), 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Punto de estado Abierto/Cerrado */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.status-dot.open   { background: var(--status-open);   box-shadow: 0 0 8px var(--status-open); }
+.status-dot.closed { background: var(--status-closed); box-shadow: 0 0 8px var(--status-closed); }
