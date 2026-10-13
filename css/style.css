@@ -1,0 +1,10 @@
+body.dark-mode {
+    --bg-color: #202020;
+    --surface-color: #2D2D2D;
+    --text-primary: #F5F5F7;
+    --text-secondary: #A1A1A6;
+    --nav-bg: rgba(32, 32, 32, 0.75);
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.5);
+    --border-color: rgba(255, 255, 255, 0.08);
+}
