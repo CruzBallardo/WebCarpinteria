@@ -1,9 +1,12 @@
-// 1. Estado Abierto / Cerrado
+//Dropdown Abierto/Cerrado
 function updateStatus() {
-    const now = new Date();
-    const day = now.getDay();   // 0 = domingo
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Mexico_City' }));
+    const day = now.getDay();
     const hour = now.getHours();
-    const isOpen = day >= 1 && day <= 6 && hour >= 8 && hour < 19;
+
+    const weekdayOpen = day >= 1 && day <= 5 && hour >= 10 && hour < 19
+    const saturdayOpen = day === 6 && hour >= 10 && hour < 14;
+    const isOpen = weekdayOpen || saturdayOpen;
 
     const dot = document.getElementById('status-dot');
     const text = document.getElementById('status-text');
@@ -15,7 +18,7 @@ function updateStatus() {
 updateStatus();
 setInterval(updateStatus, 60000);
 
-// 2. Tema claro / oscuro (usa el modo nativo de Bootstrap 5.3)
+//Tema claro / oscuro
 const html = document.documentElement;
 const themeBtn = document.getElementById('theme-toggle');
 
