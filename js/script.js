@@ -36,7 +36,7 @@ themeBtn.addEventListener('click', () => {
     setTheme(html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
 });
 
-// FUNCIONAMIENTO DE BARRA DE BUSQUEDA 
+// FUNCIONAMIENTO DE BARRA DE BUSQUEDAa
 
 const searchForm = document.getElementById("searchForm");
 const searchInput = document.getElementById("searchInput");

@@ -116,3 +116,21 @@
 .card-animada:hover .imagen-producto {
     transform: scale(1.08);
 }
+
+/* Transición suave entre modo claro y oscuro */
+body,
+nav,
+header,
+main,
+footer,
+.card,
+.container,
+.form-control,
+.btn,
+.dropdown-menu {
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
