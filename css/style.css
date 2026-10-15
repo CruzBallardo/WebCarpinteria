@@ -22,3 +22,20 @@ html { scroll-behavior: smooth; }
 }
 .status-dot.open   { background: var(--status-open);   box-shadow: 0 0 8px var(--status-open); }
 .status-dot.closed { background: var(--status-closed); box-shadow: 0 0 8px var(--status-closed); }
+
+.galeria-item img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform .4s ease;
+}
+.galeria-item:hover img {
+    transform: scale(1.06);
+}
+.galeria-overlay {
+    background: rgba(0, 0, 0, .5);
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+.galeria-item:hover .galeria-overlay {
+    opacity: 1;
+}
