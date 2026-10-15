@@ -35,3 +35,48 @@ setTheme(localStorage.getItem('theme') || 'light');
 themeBtn.addEventListener('click', () => {
     setTheme(html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
 });
+
+// FUNCIONAMIENTO DE BARRA DE BUSQUEDA 
+
+const searchForm = document.getElementById("searchForm");
+const searchInput = document.getElementById("searchInput");
+const noResults = document.getElementById("noResults");
+
+const cards = document.querySelectorAll(".card-animada");
+
+function buscarProductos() {
+    const busqueda = searchInput.value
+        .trim()
+        .toLowerCase();
+
+    let encontrados = 0;
+
+    cards.forEach((card) => {
+        // Obtener el nombre y la descripción de la tarjeta
+        const contenido = card.textContent.toLowerCase();
+
+        // Comprobar si coincide con la búsqueda
+        const coincide = contenido.includes(busqueda);
+
+        // Mostrar u ocultar la columna de la tarjeta
+        card.parentElement.style.display = coincide ? "" : "none";
+
+        if (coincide) {
+            encontrados++;
+        }
+    });
+
+    // Mostrar mensaje si no hay coincidencias
+    if (noResults) {
+        noResults.classList.toggle("d-none", encontrados > 0);
+    }
+}
+
+// Buscar mientras el usuario escribe
+searchInput.addEventListener("input", buscarProductos);
+
+// Evitar que el formulario recargue la página
+searchForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    buscarProductos();
+});
