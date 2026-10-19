@@ -14,7 +14,7 @@
     }
 }
 .menu-animado {
-    animation: aparecerAbajo 1s ease-out;
+    animation: aparecerAbajo 0.8s ease-out;
 }
 
 @keyframes aparecerAbajo {
@@ -39,6 +39,7 @@
 /* ANIMACION DE LAS TARJETAS */
 .card-animada {
     opacity: 0;
+    animation: aparecerAbajo 0.7s ease-out forwards;
     animation: aparecerAbajo 0.7s ease-out forwards;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

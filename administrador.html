@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de administración | Carpintería Barrientos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+    <!-- Navbar (el tuyo, sin cambios de diseño) -->
+    <nav class="navbar navbar-expand-lg sticky-top navbar-glass border-bottom" id="main-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html#inicio">Carpintería Barrientos</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarMain" aria-controls="navbarMain"
+                    aria-expanded="false" aria-label="Mostrar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav mx-lg-auto">
+                    <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Explora</a>
+                        <ul class="dropdown-menu shadow-lg rounded border-0">
+                            <li><a class="dropdown-item" href="../index.html#catalogo">Catalogo</a></li>
+                            <li><a class="dropdown-item" href="../index.html#cotizacion">Cotización</a></li>
+                            <li><a class="dropdown-item" href="../index.html#contacto">Contacto</a></li>
+                            <li><a class="dropdown-item" href="../index.html#galeria">Galeria</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">Nosotros</a>
+                        <ul class="dropdown-menu shadow-lg rounded border-0">
+                            <li><a class="dropdown-item" href="../index.html#conocenos">Conócenos</a></li>
+                            <li><a class="dropdown-item" href="../index.html#ubicacion">Ubicación</a></li>
+                            <li><a class="dropdown-item" href="../index.html#faqs">FAQs</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../index.html#facturacion">Facturación</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                    <button class="btn btn-link text-body p-0" id="theme-toggle" aria-label="Cambiar tema">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm rounded-pill bg-body-secondary d-flex align-items-center gap-2 fw-semibold"
+                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="status-dot" id="status-dot"></span>
+                            <span id="status-text">...</span>
+                            <i class="fa-solid fa-chevron-down small"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end shadow border-0 p-3" style="min-width: 250px;">
+                            <h6 class="mb-3">Horarios de atención</h6>
+                            <p class="small mb-2"><strong>Lunes a Viernes:</strong><br>10:00 AM – 7:00 PM</p>
+                            <p class="small mb-2"><strong>Sábado:</strong><br>10:00 AM – 2:00 PM</p>
+                            <p class="small mb-0"><strong>Domingo:</strong><br>Cerrado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<div class="admin-layout">
+
+    <!-- Menú lateral -->
+    <aside class="sidebar">
+        <nav class="nav flex-column gap-1">
+            <a href="#inicio" class="nav-link active"><i class="fa-solid fa-chart-pie fa-fw"></i> Inicio</a>
+            <a href="#agregar" class="nav-link"><i class="fa-solid fa-plus fa-fw"></i> Agregar productos</a>
+            <a href="#productos" class="nav-link"><i class="fa-solid fa-boxes-stacked fa-fw"></i> Mis productos</a>
+            <a href="#resenas" class="nav-link">
+                <i class="fa-regular fa-star fa-fw"></i> Reseñas
+            </a>
+            <a href="#cotizaciones" class="nav-link">
+                <i class="fa-regular fa-file-lines fa-fw"></i> Cotizaciones
+            </a>
+        </nav>
+
+        <div class="mt-auto pt-3 border-top">
+            <div class="d-flex align-items-center gap-2 px-2 mb-3">
+                <span class="avatar">A</span>
+                <div class="lh-sm">
+                    <strong class="d-block small">Administrador</strong>
+                    <span class="small text-secondary">Panel de control</span>
+                </div>
+            </div>
+            <a href="../catalogo.html" class="btn btn-sm btn-outline-secondary w-100">
+                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Ver catálogo público
+            </a>
+        </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+
+        <!-- Bienvenida -->
+        <section id="inicio" class="mb-5">
+            <h1 class="h3 fw-bold">Bienvenido, Administrador</h1>
+            <p class="text-secondary mb-3">
+                Gestiona tus productos, revisa las opiniones de tus clientes y
+                mantén el control de las solicitudes de cotización.
+            </p>
+            <a href="#agregar" class="btn btn-dark btn-sm"><i class="fa-solid fa-plus me-1"></i> Agregar producto</a>
+
+            <div class="row g-3 mt-2">
+                <div class="col-md-4">
+                    <div class="border rounded p-3 h-100">
+                        <div class="fs-3 fw-semibold">0</div>
+                        <div class="fw-medium">Productos registrados</div>
+                        <div class="small text-secondary">Productos en tu catálogo</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded p-3 h-100">
+                        <div class="fs-3 fw-semibold">0</div>
+                        <div class="fw-medium">Reseñas registradas</div>
+                        <div class="small text-secondary">Opiniones de los clientes</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded p-3 h-100">
+                        <div class="fs-3 fw-semibold">0</div>
+                        <div class="fw-medium">Cotizaciones pendientes</div>
+                        <div class="small text-secondary">Solicitudes por revisar</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Agregar producto -->
+        <section id="agregar" class="mb-5">
+            <h2 class="h4 fw-bold">Agregar producto</h2>
+            <p class="text-secondary">Registra un nuevo mueble y sus fotografías.</p>
+
+            <form class="border rounded p-4">
+                <h3 class="h6 fw-semibold mb-3">Información del producto</h3>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label for="txtNombreProducto" class="form-label">Nombre del producto</label>
+                        <input type="text" class="form-control" id="txtNombreProducto" placeholder="Ej. Mesa de madera artesanal">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="txtCategoriaProducto" class="form-label">Categoría</label>
+                        <select class="form-select" id="txtCategoriaProducto">
+                            <option value="">Selecciona una categoría</option>
+                            <option>Muebles</option>
+                            <option>Puertas</option>
+                            <option>Closets</option>
+                            <option>Mesas</option>
+                            <option>Sillas</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="txtPrecio" class="form-label">Precio de referencia</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="txtPrecio" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-text">En pesos mexicanos.</div>
+                    </div>
+                    <div class="col-12">
+                        <label for="txtDescripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="txtDescripcion" rows="4"
+                                  placeholder="Describe el material, las medidas, el acabado y las características del producto..."></textarea>
+                    </div>
+                </div>
+
+                <h3 class="h6 fw-semibold mb-1">Fotografías del producto</h3>
+                <p class="small text-secondary mb-3">
+                    Sube cuatro imágenes. La primera será la portada de la tarjeta y las otras tres formarán la galería.
+                </p>
+
+                <div class="row g-3 mb-2">
+                    <div class="col-6 col-md-3">
+                        <label class="photo-upload w-100" for="foto1">
+                            <i class="fa-solid fa-plus mb-1"></i>
+                            <span class="fw-medium text-body">Fotografía principal</span>
+                            <span class="small">Portada del catálogo</span>
+                        </label>
+                        <input type="file" id="foto1" accept="image/*" hidden>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label class="photo-upload w-100" for="foto2">
+                            <i class="fa-solid fa-plus mb-1"></i>
+                            <span class="fw-medium text-body">Fotografía 2</span>
+                            <span class="small">Vista adicional</span>
+                        </label>
+                        <input type="file" id="foto2" accept="image/*" hidden>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label class="photo-upload w-100" for="foto3">
+                            <i class="fa-solid fa-plus mb-1"></i>
+                            <span class="fw-medium text-body">Fotografía 3</span>
+                            <span class="small">Vista adicional</span>
+                        </label>
+                        <input type="file" id="foto3" accept="image/*" hidden>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <label class="photo-upload w-100" for="foto4">
+                            <i class="fa-solid fa-plus mb-1"></i>
+                            <span class="fw-medium text-body">Fotografía 4</span>
+                            <span class="small">Vista adicional</span>
+                        </label>
+                        <input type="file" id="foto4" accept="image/*" hidden>
+                    </div>
+                </div>
+
+                <p class="small text-secondary mb-4">
+                    <i class="fa-solid fa-circle-info me-1"></i>
+                    Formatos recomendados: JPG, PNG o WEBP. Utiliza fotografías nítidas y bien iluminadas.
+                </p>
+
+                <div class="d-flex flex-wrap justify-content-end gap-2">
+                    <button type="reset" class="btn btn-outline-secondary btn-sm">Cancelar</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm">Modificar</button>
+                    <button type="button" class="btn btn-dark btn-sm">Subir producto</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Mis productos -->
+        <section id="productos" class="mb-5">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="h4 fw-bold">Mis productos</h2>
+                    <p class="text-secondary">Consulta los artículos registrados en tu catálogo.</p>
+                </div>
+                <a href="#agregar" class="btn btn-outline-secondary btn-sm"><i class="fa-solid fa-plus me-1"></i> Nuevo producto</a>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-md-8">
+                    <input type="search" class="form-control" placeholder="Buscar producto..." aria-label="Buscar producto">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" aria-label="Filtrar por categoría">
+                        <option>Todas las categorías</option>
+                        <option>Muebles</option>
+                        <option>Puertas</option>
+                        <option>Closets</option>
+                        <option>Mesas</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="border rounded p-5 text-center text-secondary">Aún no hay productos.</div>
+        </section>
+
+        <!-- Reseñas -->
+        <section id="resenas" class="mb-5">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="h4 fw-bold">Reseñas de clientes</h2>
+                    <p class="text-secondary">Consulta las opiniones recibidas sobre tus productos.</p>
+                </div>
+            </div>
+
+            <div class="border rounded p-5 text-center text-secondary">Aún no hay reseñas.</div>
+        </section>
+
+        <!-- Cotizaciones -->
+        <section id="cotizaciones" class="mb-5">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="h4 fw-bold">Cotizaciones</h2>
+                    <p class="text-secondary">Revisa las solicitudes de tus clientes.</p>
+                </div>
+            </div>
+
+            <div class="table-responsive border rounded">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Producto</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" class="text-center text-secondary py-5">Aún no hay cotizaciones.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="border-top pt-3 small text-secondary d-flex justify-content-between">
+            <span>© 2026 Carpintería Barrientos</span>
+            <span>Panel de administración</span>
+        </footer>
+
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/script.js"></script>
+</body>
+</html>
