@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
-    
+
     <nav class="navbar navbar-expand-lg sticky-top navbar-glass border-bottom">
         <div class="container">
             <a class="navbar-brand fw-bold" href="#inicio">Carpintería Barrientos</a>
@@ -95,14 +95,14 @@
 </div>
 
 <!-- CIERRE DEL BUSCADOR -->
-    
+
 
 <!-- MENU LATERAL Y CATALOGO -->
 
 <div class="container-fluid mt-5">
     <div class="row">
 
-        <!-- MENU LATERAL -->
+        <!-- MENU LATERAL (las categorías se generan con JS según los productos) -->
         <aside class="col-md-3 col-lg-2 ps-0 menu-animado">
             <div class="border rounded-3 p-3">
 
@@ -111,35 +111,13 @@
 
                 <h6>Categorías</h6>
 
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="mesas">
-                    <label class="form-check-label" for="mesas">Madera</label>
-                </div>
-
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="sillas">
-                    <label class="form-check-label" for="sillas">Barniz</label>
-                </div>
-
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="armarios">
-                    <label class="form-check-label" for="armarios">Cerraduras</label>
-                </div>
-
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="escritorios">
-                    <label class="form-check-label" for="escritorios">Clavos</label>
-                </div>
-
-                <hr>
-
-             
+                <div id="filtroCategorias"></div>
 
             </div>
         </aside>
 
         <!-- CATALOGO DE PRODUCTOS -->
-        <main class="col-md-9 col-lg-10">
+        <main class="col-md-9 col-lg-10" id="catalogo">
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
@@ -149,375 +127,64 @@
                     </p>
                 </div>
 
-                <span class="badge text-bg-secondary">20 productos</span>
+                <span class="badge text-bg-secondary" id="contadorProductos">0 productos</span>
             </div>
 
-            <div class="row g-4">
+            <!-- Las tarjetas se generan con js/catalogo.js a partir de lo que sube el admin -->
+            <div class="row g-4" id="gridProductos"></div>
 
-                <!-- FILA 1 -->
-
-                <div class="col-6 col-xl-3">
-    <div class="card h-100 shadow-sm card-animada">
-
-        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80"
-             class="card-img-top imagen-producto"
-             alt="Sofá moderno">
-
-        <div class="card-body">
-            <h5 class="card-title">Sofá moderno</h5>
-
-            <p class="card-text text-body-secondary">
-                Diseño contemporáneo para tu hogar.
-            </p>
-
-            <button type="button"
-                    class="btn btn-primary w-100"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalProducto"
-                    data-titulo="Sofá moderno"
-                    data-descripcion="Sofá moderno con diseño contemporáneo, ideal para complementar tu sala. Podemos adaptar sus dimensiones, materiales y acabado a tus necesidades."
-                    data-imagenes="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=80|https://images.unsplash.com/photo-1550254478-ead40cc54513?auto=format&fit=crop&w=900&q=80|https://images.unsplash.com/photo-1550254478-ead40cc54513?auto=format&fit=crop&w=900&q=80">
-                Consultar
-            </button>
-
-        </div>
-    </div>
-</div>
-
-<!-- MODAL DEL PRODUCTO -->
-<div class="modal fade" id="modalProducto" tabindex="-1"
-     aria-labelledby="tituloModalProducto" aria-hidden="true">
-
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Encabezado -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModalProducto">
-                    Nombre del producto
-                </h5>
-
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Cerrar">
-                </button>
-            </div>
-
-            <!-- Contenido -->
-            <div class="modal-body">
-
-                <!-- Carrusel -->
-                <div id="carruselProducto"
-                     class="carousel slide mb-4"
-                     data-bs-ride="false">
-
-                    <div class="carousel-inner" id="imagenesCarrusel">
-                        <!-- Las imágenes se agregan con JavaScript -->
-                    </div>
-
-                    <button class="carousel-control-prev"
-                            type="button"
-                            data-bs-target="#carruselProducto"
-                            data-bs-slide="prev">
-
-                        <span class="carousel-control-prev-icon"
-                              aria-hidden="true"></span>
-
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-
-                    <button class="carousel-control-next"
-                            type="button"
-                            data-bs-target="#carruselProducto"
-                            data-bs-slide="next">
-
-                        <span class="carousel-control-next-icon"
-                              aria-hidden="true"></span>
-
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-
-                </div>
-
-                <!-- Descripción -->
-                <h6>Descripción del producto</h6>
-
-                <p id="descripcionModal"
-                   class="text-body-secondary">
-                    Descripción del producto.
-                </p>
-
-            </div>
-
-            <!-- Pie del modal -->
-            <div class="modal-footer">
-
-                <button type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">
-                    Cerrar
-                </button>
-
-                <a href="#cotizacion"
-                   id="btnCotizar"
-                   class="btn btn-primary">
-                    Cotizar producto
-                </a>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1499933374294-4584851497cc?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto"
-                             alt="Escritorio de madera">
-                        <div class="card-body">
-                            <h5 class="card-title">Escritorio clásico</h5>
-                            <p class="card-text text-body-secondary">Ideal para trabajar o estudiar.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto"
-                             alt="Interior con mobiliario">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble decorativo</h5>
-                            <p class="card-text text-body-secondary">Elegancia y funcionalidad.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1449247709967-d4461a6a6103?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto"
-                             alt="Mesa de madera">
-                        <div class="card-body">
-                            <h5 class="card-title">Mesa artesanal</h5>
-                            <p class="card-text text-body-secondary">Acabados cuidados y resistentes.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FILA 2 -->
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Silla moderna">
-                        <div class="card-body">
-                            <h5 class="card-title">Silla moderna</h5>
-                            <p class="card-text text-body-secondary">Comodidad para cualquier espacio.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Sala decorada">
-                        <div class="card-body">
-                            <h5 class="card-title">Sala contemporánea</h5>
-                            <p class="card-text text-body-secondary">Estilo para renovar tu espacio.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Muebles para interiores">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble de interior</h5>
-                            <p class="card-text text-body-secondary">Diseño para cada rincón.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Decoración moderna">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble decorativo</h5>
-                            <p class="card-text text-body-secondary">Un toque especial para tu hogar.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FILA 3 -->
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Comedor moderno">
-                        <div class="card-body">
-                            <h5 class="card-title">Comedor moderno</h5>
-                            <p class="card-text text-body-secondary">Ideal para compartir en familia.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Estantería">
-                        <div class="card-body">
-                            <h5 class="card-title">Estantería</h5>
-                            <p class="card-text text-body-secondary">Organización con estilo.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1598300056393-4aac492f4344?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Sillón">
-                        <div class="card-body">
-                            <h5 class="card-title">Sillón individual</h5>
-                            <p class="card-text text-body-secondary">Confort para tus momentos de descanso.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Sala elegante">
-                        <div class="card-body">
-                            <h5 class="card-title">Sala elegante</h5>
-                            <p class="card-text text-body-secondary">Diseño y comodidad en equilibrio.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FILA 4 -->
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1615874694520-474822394e73?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Dormitorio">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble de dormitorio</h5>
-                            <p class="card-text text-body-secondary">Armonía para tu habitación.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Mobiliario de madera">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble minimalista</h5>
-                            <p class="card-text text-body-secondary">Sencillez y elegancia.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Interior residencial">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble residencial</h5>
-                            <p class="card-text text-body-secondary">Hecho para tu espacio.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Muebles para el hogar">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble personalizado</h5>
-                            <p class="card-text text-body-secondary">Adaptado a tus necesidades.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FILA 5 -->
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Interior de casa">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble de diseño</h5>
-                            <p class="card-text text-body-secondary">Un estilo único para tu hogar.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Casa contemporánea">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble contemporáneo</h5>
-                            <p class="card-text text-body-secondary">Diseño para espacios modernos.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Interior elegante">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble elegante</h5>
-                            <p class="card-text text-body-secondary">Detalles que marcan la diferencia.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-xl-3">
-                    <div class="card h-100 shadow-sm card-animada">
-                        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=600&q=80"
-                             class="card-img-top imagen-producto" alt="Mobiliario decorativo">
-                        <div class="card-body">
-                            <h5 class="card-title">Mueble artesanal</h5>
-                            <p class="card-text text-body-secondary">Acabados para destacar tu espacio.</p>
-                            <a href="#cotizacion" class="btn btn-primary w-100">Consultar</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </main>
 
     </div>
 </div>
 
 <!-- CIERRE MENU Y CATALOGO -->
+
+<!-- MODAL DEL PRODUCTO (un solo modal reutilizable) -->
+<div class="modal fade" id="modalProducto" tabindex="-1"
+     aria-labelledby="tituloModalProducto" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalProducto">Nombre del producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div id="carruselProducto" class="carousel slide mb-4" data-bs-ride="false">
+                    <div class="carousel-inner" id="imagenesCarrusel"></div>
+
+                    <button class="carousel-control-prev" type="button"
+                            data-bs-target="#carruselProducto" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+
+                    <button class="carousel-control-next" type="button"
+                            data-bs-target="#carruselProducto" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+
+                <span class="badge text-bg-light border mb-2" id="categoriaModal"></span>
+                <h6>Descripción del producto</h6>
+                <p id="descripcionModal" class="text-body-secondary mb-2">Descripción del producto.</p>
+                <p id="precioModal" class="fw-semibold mb-0"></p>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#cotizacion" id="btnCotizar" class="btn btn-primary">Cotizar producto</a>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <!-- UBICACION -->
 
@@ -531,7 +198,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="ratio ratio-16x9 rounded-4 shadow overflow-hidden">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d236.65561373811678!2d-95.79416970266699!3d18.370545301606384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1792012779707!5m2!1ses-419!2smx" title="Ubicación" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d236.65561373811678!2d-95.79416970266699!3d18.370545301606384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1792012779707!5m2!1ses-419!2smx" title="Ubicación" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
             </div>
@@ -586,11 +253,11 @@
         </div>
     </footer>
 
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/script.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/productos-db.js"></script>
+    <script src="js/catalogo.js"></script>
 </body>
 </html>
