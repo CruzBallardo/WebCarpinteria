@@ -135,3 +135,39 @@ footer,
         border-color 0.4s ease,
         box-shadow 0.4s ease;
 }
+
+
+/* ---------- SKELETONS ---------- */
+
+/* Misma altura que .imagen-producto (190px) para evitar saltos de layout */
+.sk-img {
+    height: 190px;
+    width: 100%;
+    background: var(--bs-secondary-bg);
+}
+
+/* Tono suave que funciona en modo claro y oscuro (data-bs-theme) */
+.placeholder {
+    background-color: var(--bs-secondary-color);
+    opacity: .25;
+}
+
+/* Mientras la foto real descarga, que el hueco sea gris y no blanco */
+.imagen-producto {
+    background: var(--bs-secondary-bg);
+}
+
+/* Imagen del carrusel del modal */
+#imagenesCarrusel img {
+    background: var(--bs-secondary-bg);
+    min-height: 200px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .placeholder-glow .placeholder,
+    .placeholder-wave {
+        animation: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+}

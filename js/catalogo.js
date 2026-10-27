@@ -15,6 +15,38 @@
     const esc = t => String(t ?? '').replace(/[&<>"']/g, c =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+        /* ---------- Skeletons ---------- */
+    function skeletonCards(n = 8) {
+        return Array.from({ length: n }, () => `
+            <div class="col-6 col-xl-3" aria-hidden="true">
+                <div class="card h-100 shadow-sm">
+                    <div class="sk-img placeholder-wave">
+                        <span class="placeholder d-block w-100 h-100 rounded-0"></span>
+                    </div>
+                    <div class="card-body d-flex flex-column placeholder-glow">
+                        <span class="placeholder col-4 mb-2" style="height:1.4rem"></span>
+                        <span class="placeholder col-8 mb-2" style="height:1.5rem"></span>
+                        <span class="placeholder col-12 mb-1"></span>
+                        <span class="placeholder col-9 mb-3"></span>
+                        <span class="placeholder col-12 mt-auto" style="height:2.4rem"></span>
+                    </div>
+                </div>
+            </div>`).join('');
+    }
+
+    function mostrarSkeletons() {
+        grid.setAttribute('aria-busy', 'true');
+        grid.innerHTML = skeletonCards(8);
+        contador.innerHTML = '<span class="placeholder d-inline-block" style="width:4.5rem">&nbsp;</span>';
+        filtros.innerHTML = `
+            <div class="placeholder-glow" aria-hidden="true">
+                <span class="placeholder col-10 d-block mb-3"></span>
+                <span class="placeholder col-8 d-block mb-3"></span>
+                <span class="placeholder col-9 d-block mb-3"></span>
+                <span class="placeholder col-7 d-block"></span>
+            </div>`;
+    }
+
     /* ---------- Filtros de categoría (dinámicos) ---------- */
     function pintarFiltros() {
         const categorias = [...new Set(productos.map(p => p.categoria))].sort();
@@ -58,7 +90,7 @@
         grid.innerHTML = lista.map(p => `
             <div class="col-6 col-xl-3">
                 <div class="card h-100 shadow-sm card-animada">
-                    <img src="${p.imagenes[0]}" class="card-img-top imagen-producto" alt="${esc(p.nombre)}">
+                    <img src="${p.imagenes[0]}" class="card-img-top imagen-producto" alt="${esc(p.nombre)}" loading="lazy" decoding="async">
                     <div class="card-body d-flex flex-column">
                         <span class="badge text-bg-light border align-self-start mb-2">${esc(p.categoria)}</span>
                         <h5 class="card-title">${esc(p.nombre)}</h5>
@@ -103,12 +135,25 @@
 
     /* ---------- Inicio ---------- */
     (async () => {
+        mostrarSkeletons();
+
         try {
             productos = await CatalogoDB.obtenerTodos();
         } catch (e) {
             console.error('No se pudo leer el catálogo', e);
+            grid.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <p class="text-body-secondary mb-3">No pudimos cargar el catálogo.</p>
+                    <button class="btn btn-outline-primary" onclick="location.reload()">Reintentar</button>
+                </div>`;
+            contador.textContent = '';
+            filtros.innerHTML = '';
+            grid.setAttribute('aria-busy', 'false');
+            return;
         }
+
         pintarFiltros();
         pintarCatalogo();
+        grid.setAttribute('aria-busy', 'false');
     })();
 })();
