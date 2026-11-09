@@ -234,6 +234,7 @@
                 mostrarAlerta('No se pudo eliminar: ' + (err.message || 'error desconocido'), 'danger');
             }
         } else {
+            // === EDITAR ===
             editandoId = id;
             campos.nombre.value = producto.nombre;
             campos.categoria.value = producto.categoria;
@@ -245,7 +246,11 @@
             actualizarBotones();
             $('tituloFormulario').textContent = 'Modificar producto';
             $('alertaForm').innerHTML = '';
-            $('agregar').scrollIntoView({ behavior: 'smooth' });
+
+            // Cambiar automáticamente a la pestaña de Agregar producto
+            if (typeof window.showSection === 'function') {
+                window.showSection('agregar');
+            }
         }
     });
 
@@ -265,3 +270,45 @@
         mostrarAlerta('No se pudo cargar el catálogo: ' + (e.message || 'error desconocido'), 'danger');
     });
 })();
+
+/* ========== Navegación por pestañas del panel admin ========== */
+document.addEventListener('DOMContentLoaded', function () {
+
+    const sections = document.querySelectorAll('.main-content > section');
+    const navLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
+
+    if (!sections.length || !navLinks.length) return;
+
+    window.showSection = function (id) {
+        sections.forEach(sec => sec.classList.remove('active'));
+        navLinks.forEach(link => link.classList.remove('active'));
+
+        const target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+
+            const activeLink = document.querySelector(`.sidebar .nav-link[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+    };
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const id = href.substring(1);
+                window.showSection(id);
+                history.replaceState(null, null, href);
+            }
+        });
+    });
+
+    // Mostrar sección al cargar
+    const hash = window.location.hash.substring(1);
+    if (hash && document.getElementById(hash)) {
+        window.showSection(hash);
+    } else {
+        window.showSection('inicio');
+    }
+});

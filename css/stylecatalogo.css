@@ -1,18 +1,8 @@
+/* ---------- ANIMACIONES GENERALES ---------- */
 .busqueda-animada {
     animation: aparecerAbajo 0.7s ease-out;
 }
 
-@keyframes aparecerAbajo {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 .menu-animado {
     animation: aparecerAbajo 0.8s ease-out;
 }
@@ -22,26 +12,78 @@
         opacity: 0;
         transform: translateY(40px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* IMAGENES DE LAS TARJETAS */
-.imagen-producto {
-    width: 100%;
-    height: 190px;
-    object-fit: cover;
+/* ---------- BUSCADOR ---------- */
+.search-wrapper {
+    position: relative;
 }
 
-/* ANIMACION DE LAS TARJETAS */
+.search-input {
+    border-radius: 50rem;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    padding-left: 1.25rem;
+    padding-right: 3.25rem;
+    height: 52px;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.search-input:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+    outline: none;
+}
+
+.search-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bs-secondary-color);
+    transition: color 0.2s ease;
+}
+
+.search-btn:hover {
+    color: var(--bs-primary);
+}
+
+/* ---------- TÍTULOS DEL CATÁLOGO ---------- */
+.catalog-title {
+    letter-spacing: -0.02em;
+    font-size: 1.75rem;
+}
+
+.catalog-subtitle {
+    font-size: 0.95rem;
+}
+
+/* ---------- IMÁGENES DE LAS TARJETAS ---------- */
+.imagen-producto {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: var(--bs-secondary-bg);
+}
+
+/* ---------- ANIMACIÓN DE LAS TARJETAS ---------- */
 .card-animada {
     opacity: 0;
     animation: aparecerAbajo 0.7s ease-out forwards;
-    animation: aparecerAbajo 0.7s ease-out forwards;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+    overflow: hidden;
+    border-radius: 0.85rem;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
 }
 
 /* RETRASO PROGRESIVO DE CADA TARJETA */
@@ -66,59 +108,124 @@
 .card-animada:nth-child(19) { animation-delay: 0.95s; }
 .card-animada:nth-child(20) { animation-delay: 1.00s; }
 
-/* EFECTO AL PASAR EL CURSOR */
-.card-animada:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15) !important;
-}
-
-/* APARECER DESDE ABAJO */
-@keyframes aparecerAbajo {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* RESPETAR LA PREFERENCIA DE MOVIMIENTO DEL USUARIO */
-@media (prefers-reduced-motion: reduce) {
-    .card-animada {
-        animation: none;
-        opacity: 1;
-        transition: none;
-    }
-}
-
 /* EFECTO HOVER DE LAS CARDS */
-.card-animada {
-    transition: transform 0.35s ease,
-                box-shadow 0.35s ease,
-                border-color 0.35s ease;
-    overflow: hidden;
-}
-
 .card-animada:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.20) !important;
-    border-color: #007bff;
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12) !important;
+    border-color: rgba(var(--bs-primary-rgb), 0.35);
     z-index: 2;
 }
 
-/* ZOOM DE LA IMAGEN */
+/* ZOOM SUAVE DE LA IMAGEN */
 .card-animada .imagen-producto {
     transition: transform 0.5s ease;
 }
 
 .card-animada:hover .imagen-producto {
-    transform: scale(1.08);
+    transform: scale(1.06);
 }
 
-/* Transición suave entre modo claro y oscuro */
+/* Estilos internos de la card (si el JS genera card-body, etc.) */
+.card-animada .card-body {
+    padding: 1.1rem 1.15rem 1.25rem;
+}
+
+.card-animada .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+.card-animada .card-text {
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---------- SKELETONS ---------- */
+.sk-img {
+    height: 200px;
+    width: 100%;
+    background: var(--bs-secondary-bg);
+}
+
+.placeholder {
+    background-color: var(--bs-secondary-color);
+    opacity: .25;
+}
+
+#imagenesCarrusel img {
+    background: var(--bs-secondary-bg);
+    min-height: 220px;
+    object-fit: cover;
+}
+
+/* ---------- PANEL DE FILTROS ---------- */
+.filtros-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1019;
+}
+
+#btnFiltros .bi-x-lg { display: none; }
+#btnFiltros:not(.collapsed) .bi-list { display: none; }
+#btnFiltros:not(.collapsed) .bi-x-lg { display: inline; }
+
+#btnFiltros:not(.collapsed) {
+    background-color: var(--bs-secondary-bg);
+}
+
+.filtros-panel .form-check-label {
+    cursor: pointer;
+}
+
+/* Chips / checks de filtros más limpios */
+#filtroCategorias .form-check {
+    margin-bottom: 0;
+}
+
+#filtroCategorias .form-check-input {
+    cursor: pointer;
+}
+
+#filtroCategorias .form-check-label {
+    font-size: 0.925rem;
+    padding-left: 0.25rem;
+}
+
+/* ---------- MODAL PRODUCTO ---------- */
+.modal-producto {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-producto .modal-header {
+    padding: 1.25rem 1.5rem 0.5rem;
+}
+
+.modal-producto .modal-body {
+    padding: 0.5rem 1.5rem 1.25rem;
+}
+
+.modal-producto .modal-footer {
+    padding: 0.75rem 1.5rem 1.35rem;
+}
+
+.modal-producto .carousel-control-prev-icon,
+.modal-producto .carousel-control-next-icon {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+/* ---------- TRANSICIONES GLOBALES (tema claro/oscuro) ---------- */
 body,
 nav,
 header,
@@ -136,38 +243,115 @@ footer,
         box-shadow 0.4s ease;
 }
 
-
-/* ---------- SKELETONS ---------- */
-
-/* Misma altura que .imagen-producto (190px) para evitar saltos de layout */
-.sk-img {
-    height: 190px;
-    width: 100%;
-    background: var(--bs-secondary-bg);
-}
-
-/* Tono suave que funciona en modo claro y oscuro (data-bs-theme) */
-.placeholder {
-    background-color: var(--bs-secondary-color);
-    opacity: .25;
-}
-
-/* Mientras la foto real descarga, que el hueco sea gris y no blanco */
-.imagen-producto {
-    background: var(--bs-secondary-bg);
-}
-
-/* Imagen del carrusel del modal */
-#imagenesCarrusel img {
-    background: var(--bs-secondary-bg);
-    min-height: 200px;
-}
-
+/* ---------- ACCESIBILIDAD ---------- */
 @media (prefers-reduced-motion: reduce) {
+    .card-animada {
+        animation: none;
+        opacity: 1;
+        transition: none;
+    }
+
+    .card-animada:hover {
+        transform: none;
+    }
+
+    .card-animada:hover .imagen-producto {
+        transform: none;
+    }
+
     .placeholder-glow .placeholder,
     .placeholder-wave {
         animation: none;
         -webkit-mask-image: none;
         mask-image: none;
     }
+}
+/* ---------- BOTÓN FILTROS (bien a la izquierda) ---------- */
+#btnFiltros {
+    left: -6px !important;          /* ← lo mueve más a la izquierda */
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+#btnFiltros:hover {
+    background-color: var(--bs-secondary-bg);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.11);
+}
+
+#btnFiltros:not(.collapsed) {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(var(--bs-primary-rgb), 0.35);
+}
+
+#btnFiltros:not(.collapsed) .bi-x-lg,
+#btnFiltros:not(.collapsed) .bi-list {
+    color: #fff;
+}
+
+#btnFiltros .bi-list,
+#btnFiltros .bi-x-lg {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+
+/* ---------- PANEL DE FILTROS ---------- */
+.filtros-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 280px;
+    z-index: 1050;
+    padding-top: 8px;
+}
+
+.filtros-panel > .bg-body {
+    background-color: var(--bs-tertiary-bg) !important;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+
+
+/* ---------- FILTROS (con casilla visible) ---------- */
+#filtroCategorias {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+#filtroCategorias .form-check {
+    margin: 0;
+    padding-left: 1.9em;
+    min-height: auto;
+}
+
+#filtroCategorias .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.15em;
+    cursor: pointer;
+}
+
+#filtroCategorias .form-check-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding-top: 0.15rem;
+}
+
+#filtroCategorias .form-check-label:hover {
+    color: var(--bs-primary);
 }

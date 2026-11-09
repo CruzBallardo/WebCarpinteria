@@ -62,4 +62,32 @@ formularioLogin?.addEventListener('submit', async (e) => {
   if (ok) formularioLogin.reset()
 })
 
-btnLogout?.addEventListener('click', logout)
+btnLogout?.addEventListener('click', logout);
+
+// ver y ocultar contraseña
+function activarToggleContrasena() {
+  const modal  = document.getElementById('loginModal');
+  const input  = document.getElementById('loginPassword');
+  const toggle = document.getElementById('togglePassword');
+  if (!modal || !input || !toggle) return;
+
+  const icon = toggle.querySelector('i');
+
+  function setVisible(visible) {
+    input.type = visible ? 'text' : 'password';
+    icon.classList.toggle('bi-eye', !visible);
+    icon.classList.toggle('bi-eye-slash', visible);
+    toggle.setAttribute('aria-pressed', String(visible));
+    toggle.setAttribute('aria-label', visible ? 'Ocultar contraseña' : 'Mostrar contraseña');
+  }
+
+  toggle.addEventListener('click', () => {
+    setVisible(input.type === 'password');
+    input.focus();
+  });
+
+  // al cerrar el modal, la contraseña vuelve a quedar oculta
+  modal.addEventListener('hidden.bs.modal', () => setVisible(false));
+}
+
+activarToggleContrasena();

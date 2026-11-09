@@ -7,7 +7,7 @@
 
 html { scroll-behavior: smooth; }
 
-/* Navbar con efecto blur (se adapta solo al tema claro/oscuro) */
+/* Navbar con efecto blur */
 .navbar-glass {
     background-color: rgba(var(--bs-body-bg-rgb), 0.75);
     backdrop-filter: blur(20px);
@@ -38,4 +38,249 @@ html { scroll-behavior: smooth; }
 }
 .galeria-item:hover .galeria-overlay {
     opacity: 1;
+}
+
+body,
+.navbar-glass,
+.bg-body,
+.bg-body-secondary,
+.bg-body-tertiary,
+.accordion-item,
+.accordion-button,
+.dropdown-menu,
+.modal-content,
+.form-control,
+.btn,
+.card,
+.border-bottom,
+.shadow,
+.shadow-sm,
+.shadow-lg {
+    transition:
+        background-color .4s ease,
+        color .4s ease,
+        border-color .4s ease,
+        box-shadow .4s ease;
+}
+
+/* ===== Animaciones Pop-up ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+
+/* ===== Hero (solo primera slide del carrusel) ===== */
+.hero-content h1,
+.hero-content p,
+.hero-content .btn {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-content h1.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+}
+
+.hero-content p.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.7s;
+}
+
+.hero-content .btn.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 1s;
+}
+
+/* =====================================================
+   Modal Glass — se adapta al tema (data-bs-theme)
+   Usa las variables de Bootstrap, así que cambia solo
+   al alternar entre claro y oscuro.
+   ===================================================== */
+
+/* Variables propias del modal: claro por defecto */
+#loginModal {
+    --glass-bg:            rgba(var(--bs-body-bg-rgb), 0.82);
+    --glass-border:        rgba(var(--bs-emphasis-color-rgb), 0.12);
+    --glass-shadow:        0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --glass-field-bg:      rgba(var(--bs-emphasis-color-rgb), 0.05);
+    --glass-field-bg-focus:rgba(var(--bs-emphasis-color-rgb), 0.08);
+    --glass-field-border:  rgba(var(--bs-emphasis-color-rgb), 0.14);
+    --glass-field-focus:   rgba(var(--bs-emphasis-color-rgb), 0.45);
+    --glass-ring:          rgba(var(--bs-emphasis-color-rgb), 0.08);
+}
+
+/* Ajustes para el tema oscuro */
+[data-bs-theme="dark"] #loginModal {
+    --glass-bg:            rgba(25, 25, 25, 0.78);
+    --glass-border:        rgba(255, 255, 255, 0.12);
+    --glass-shadow:        0 25px 50px -12px rgba(0, 0, 0, 0.45);
+    --glass-field-bg:      rgba(255, 255, 255, 0.07);
+    --glass-field-bg-focus:rgba(255, 255, 255, 0.11);
+    --glass-field-border:  rgba(255, 255, 255, 0.13);
+    --glass-field-focus:   rgba(255, 255, 255, 0.32);
+    --glass-ring:          rgba(255, 255, 255, 0.07);
+}
+
+.glass-modal {
+    background: var(--glass-bg);
+    color: var(--bs-body-color);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 1.25rem;
+    box-shadow: var(--glass-shadow);
+}
+
+/* Grupo de input con icono */
+.glass-input-group {
+    background: var(--glass-field-bg);
+    border: 1px solid var(--glass-field-border);
+    border-radius: 0.75rem;
+    transition: all 0.25s ease;
+    overflow: hidden;
+}
+
+.glass-input-group:focus-within {
+    background: var(--glass-field-bg-focus);
+    border-color: var(--glass-field-focus);
+    box-shadow: 0 0 0 3px var(--glass-ring);
+}
+
+.glass-input {
+    background: transparent !important;
+    color: var(--bs-body-color) !important;
+    padding: 0.85rem 0.75rem 0.85rem 0;
+    font-size: 0.95rem;
+}
+
+.glass-input::placeholder {
+    color: var(--bs-secondary-color);
+    opacity: 0.8;
+}
+
+.glass-input:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--bs-body-color) !important;
+}
+
+/* Evita el fondo amarillo/azul del autocompletado del navegador */
+.glass-input:-webkit-autofill,
+.glass-input:-webkit-autofill:hover,
+.glass-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--bs-body-color);
+    caret-color: var(--bs-body-color);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Botón ver / ocultar contraseña */
+.btn-toggle-password {
+    padding: 0 0.9rem;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: color 0.2s ease;
+}
+
+.btn-toggle-password:hover,
+.btn-toggle-password:focus-visible,
+.btn-toggle-password[aria-pressed="true"] {
+    color: var(--bs-emphasis-color) !important;
+}
+
+.btn-toggle-password:focus-visible {
+    outline: 2px solid var(--glass-field-focus);
+    outline-offset: -4px;
+    border-radius: 0.5rem !important;
+}
+
+/* Botón de login: invierte colores según el tema
+   (oscuro sobre fondo claro, claro sobre fondo oscuro) */
+.btn-login {
+    background: var(--bs-emphasis-color);
+    color: var(--bs-body-bg);
+    border: none;
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+}
+
+.btn-login:hover,
+.btn-login:focus-visible {
+    background: var(--bs-emphasis-color);
+    color: var(--bs-body-bg);
+    opacity: 0.88;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-login:active {
+    background: var(--bs-emphasis-color);
+    color: var(--bs-body-bg);
+    transform: translateY(0);
+}
+
+/* Checkbox (solo dentro del modal de login) */
+#loginModal .form-check-input {
+    background-color: var(--glass-field-bg);
+    border: 1px solid var(--glass-field-focus);
+}
+
+#loginModal .form-check-input:checked {
+    background-color: var(--bs-emphasis-color);
+    border-color: var(--bs-emphasis-color);
+    /* palomita en color del fondo (blanca en tema claro) */
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+/* En tema oscuro el fondo del check es blanco, así que la palomita va oscura */
+[data-bs-theme="dark"] #loginModal .form-check-input:checked {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23111' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+
+#loginModal .form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem var(--glass-ring);
+    border-color: var(--glass-field-focus);
+}
+
+/* Hover en enlaces */
+.hover-opacity:hover {
+    opacity: 1 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .hero-content h1,
+    .hero-content p,
+    .hero-content .btn {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .btn-login,
+    .glass-input-group {
+        transition: none;
+    }
+
+    .btn-login:hover {
+        transform: none;
+    }
 }

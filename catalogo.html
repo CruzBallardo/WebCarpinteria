@@ -13,71 +13,97 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg sticky-top navbar-glass border-bottom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#inicio">Carpintería Barrientos</a>
+<nav class="navbar navbar-expand-lg sticky-top navbar-glass border-bottom position-relative">
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarMain" aria-controls="navbarMain"
-                    aria-expanded="false" aria-label="Mostrar navegación">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- BOTÓN HAMBURGUESA (borde izquierdo absoluto) -->
+    <button id="btnFiltros" class="btn btn-outline-secondary collapsed" type="button"
+            data-bs-toggle="collapse" data-bs-target="#panelFiltros"
+            aria-controls="panelFiltros" aria-expanded="false" aria-label="Mostrar u ocultar filtros">
+        <i class="bi bi-list fs-5"></i>
+        <i class="bi bi-x-lg fs-5"></i>
+        <span id="badgeFiltros" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary d-none">0</span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav mx-lg-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Explora</a>
-                        <ul class="dropdown-menu shadow-lg rounded border-0">
-                            <li><a class="dropdown-item" href="#catalogo">Catalogo</a></li>
-                            <li><a class="dropdown-item" href="#cotizacion">Cotización</a></li>
-                            <li><a class="dropdown-item" href="#contacto">Contacto</a></li>
-                            <li><a class="dropdown-item" href="#galeria">Galeria</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">Nosotros</a>
-                        <ul class="dropdown-menu shadow-lg rounded border-0">
-                            <li><a class="dropdown-item" href="#conocenos">Conócenos</a></li>
-                            <li><a class="dropdown-item" href="#ubicacion">Ubicación</a></li>
-                            <li><a class="dropdown-item" href="#faqs">FAQs</a></li>
-                        </ul>
-                    </li>
-                </ul>
+    <div class="container">
 
-                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-                    <button class="btn btn-link text-body p-0" id="theme-toggle" aria-label="Cambiar tema">
-                        <i class="fa-solid fa-moon"></i>
+        <!-- MARCA -->
+        <a class="navbar-brand fw-bold" href="#inicio">Carpintería Barrientos</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarMain" aria-controls="navbarMain"
+                aria-expanded="false" aria-label="Mostrar navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav mx-lg-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Explora</a>
+                    <ul class="dropdown-menu shadow-lg rounded border-0">
+                        <li><a class="dropdown-item" href="#catalogo">Catalogo</a></li>
+                        <li><a class="dropdown-item" href="#cotizacion">Cotización</a></li>
+                        <li><a class="dropdown-item" href="#contacto">Contacto</a></li>
+                        <li><a class="dropdown-item" href="#galeria">Galeria</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">Nosotros</a>
+                    <ul class="dropdown-menu shadow-lg rounded border-0">
+                        <li><a class="dropdown-item" href="#conocenos">Conócenos</a></li>
+                        <li><a class="dropdown-item" href="#ubicacion">Ubicación</a></li>
+                        <li><a class="dropdown-item" href="#faqs">FAQs</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                <button class="btn btn-link text-body p-0" id="theme-toggle" aria-label="Cambiar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-sm rounded-pill bg-body-secondary d-flex align-items-center gap-2 fw-semibold"
+                            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="status-dot" id="status-dot"></span>
+                        <span id="status-text">...</span>
+                        <i class="fa-solid fa-chevron-down small"></i>
                     </button>
-
-                    <div class="dropdown">
-                        <button class="btn btn-sm rounded-pill bg-body-secondary d-flex align-items-center gap-2 fw-semibold"
-                                type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="status-dot" id="status-dot"></span>
-                            <span id="status-text">...</span>
-                            <i class="fa-solid fa-chevron-down small"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end shadow border-0 p-3" style="min-width: 250px;">
-                            <h6 class="mb-3">Horarios de atención</h6>
-                            <p class="small mb-2"><strong>Lunes a Viernes:</strong><br>10:00 AM – 7:00 PM</p>
-                            <p class="small mb-2"><strong>Sábado:</strong><br>10:00 AM – 2:00 PM</p>
-                            <p class="small mb-0"><strong>Domingo:</strong><br>Cerrado</p>
-                        </div>
+                    <div class="dropdown-menu dropdown-menu-end shadow border-0 p-3" style="min-width: 250px;">
+                        <h6 class="mb-3">Horarios de atención</h6>
+                        <p class="small mb-2"><strong>Lunes a Viernes:</strong><br>10:00 AM – 7:00 PM</p>
+                        <p class="small mb-2"><strong>Sábado:</strong><br>10:00 AM – 2:00 PM</p>
+                        <p class="small mb-0"><strong>Domingo:</strong><br>Cerrado</p>
                     </div>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
 
+    <!-- PANEL DE FILTROS -->
+    <div class="collapse filtros-panel" id="panelFiltros">
+        <div class="bg-body">
+            <div class="py-3 px-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="fw-bold mb-0"><i class="bi bi-funnel me-2 text-primary"></i>Filtrar por categoría</h6>
+                    <button type="button" id="btnLimpiarFiltros" class="btn btn-sm btn-outline-secondary rounded-pill d-none">
+                        Limpiar filtros
+                    </button>
+                </div>
+                <div id="filtroCategorias"></div>
+            </div>
+        </div>
+    </div>
+</nav>
 <!-- BUSCADOR -->
 
-<div class="container mt-5 busqueda-animada" style="max-width: 670px;">
-    <form id="searchForm" class="position-relative" role="search">
+<div class="container mt-4 mt-md-5 busqueda-animada" style="max-width: 680px;">
+    <form id="searchForm" class="position-relative search-wrapper" role="search">
         <input
             id="searchInput"
-            class="form-control pe-5"
+            class="form-control form-control-lg pe-5 search-input"
             type="search"
             placeholder="Buscar muebles..."
             aria-label="Buscar productos"
@@ -85,7 +111,7 @@
         />
 
         <button
-            class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent"
+            class="btn position-absolute top-50 end-0 translate-middle-y border-0 bg-transparent search-btn"
             type="submit"
             aria-label="Buscar"
         >
@@ -97,40 +123,24 @@
 <!-- CIERRE DEL BUSCADOR -->
 
 
-<!-- MENU LATERAL Y CATALOGO -->
+<!-- CATALOGO -->
 
-<div class="container mt-5">
+<div class="container mt-4 mt-md-5">
     <div class="row">
 
-        <!-- MENU LATERAL (las categorías se generan con JS según los productos) -->
-        <aside class="col-md-3 col-lg-2 ps-0 menu-animado">
-            <div class="border rounded-3 p-3">
+        <main class="col-12" id="catalogo">
 
-                <h5 class="fw-bold">Filtros</h5>
-                <hr>
-
-                <h6>Categorías</h6>
-
-                <div id="filtroCategorias"></div>
-
-            </div>
-        </aside>
-
-        <!-- CATALOGO DE PRODUCTOS -->
-        <main class="col-md-9 col-lg-10" id="catalogo">
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
                 <div>
-                    <h2 class="fw-bold mb-1">Nuestro catálogo</h2>
-                    <p class="text-body-secondary mb-0">
+                    <h2 class="fw-bold mb-1 catalog-title">Nuestro catálogo</h2>
+                    <p class="text-body-secondary mb-0 catalog-subtitle">
                         Descubre nuestros muebles artesanales
                     </p>
                 </div>
 
-                <span class="badge text-bg-secondary" id="contadorProductos">&nbsp;</span>
+                <span class="badge text-bg-secondary rounded-pill px-3 py-2" id="contadorProductos">&nbsp;</span>
             </div>
 
-            <!-- Las tarjetas se generan con js/catalogo.js a partir de lo que sube el admin -->
             <div class="row g-4" id="gridProductos"></div>
             <div class="mt-5"></div>
 
@@ -139,23 +149,23 @@
     </div>
 </div>
 
-<!-- CIERRE MENU Y CATALOGO -->
+<!-- CIERRE CATALOGO -->
 
-<!-- MODAL DEL PRODUCTO (un solo modal reutilizable) -->
+<!-- MODAL DEL PRODUCTO -->
 <div class="modal fade" id="modalProducto" tabindex="-1"
      aria-labelledby="tituloModalProducto" aria-hidden="true">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content modal-producto">
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="tituloModalProducto">Nombre del producto</h5>
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-semibold" id="tituloModalProducto">Nombre del producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body pt-3">
 
-                <div id="carruselProducto" class="carousel slide mb-4" data-bs-ride="false">
+                <div id="carruselProducto" class="carousel slide mb-4 rounded-3 overflow-hidden" data-bs-ride="false">
                     <div class="carousel-inner" id="imagenesCarrusel"></div>
 
                     <button class="carousel-control-prev" type="button"
@@ -171,16 +181,16 @@
                     </button>
                 </div>
 
-                <span class="badge text-bg-light border mb-2" id="categoriaModal"></span>
-                <h6>Descripción del producto</h6>
-                <p id="descripcionModal" class="text-body-secondary mb-2">Descripción del producto.</p>
-                <p id="precioModal" class="fw-semibold mb-0"></p>
+                <span class="badge text-bg-light border mb-3 rounded-pill px-3" id="categoriaModal"></span>
+                <h6 class="fw-semibold mb-2">Descripción del producto</h6>
+                <p id="descripcionModal" class="text-body-secondary mb-3">Descripción del producto.</p>
+                <p id="precioModal" class="fw-semibold fs-5 mb-0 text-primary"></p>
 
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <a href="#cotizacion" id="btnCotizar" class="btn btn-primary">Cotizar producto</a>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cerrar</button>
+                <a href="#cotizacion" id="btnCotizar" class="btn btn-primary rounded-pill px-4">Cotizar producto</a>
             </div>
 
         </div>
