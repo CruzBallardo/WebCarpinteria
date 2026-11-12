@@ -285,24 +285,39 @@
 
         <!-- Reseñas -->
         <section id="resenas" class="mb-5">
-            <div class="d-flex justify-content-between align-items-start">
-                <div>
-                    <h2 class="h4 fw-bold">Reseñas de clientes</h2>
-                    <p class="text-secondary">Consulta las opiniones recibidas sobre tus productos.</p>
-                </div>
-            </div>
+            <h2 class="h4 fw-bold">Reseñas de clientes</h2>
+            <p class="text-secondary">Consulta las opiniones recibidas. Puedes ocultar o eliminar las que no quieras mostrar.</p>
 
-            <div class="border rounded p-5 text-center text-secondary">Aún no hay reseñas.</div>
+            <div class="table-responsive border rounded">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr><th>Cliente</th><th>Calificación</th><th>Comentario</th><th>Fecha</th><th>Acción</th></tr>
+                    </thead>
+                    <tbody id="tbodyResenas">
+                        <tr><td colspan="5" class="text-center text-secondary py-5">Cargando…</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <hr>
 
         <!-- Cotizaciones -->
         <section id="cotizaciones" class="mb-5">
-            <div class="d-flex justify-content-between align-items-start">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
                 <div>
                     <h2 class="h4 fw-bold">Cotizaciones</h2>
                     <p class="text-secondary">Revisa las solicitudes de tus clientes.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" id="filtroCotizaciones" aria-label="Filtrar cotizaciones">
+                        <option value="pendiente" selected>Pendientes</option>
+                        <option value="atendida">Atendidas</option>
+                        <option value="todas">Todas</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnRefrescarCot" title="Actualizar">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
                 </div>
             </div>
 
@@ -311,18 +326,35 @@
                     <thead>
                         <tr>
                             <th>Cliente</th>
-                            <th>Producto</th>
+                            <th>Proyecto</th>
                             <th>Fecha</th>
                             <th>Estado</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr><td colspan="5" class="text-center text-secondary py-5">Aún no hay cotizaciones.</td></tr>
+                    <tbody id="tbodyCotizaciones">
+                        <tr><td colspan="5" class="text-center text-secondary py-5">Cargando…</td></tr>
                     </tbody>
                 </table>
             </div>
         </section>
+
+        <!-- Modal detalle de cotización -->
+        <div class="modal fade" id="modalCotizacion" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5">Detalle de la cotización</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body" id="cotDetalle"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-sm btn-success" id="btnEstadoModal"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer class="border-top pt-3 small text-secondary d-flex justify-content-between">
             <span>© 2026 Carpintería Barrientos</span>
@@ -340,6 +372,8 @@
     <script src="js/admin.js"></script>
     <script src="js/productos-db.js"></script>
     <script src="js/productos-admin.js"></script>
+    <script src="js/cotizaciones-admin.js"></script>
+    <script src="js/resenas-admin.js"></script>
 
 </body>
 </html>

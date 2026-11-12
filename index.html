@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/stylecatalogo.css">
+    <link rel="stylesheet" href="css/styleresenas.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg sticky-top navbar-glass border-bottom">
@@ -31,8 +32,8 @@
                         data-bs-toggle="dropdown" aria-expanded="false">Explora</a>
                         <ul class="dropdown-menu shadow-lg rounded border-0">
                             <li><a class="dropdown-item" href="catalogo.html">Catálogo</a></li>
-                            <li><a class="dropdown-item" href="#cotizacion">Cotización</a></li>
-                            <li><a class="dropdown-item" href="#contacto">Contacto</a></li>
+                            <li><a class="dropdown-item" href="cotizacion.html">Cotización</a></li>
+                            <li><a class="dropdown-item" href="#ubicacion">Contacto</a></li>
                             <li><a class="dropdown-item" href="#galeria">Galería</a></li>
                         </ul>
                     </li>
@@ -145,7 +146,7 @@
                     <div class="container position-relative text-center text-white">
                         <h1 class="display-4 fw-bold">Muebles hechos a tu medida</h1>
                         <p class="lead mb-4">Cocinas, closets y puertas diseñados y fabricados para tu espacio.</p>
-                        <a href="#cotizacion" class="btn btn-primary btn-lg px-4">Pide tu cotización</a>
+                        <a href="cotizacion.html" class="btn btn-primary btn-lg px-4">Pide tu cotización</a>
                     </div>
                 </div>
             </div>
@@ -214,7 +215,28 @@ En Maderería y Carpintería Hermanos Barrientos, respaldamos cada proyecto con 
 
             <div class="text-center mt-5 reveal">
                 <p class="mb-3">¿Quieres algo similar para tu hogar o negocio?</p>
-                <a href="#cotizacion" class="btn btn-primary btn-lg px-4">Cotiza tu proyecto</a>
+                <a href="cotizacion.html" class="btn btn-primary btn-lg px-4">Cotiza tu proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN RESEÑAS -->
+    <section id="resenas" class="py-5 bg-body-tertiary">
+        <div class="container mt-5">
+            <div class="text-center mb-5 reveal">
+                <h2 class="fw-bold">Lo que dicen nuestros clientes</h2>
+                <div id="resumenResenas" class="d-flex justify-content-center align-items-center gap-2 mt-2"></div>
+            </div>
+
+            <div class="row g-4" id="listaResenas">
+                <div class="col-12 text-center text-body-secondary">Cargando reseñas…</div>
+            </div>
+
+            <div class="text-center mt-5 reveal">
+                <button id="btnVerMasResenas" type="button" class="btn btn-outline-secondary rounded-pill px-4 me-2 d-none">Ver más reseñas</button>
+                <button type="button" class="btn btn-primary rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#modalResena">
+                    <i class="bi bi-star me-1"></i> Dejar una reseña
+                </button>
             </div>
         </div>
     </section>
@@ -362,101 +384,134 @@ En Maderería y Carpintería Hermanos Barrientos, respaldamos cada proyecto con 
     </footer>
 
     <!-- Modal de Login -->
-<!-- Modal de Login (soporta tema claro/oscuro de Bootstrap 5.3 con data-bs-theme) -->
-<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-modal border-0 overflow-hidden">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-modal border-0 overflow-hidden">
 
-            <!-- Botón cerrar (btn-close se adapta solo al tema en Bootstrap 5.3) -->
-            <button type="button" class="btn-close position-absolute top-0 end-0 m-3"
-                    data-bs-dismiss="modal" aria-label="Cerrar" style="z-index: 10;"></button>
+                <!-- Botón cerrar (btn-close se adapta solo al tema en Bootstrap 5.3) -->
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3"
+                        data-bs-dismiss="modal" aria-label="Cerrar" style="z-index: 10;"></button>
 
-            <div class="modal-body p-4 p-md-5">
+                <div class="modal-body p-4 p-md-5">
 
-                <!-- Título -->
-                <div class="text-center mb-4">
-                    <h2 id="loginModalTitle" class="fw-bold mb-1" style="letter-spacing: -0.5px;">Iniciar sesión</h2>
-                    <p class="text-body-secondary small mb-0">Bienvenido de nuevo</p>
+                    <!-- Título -->
+                    <div class="text-center mb-4">
+                        <h2 id="loginModalTitle" class="fw-bold mb-1" style="letter-spacing: -0.5px;">Iniciar sesión</h2>
+                        <p class="text-body-secondary small mb-0">Bienvenido de nuevo</p>
+                    </div>
+
+                    <form id="loginForm" novalidate>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <div class="input-group glass-input-group">
+                                <span class="input-group-text bg-transparent border-0 text-body-secondary">
+                                    <i class="bi bi-envelope"></i>
+                                </span>
+                                <input type="email" id="loginEmail"
+                                    class="form-control glass-input border-0 shadow-none"
+                                    placeholder="Correo electrónico"
+                                    autocomplete="email" required>
+                            </div>
+                        </div>
+
+                        <!-- Password con ver / ocultar -->
+                        <div class="mb-3">
+                            <div class="input-group glass-input-group">
+                                <span class="input-group-text bg-transparent border-0 text-body-secondary">
+                                    <i class="bi bi-lock"></i>
+                                </span>
+                                <input type="password" id="loginPassword"
+                                    class="form-control glass-input border-0 shadow-none"
+                                    placeholder="Contraseña"
+                                    autocomplete="current-password" required>
+                                <button type="button" id="togglePassword"
+                                        class="btn btn-toggle-password border-0 bg-transparent text-body-secondary"
+                                        aria-label="Mostrar contraseña" aria-pressed="false"
+                                        aria-controls="loginPassword">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Botón Login -->
+                        <button type="submit" class="btn btn-login w-100 rounded-pill fw-semibold py-2 mb-3 mt-5">
+                            Iniciar sesión
+                        </button>
+
+                    </form>
                 </div>
-
-                <form id="loginForm" novalidate>
-
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <div class="input-group glass-input-group">
-                            <span class="input-group-text bg-transparent border-0 text-body-secondary">
-                                <i class="bi bi-envelope"></i>
-                            </span>
-                            <input type="email" id="loginEmail"
-                                   class="form-control glass-input border-0 shadow-none"
-                                   placeholder="Correo electrónico"
-                                   autocomplete="email" required>
-                        </div>
-                    </div>
-
-                    <!-- Password con ver / ocultar -->
-                    <div class="mb-3">
-                        <div class="input-group glass-input-group">
-                            <span class="input-group-text bg-transparent border-0 text-body-secondary">
-                                <i class="bi bi-lock"></i>
-                            </span>
-                            <input type="password" id="loginPassword"
-                                   class="form-control glass-input border-0 shadow-none"
-                                   placeholder="Contraseña"
-                                   autocomplete="current-password" required>
-                            <button type="button" id="togglePassword"
-                                    class="btn btn-toggle-password border-0 bg-transparent text-body-secondary"
-                                    aria-label="Mostrar contraseña" aria-pressed="false"
-                                    aria-controls="loginPassword">
-                                <i class="bi bi-eye" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Recordarme + Olvidé contraseña -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label small text-body-secondary" for="rememberMe">
-                                Recordarme
-                            </label>
-                        </div>
-                        <a href="#" class="small text-body text-decoration-none opacity-75 hover-opacity">
-                            ¿Olvidaste tu contraseña?
-                        </a>
-                    </div>
-
-                    <!-- Botón Login -->
-                    <button type="submit" class="btn btn-login w-100 rounded-pill fw-semibold py-2 mb-3">
-                        Iniciar sesión
-                    </button>
-
-                    <!-- Separador -->
-                    <div class="d-flex align-items-center my-4">
-                        <div class="flex-grow-1 border-top"></div>
-                        <span class="px-3 small text-body-secondary">o</span>
-                        <div class="flex-grow-1 border-top"></div>
-                    </div>
-
-                    <!-- Texto registro -->
-                    <p class="text-center small text-body-secondary mb-0">
-                        ¿No tienes cuenta?
-                        <a href="#" class="text-body fw-semibold text-decoration-none"
-                           data-bs-toggle="modal" data-bs-target="#registerModal">
-                            Regístrate
-                        </a>
-                    </p>
-
-                </form>
             </div>
         </div>
     </div>
-</div>
+
+
+    <!-- Modal de reseña -->
+    <div class="modal fade" id="modalResena" tabindex="-1" aria-labelledby="modalResenaTitulo" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h2 class="modal-title h5 fw-bold" id="modalResenaTitulo">Cuéntanos tu experiencia</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="formResena" novalidate>
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="resNombre" placeholder="Nombre" maxlength="40" autocomplete="given-name">
+                                    <label for="resNombre">Nombre</label>
+                                    <div class="invalid-feedback">Escribe tu nombre.</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="resApellido" placeholder="Apellido" maxlength="40" autocomplete="family-name">
+                                    <label for="resApellido">Apellido</label>
+                                    <div class="invalid-feedback">Escribe tu apellido.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <p class="fw-semibold mb-1">Tu calificación</p>
+                            <div class="star-rating" role="radiogroup" aria-label="Calificación">
+                                <input type="radio" name="calificacion" id="est5" value="5"><label for="est5" title="5 estrellas"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" name="calificacion" id="est4" value="4"><label for="est4" title="4 estrellas"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" name="calificacion" id="est3" value="3"><label for="est3" title="3 estrellas"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" name="calificacion" id="est2" value="2"><label for="est2" title="2 estrellas"><i class="bi bi-star-fill"></i></label>
+                                <input type="radio" name="calificacion" id="est1" value="1"><label for="est1" title="1 estrella"><i class="bi bi-star-fill"></i></label>
+                            </div>
+                            <div class="text-danger small mt-1" id="resErrorEstrellas" hidden>Elige una calificación.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="resComentario" class="form-label fw-semibold">Tu comentario</label>
+                            <textarea class="form-control" id="resComentario" rows="4" maxlength="400" placeholder="¿Qué tal fue la atención y la calidad de los materiales?"></textarea>
+                            <div class="invalid-feedback">Cuéntanos un poco más (mínimo 10 caracteres).</div>
+                            <div class="text-end small text-body-secondary mt-1"><span id="resContador">0</span>/400</div>
+                        </div>
+
+                        <!-- Campo trampa anti-bots: no lo borres -->
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="resWeb">Web</label>
+                            <input type="text" id="resWeb" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <button type="submit" id="resenaBtnEnviar" class="btn btn-primary w-100 rounded-pill fw-semibold py-2">Publicar reseña</button>
+                        <div id="resenaAlerta" hidden role="alert"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/db.js"></script>
+    <script src="js/resenas.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/script.js"></script>
+    
 </body>
 </html>

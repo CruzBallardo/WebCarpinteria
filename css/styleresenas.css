@@ -1,0 +1,50 @@
+/* Tarjetas de reseñas */
+.resena-card {
+    border: 1px solid var(--bs-border-color-translucent);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.resena-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--bs-box-shadow) !important;
+}
+.resena-quote {
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--bs-primary);
+    opacity: .35;
+}
+.resena-stars { color: #f5b301; letter-spacing: 2px; }
+.resena-stars .vacia { color: var(--bs-border-color); }
+
+/* Selector de estrellas (radios; funciona con teclado) */
+.star-rating {
+    position: relative;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    gap: .25rem;
+}
+.star-rating input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.star-rating label {
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--bs-border-color);
+    transition: color .15s ease, transform .15s ease;
+}
+.star-rating label:hover { transform: scale(1.15); }
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label { color: #f5b301; }
+.star-rating input:focus-visible + label {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+    border-radius: .25rem;
+}
+.star-rating.is-invalid-stars label:not(:hover) { filter: drop-shadow(0 0 2px var(--bs-danger)); }
+
+/* Campo trampa anti-bots (oculto) */
+.hp-field { position: absolute; left: -9999px; height: 0; overflow: hidden; }
