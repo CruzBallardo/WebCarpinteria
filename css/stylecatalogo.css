@@ -384,14 +384,30 @@
     color: #1a1a1a;
 }
 
+/* Botón Cotizar (más grande + azul nuevo) */
 #btnCotizar {
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-height: 36px;
+    border-radius: 0.5rem;
     letter-spacing: 0.01em;
+    background-color: #2563EB;
+    border-color: #2563EB;
+    color: #fff;
     transition: all 0.25s ease;
 }
 
 #btnCotizar:hover {
+    background-color: #1D4ED8;
+    border-color: #1D4ED8;
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+#btnCotizar:active {
+    background-color: #1E40AF;
+    border-color: #1E40AF;
 }
 
 #btnFavorito {
@@ -689,4 +705,49 @@ body::before {
         width: 60px;
         height: 60px;
     }
+}
+
+/* =====================================================
+   NUEVO AZUL GLOBAL (#2563EB)
+   Mantener SIEMPRE al final del archivo
+   ===================================================== */
+:root,
+[data-bs-theme="light"] {
+    --bs-primary: #2563EB;
+    --bs-primary-rgb: 37, 99, 235;
+    --bs-link-color: #2563EB;
+    --bs-link-color-rgb: 37, 99, 235;
+    --bs-link-hover-color: #1D4ED8;
+    --bs-link-hover-color-rgb: 29, 78, 216;
+}
+
+[data-bs-theme="dark"] {
+    --bs-primary: #3B82F6;
+    --bs-primary-rgb: 59, 130, 246;
+    --bs-link-color: #60A5FA;
+    --bs-link-color-rgb: 96, 165, 250;
+    --bs-link-hover-color: #93C5FD;
+    --bs-link-hover-color-rgb: 147, 197, 253;
+}
+
+.btn-primary {
+    --bs-btn-bg: #2563EB;
+    --bs-btn-border-color: #2563EB;
+    --bs-btn-hover-bg: #1D4ED8;
+    --bs-btn-hover-border-color: #1D4ED8;
+    --bs-btn-active-bg: #1E40AF;
+    --bs-btn-active-border-color: #1E40AF;
+    --bs-btn-disabled-bg: #2563EB;
+    --bs-btn-disabled-border-color: #2563EB;
+    --bs-btn-focus-shadow-rgb: 37, 99, 235;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #2563EB;
+    --bs-btn-border-color: #2563EB;
+    --bs-btn-hover-bg: #2563EB;
+    --bs-btn-hover-border-color: #2563EB;
+    --bs-btn-active-bg: #1D4ED8;
+    --bs-btn-active-border-color: #1D4ED8;
+    --bs-btn-focus-shadow-rgb: 37, 99, 235;
 }
