@@ -15,7 +15,7 @@
     const esc = t => String(t ?? '').replace(/[&<>"']/g, c =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-        /* ---------- Skeletons ---------- */
+    /* ---------- Skeletons ---------- */
     function skeletonCards(n = 8) {
         return Array.from({ length: n }, () => `
             <div class="col-6 col-xl-3" aria-hidden="true">
@@ -105,29 +105,189 @@
             </div>`).join('');
     }
 
+    /* =========================================================
+       MODAL + MAGNIFIER + ZOOM
+       ========================================================= */
+
+    let magnifierLens = null;
+    let currentZoomSrc = '';
+
+    function crearMagnifier() {
+        if (magnifierLens) return magnifierLens;
+        const wrapper = document.querySelector('.main-image-wrapper');
+        if (!wrapper) return null;
+
+        magnifierLens = document.createElement('div');
+        magnifierLens.className = 'magnifier-lens';
+        wrapper.appendChild(magnifierLens);
+        return magnifierLens;
+    }
+
+    function actualizarMagnifier(src) {
+        currentZoomSrc = src;
+        if (magnifierLens) {
+            magnifierLens.style.backgroundImage = `url('${src}')`;
+        }
+    }
+
+    function initMagnifier() {
+        const wrapper = document.querySelector('.main-image-wrapper');
+        if (!wrapper) return;
+
+        const lens = crearMagnifier();
+        if (!lens) return;
+
+        const zoom = 2.5;
+        const lensSize = 140;
+
+        wrapper.addEventListener('mousemove', e => {
+            if (window.innerWidth < 992) return; // solo desktop
+
+            const rect = wrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            let lensX = x - lensSize / 2;
+            let lensY = y - lensSize / 2;
+
+            lensX = Math.max(0, Math.min(lensX, rect.width - lensSize));
+            lensY = Math.max(0, Math.min(lensY, rect.height - lensSize));
+
+            lens.style.left = lensX + 'px';
+            lens.style.top = lensY + 'px';
+            lens.classList.add('active');
+
+            const bgX = (x / rect.width) * 100;
+            const bgY = (y / rect.height) * 100;
+
+            lens.style.backgroundImage = `url('${currentZoomSrc}')`;
+            lens.style.backgroundSize = `${rect.width * zoom}px ${rect.height * zoom}px`;
+            lens.style.backgroundPosition = `${bgX}% ${bgY}%`;
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            if (lens) lens.classList.remove('active');
+        });
+    }
+
     /* ---------- Modal ---------- */
     $('modalProducto').addEventListener('show.bs.modal', e => {
         const id = e.relatedTarget && e.relatedTarget.dataset.id;
         const p = productos.find(x => x.id === id);
         if (!p) return;
 
+        // Datos del producto
         $('tituloModalProducto').textContent = p.nombre;
-        $('descripcionModal').textContent = p.descripcion;
-        $('categoriaModal').textContent = p.categoria;
+        $('descripcionModal').textContent = p.descripcion || '';
+        $('categoriaModal').textContent = p.categoria || '';
+
+        // Precio limpio
         $('precioModal').textContent = p.precio != null
-            ? `Precio de referencia: $${p.precio.toLocaleString('es-MX')} MXN` : '';
+            ? `$${p.precio.toLocaleString('es-MX')}`
+            : 'Precio a cotizar';
 
-        $('imagenesCarrusel').innerHTML = p.imagenes.map((src, i) => `
-            <div class="carousel-item ${i === 0 ? 'active' : ''}">
-                <img src="${src}" class="d-block w-100 rounded" alt="${esc(p.nombre)} ${i + 1}"
-                     style="max-height:420px;object-fit:contain">
-            </div>`).join('');
+        // Imagen principal
+        const imgPrincipal = $('imagenPrincipalModal');
+        imgPrincipal.src = p.imagenes[0] || '';
+        imgPrincipal.alt = p.nombre;
 
-        // Con una sola foto, ocultar flechas
-        const unica = p.imagenes.length < 2;
-        document.querySelectorAll('#carruselProducto .carousel-control-prev, #carruselProducto .carousel-control-next')
-            .forEach(b => b.classList.toggle('d-none', unica));
+        // Miniaturas
+        const contMiniaturas = $('miniaturasProducto');
+        contMiniaturas.innerHTML = '';
+
+        if (p.imagenes && p.imagenes.length > 1) {
+            p.imagenes.forEach((src, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = `thumbnail-item ${i === 0 ? 'active' : ''}`;
+                thumb.innerHTML = `<img src="${src}" alt="${esc(p.nombre)} ${i + 1}">`;
+
+                thumb.addEventListener('click', () => {
+                    imgPrincipal.style.opacity = '0';
+                    setTimeout(() => {
+                        imgPrincipal.src = src;
+                        imgPrincipal.style.opacity = '1';
+                        actualizarMagnifier(src);
+                    }, 150);
+
+                    contMiniaturas.querySelectorAll('.thumbnail-item').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                });
+
+                contMiniaturas.appendChild(thumb);
+            });
+        }
+
+        // Actualizar magnifier con la primera imagen
+        actualizarMagnifier(p.imagenes[0] || '');
+
+        // Zoom fullscreen al hacer clic
+        imgPrincipal.onclick = () => abrirZoom(imgPrincipal.src, p.nombre);
+
+        // Reset del botón favorito
+        const btnFav = $('btnFavorito');
+        if (btnFav) {
+            btnFav.classList.remove('active');
+            const icon = btnFav.querySelector('i');
+            if (icon) {
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+            }
+        }
     });
+
+    /* ---------- Favorito ---------- */
+    document.addEventListener('click', e => {
+        if (e.target.closest('#btnFavorito')) {
+            const btn = $('btnFavorito');
+            if (!btn) return;
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('bi-heart');
+                icon.classList.toggle('bi-heart-fill');
+            }
+        }
+    });
+
+    /* ---------- Zoom fullscreen ---------- */
+    function abrirZoom(src, alt) {
+        let overlay = document.getElementById('zoomOverlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'zoomOverlay';
+            overlay.className = 'zoom-overlay';
+            overlay.innerHTML = `
+                <button class="zoom-close" aria-label="Cerrar zoom">&times;</button>
+                <img src="" alt="">
+            `;
+            document.body.appendChild(overlay);
+
+            overlay.addEventListener('click', e => {
+                if (e.target === overlay || e.target.classList.contains('zoom-close')) {
+                    cerrarZoom();
+                }
+            });
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') cerrarZoom();
+            });
+        }
+
+        const img = overlay.querySelector('img');
+        img.src = src;
+        img.alt = alt || '';
+
+        requestAnimationFrame(() => {
+            overlay.classList.add('active');
+        });
+    }
+
+    function cerrarZoom() {
+        const overlay = document.getElementById('zoomOverlay');
+        if (overlay) {
+            overlay.classList.remove('active');
+        }
+    }
 
     /* ---------- Buscador ---------- */
     $('searchForm').addEventListener('submit', e => { e.preventDefault(); pintarCatalogo(); });
@@ -155,5 +315,8 @@
         pintarFiltros();
         pintarCatalogo();
         grid.setAttribute('aria-busy', 'false');
+
+        // Inicializar magnifier una vez que el DOM del modal existe
+        initMagnifier();
     })();
 })();
