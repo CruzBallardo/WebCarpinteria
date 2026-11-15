@@ -738,3 +738,27 @@ body::before {
     --bs-btn-active-border-color: #1D4ED8;
     --bs-btn-focus-shadow-rgb: 37, 99, 235;
 }
+/* ===== Botón WhatsApp ===== */
+.btn-whatsapp {
+    --bs-btn-color: #fff; --bs-btn-bg: #075E54; --bs-btn-border-color: #075E54;
+    --bs-btn-hover-color: #fff; --bs-btn-hover-bg: #054C44; --bs-btn-hover-border-color: #054C44;
+    --bs-btn-active-color: #fff; --bs-btn-active-bg: #043C36; --bs-btn-active-border-color: #043C36;
+}
+
+/* ===== Modal: categoría y pie de acciones ===== */
+.modal-product-category {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--bs-secondary-color);
+}
+.modal-acciones {
+    gap: 0.5rem;
+    border-top: 1px solid var(--bs-border-color);
+    background: var(--bs-body-bg);
+}
+.modal-acciones .btn { min-height: 48px; padding: 0.5rem 1.4rem; font-size: 1rem; font-weight: 600; border-radius: 8px; }
+.modal-acciones #btnCotizar { flex: 1 1 auto; min-height: 48px; padding: 0.5rem 1.4rem; font-size: 1rem; border-radius: 8px; }
+@media (min-width: 992px) { .modal-acciones #btnCotizar { flex: 0 0 auto; } }
+@media (max-width: 767.98px) {
+    .modal-fullscreen-md-down { margin: 0 !important; }
+    .modal-producto { border-radius: 0; }
+}

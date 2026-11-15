@@ -68,6 +68,10 @@
                         <p class="small mb-0"><strong>Domingo:</strong><br>Cerrado</p>
                     </div>
                 </div>
+
+                <a data-wa class="btn btn-sm btn-whatsapp fw-semibold px-3">
+                    <i class="bi bi-whatsapp me-1"></i> WhatsApp
+                </a>
             </div>
         </div>
     </div>
@@ -146,15 +150,15 @@
     <div class="container text-center">
         <h2 class="fw-bold mb-2">¿No ves lo que buscas?</h2>
         <p class="text-body-secondary mb-4">Fabricamos a tu medida. Cuéntanos qué necesitas y te cotizamos.</p>
-        <a href="cotizacion.html" class="btn btn-primary btn-lg px-4">Pedir cotización</a>
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+            <a data-wa class="btn btn-whatsapp btn-lg px-4"><i class="bi bi-whatsapp me-2"></i>Escribir por WhatsApp</a>
+        </div>
     </div>
 </section>
 
-<!-- ===================== MODAL PRODUCTO (NUEVO DISEÑO) ===================== -->
-<div class="modal fade" id="modalProducto" tabindex="-1"
-     aria-labelledby="tituloModalProducto" aria-hidden="true">
-
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+<!-- MODAL PRODUCTO -->
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-labelledby="tituloModalProducto" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-fullscreen-md-down">
         <div class="modal-content modal-producto border-0 shadow-lg">
 
             <button type="button" class="btn-close position-absolute top-0 end-0 m-3 z-3"
@@ -163,67 +167,45 @@
             <div class="modal-body p-0">
                 <div class="row g-0">
 
-                    <!-- COLUMNA IZQUIERDA: GALERÍA -->
                     <div class="col-lg-6">
                         <div class="product-gallery h-100 d-flex flex-column p-3 p-md-4">
-                            <div class="main-image-wrapper flex-grow-1 position-relative rounded-3 overflow-hidden bg-body-secondary mb-3">
-                                <img id="imagenPrincipalModal"
-                                     src=""
-                                     alt=""
-                                     class="w-100 h-100 main-product-image"
+                            <div class="main-image-wrapper position-relative rounded-3 overflow-hidden bg-body-secondary mb-3">
+                                <img id="imagenPrincipalModal" src="" alt="" class="w-100 h-100 main-product-image"
                                      style="object-fit: contain; min-height: 320px;">
                             </div>
                             <div id="miniaturasProducto" class="d-flex gap-2 overflow-auto pb-1 thumbnails-row"></div>
                         </div>
                     </div>
 
-                    <!-- COLUMNA DERECHA: DETALLES -->
-                    <div class="col-lg-6 d-flex flex-column">
-                        <div class="p-4 p-lg-5 d-flex flex-column h-100">
+                    <div class="col-lg-6">
+                        <div class="p-4 p-lg-5">
+                            <p class="modal-product-category mb-1"><span id="categoriaModal"></span></p>
+                            <h2 class="modal-product-title mb-2" id="tituloModalProducto">Nombre del producto</h2>
+                            <p class="modal-product-price mb-1" id="precioModal">$0.00</p>
+                            <p class="small text-body-secondary mb-0">El precio final depende de las medidas y acabados.</p>
 
-                            <h2 class="modal-product-title fw-semibold mb-2" id="tituloModalProducto">
-                                Nombre del producto
-                            </h2>
+                            <hr class="my-4 opacity-25">
 
-                            <p class="modal-product-price mb-3" id="precioModal">$0.00</p>
+                            <h6 class="fw-semibold mb-2">Descripción</h6>
+                            <p id="descripcionModal" class="text-body-secondary mb-4" style="line-height: 1.6;"></p>
 
-                            <hr class="my-3 opacity-25">
-
-                            <div class="mb-3">
-                                <span class="text-body-secondary small d-block mb-1">Categoría</span>
-                                <span class="badge text-bg-light border rounded-pill px-3 py-2" id="categoriaModal"></span>
-                            </div>
-
-                            <div class="mb-4">
-                                <h6 class="fw-semibold mb-2">Descripción</h6>
-                                <p id="descripcionModal" class="text-body-secondary mb-0" style="line-height: 1.6;"></p>
-                            </div>
-                                <div class="mb-3">
-                                    <label class="form-label small text-body-secondary mb-2">Medida</label>
-                                    <div class="d-flex gap-2 flex-wrap" id="opcionesMedida">
-                                        <button type="button" class="btn btn-sm btn-dark rounded-pill px-3">Estándar</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3">Personalizado</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex-grow-1"></div>
-
-                                <a href="cotizacion.html"
-                                   id="btnCotizar"
-                                   class="btn btn-dark btn-lg flex-grow-1 rounded-pill fw-semibold py-3">
-                                    Cotizar producto
-                                </a>
-                            </div>
+                            <p class="small text-body-secondary mb-0">
+                                <i class="bi bi-rulers me-1"></i>¿Necesitas otra medida? Lo fabricamos a tu medida; cuéntanos las dimensiones al cotizar.
+                            </p>
+                            <div id="opcionesMedida" hidden></div>
                         </div>
                     </div>
+
                 </div>
             </div>
+
+            <div class="modal-footer modal-acciones">
+                <a href="cotizacion.html" id="btnCotizar" class="btn btn-primary">Cotizar producto</a>
+            </div>
+
         </div>
     </div>
 </div>
-
-
 
 <!-- FOOTER -->
 <footer class="bg-dark text-white pt-5 pb-3">
@@ -255,7 +237,7 @@
                 <div class="d-flex gap-3 fs-4">
                     <a href="#" class="text-white" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
                     <a href="#" class="text-white" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="text-white" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a data-wa class="text-white" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
                 <div class="mt-2 d-flex flex-wrap justify-content-between gap-2 small text-secondary">
                     <a class="link-secondary" href="privacidad.html">Aviso de privacidad</a>
@@ -273,5 +255,8 @@
 <script src="js/db.js"></script>
 <script src="js/productos-db.js"></script>
 <script src="js/catalogo.js"></script>
+<script>
+
+</script>
 </body>
 </html>

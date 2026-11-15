@@ -321,3 +321,26 @@
         initMagnifier();
     })();
 })();
+(() => {
+    // COMPLETAR: lada del país + número, sin "+" ni espacios. Ejemplo México: 522941234567
+    const WHATSAPP = '522881365234';
+    const wa = msg => `https://wa.me/${WHATSAPP}` + (msg ? `?text=${encodeURIComponent(msg)}` : '');
+
+    document.querySelectorAll('[data-wa]').forEach(a => {
+        a.href = wa('Hola, quiero información sobre sus muebles.');
+        a.target = '_blank';
+        a.rel = 'noopener';
+    });
+
+    // Al abrir un producto: pasa su nombre a Cotizar y a WhatsApp
+    const modal = document.getElementById('modalProducto');
+    modal.addEventListener('shown.bs.modal', () => {
+        const nombre = document.getElementById('tituloModalProducto').textContent.trim();
+        const cot = document.getElementById('btnCotizar');
+        const url = new URL(cot.getAttribute('href'), location.href);
+        if (!url.searchParams.has('producto')) url.searchParams.set('producto', nombre);
+        cot.href = url.href;
+        document.getElementById('btnWhatsAppProducto').href =
+            wa(`Hola, me interesa el producto "${nombre}" del catálogo.`);
+    });
+})();
