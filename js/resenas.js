@@ -14,8 +14,24 @@
     const btnEnviar = $('resenaBtnEnviar');
     const modalEl = $('modalResena');
 
+    const textoVerMas = btnMas.innerHTML; 
     let todas = [];
     let verTodas = false;
+    let yaRenderizadas = 0;
+
+    // ====== ANIMACIÓN AL HACER SCROLL ======
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // anima solo una vez
+            }
+        });
+    }, { threshold: 0.15 });
+
+    function animarTarjetas() {
+        lista.querySelectorAll('.reveal:not(.visible)').forEach((el) => observer.observe(el));
+    }
 
     const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -48,6 +64,7 @@
             resumen.innerHTML = '';
             lista.innerHTML = '<div class="col-12 text-center text-body-secondary py-4">Aún no hay reseñas. ¡Sé el primero en opinar!</div>';
             btnMas.classList.add('d-none');
+            yaRenderizadas = 0;
             return;
         }
 
@@ -58,8 +75,8 @@
             <span class="text-body-secondary small">${todas.length} reseña${todas.length === 1 ? '' : 's'}</span>`;
 
         const visibles = verTodas ? todas : todas.slice(0, MAX_INICIAL);
-        lista.innerHTML = visibles.map(r => `
-            <div class="col-md-6 col-lg-4">
+        lista.innerHTML = visibles.map((r, i) => `
+            <div class="col-md-6 col-lg-4 reveal ${i < yaRenderizadas ? 'visible' : `reveal-delay-${(i - yaRenderizadas) % 3 + 1}`}">
                 <figure class="resena-card card h-100 rounded-4 shadow-sm border-0 p-4 mb-0">
                     <div class="resena-quote">&ldquo;</div>
                     <div class="resena-stars mb-2" aria-label="${r.calificacion} de 5 estrellas">${estrellas(r.calificacion)}</div>
@@ -68,10 +85,25 @@
                 </figure>
             </div>`).join('');
 
-        btnMas.classList.toggle('d-none', verTodas || todas.length <= MAX_INICIAL);
+        animarTarjetas();
+        yaRenderizadas = visibles.length;
+
+        // El botón se muestra solo si hay más reseñas que el límite inicial
+        btnMas.classList.toggle('d-none', todas.length <= MAX_INICIAL);
+        btnMas.innerHTML = verTodas
+            ? '<i class="bi bi-chevron-up me-1"></i>Ver menos'
+            : textoVerMas;
     }
 
-    btnMas.addEventListener('click', () => { verTodas = true; render(); });
+    // Un solo botón alterna entre "Ver más" y "Ver menos"
+    btnMas.addEventListener('click', () => {
+        verTodas = !verTodas;
+        render();
+        if (!verTodas) {
+            // Al ocultar volver al inicio de la sección para no perder el contexto
+            (lista.closest('section') || lista).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
 
     // ====== FORMULARIO ======
     const campo = id => $(id);

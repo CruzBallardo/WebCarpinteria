@@ -87,9 +87,10 @@
             return;
         }
 
-        grid.innerHTML = lista.map(p => `
+        // --i = posición de la card (1, 2, 3...). El CSS calcula el animation-delay con ella.
+        grid.innerHTML = lista.map((p, i) => `
             <div class="col-6 col-xl-3">
-                <div class="card h-100 shadow-sm card-animada">
+                <div class="card h-100 shadow-sm card-animada" style="--i:${i + 1}">
                     <img src="${p.imagenes[0]}" class="card-img-top imagen-producto" alt="${esc(p.nombre)}" loading="lazy" decoding="async">
                     <div class="card-body d-flex flex-column">
                         <span class="badge text-bg-light border align-self-start mb-2">${esc(p.categoria)}</span>
