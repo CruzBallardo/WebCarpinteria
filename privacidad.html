@@ -15,7 +15,11 @@
   <header class="border-bottom">
     <nav class="container py-3 d-flex flex-wrap justify-content-between align-items-center gap-2" aria-label="Principal">
       <a class="fw-semibold text-dark text-decoration-none fs-5" href="index.html">Hermanos Barrientos</a>
-      <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover" href="index.html">Volver al inicio</a>
+      <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
+        href="index.html"
+        onclick="if (document.referrer && history.length > 1) { history.back(); return false; }">
+        Volver
+      </a>
     </nav>
   </header>
 
@@ -27,13 +31,14 @@
         <p class="lead text-secondary mb-2">
           Te explicamos qué datos personales recabamos en este sitio, para qué los usamos y cómo puedes controlarlos.
         </p>
-        <p class="small text-secondary mb-5">Última actualización: [FECHA]</p>
+        <p class="small text-secondary mb-5">Última actualización: 16 de noviembre de 2026</p>
 
         <section class="py-4 border-top">
           <h2 class="h4 fw-semibold mb-3">Quién es el responsable</h2>
           <p>
             <strong>[RAZÓN SOCIAL O NOMBRE COMPLETO DEL TITULAR]</strong>, que opera bajo el nombre comercial
-            <strong>Hermanos Barrientos</strong>, con domicilio en [CALLE, NÚMERO, COLONIA, CÓDIGO POSTAL, CIUDAD, ESTADO, MÉXICO],
+            <strong>Hermanos Barrientos</strong>, con RFC <strong>[RFC DEL RESPONSABLE]</strong> y domicilio en
+            [CALLE, NÚMERO, COLONIA, CÓDIGO POSTAL, CIUDAD, ESTADO, MÉXICO],
             es responsable del tratamiento de tus datos personales, conforme a la Ley Federal de Protección de Datos Personales
             en Posesión de los Particulares (LFPDPPP).
           </p>
@@ -51,31 +56,42 @@
                 <tr>
                   <th scope="col" class="fw-semibold">Función del sitio</th>
                   <th scope="col" class="fw-semibold">Datos que recabamos</th>
+                  <th scope="col" class="fw-semibold">Quién puede verlos</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Solicitud de cotización</td>
-                  <td>Nombre, teléfono, correo electrónico y descripción de los productos o trabajos que necesitas.</td>
+                  <td>Nombre, apellido, teléfono, correo electrónico (opcional), tipo de madera (opcional) y descripción de lo que quieres cotizar.</td>
+                  <td>Solo el administrador.</td>
                 </tr>
                 <tr>
-                  <td>Calificaciones y reseñas</td>
-                  <td>Nombre (o alias), calificación y comentario.</td>
+                  <td>Solicitud de factura</td>
+                  <td>Número de ticket o nota de venta, fecha de compra, ticket adjunto (opcional, foto o PDF), RFC, nombre o razón social, código postal fiscal, régimen fiscal, uso de CFDI y correo electrónico.</td>
+                  <td>Solo el administrador. Para emitir la factura se capturan en el portal del SAT.</td>
                 </tr>
                 <tr>
-                  <td>Seguimiento de pedido</td>
-                  <td>Código de pedido que tú ingresas y el estado asociado a él.</td>
+                  <td>Reseñas</td>
+                  <td>Nombre, apellido, calificación en estrellas y comentario.</td>
+                  <td>Público: tu reseña se muestra en el sitio con tu nombre y apellido.</td>
+                </tr>
+                <tr>
+                  <td>Acceso de administrador</td>
+                  <td>Correo electrónico y contraseña.</td>
+                  <td>Solo el administrador. Este acceso es exclusivo; los clientes no necesitan crear cuenta.</td>
                 </tr>
                 <tr>
                   <td>Navegación en el sitio</td>
-                  <td>Datos técnicos básicos, como tipo de navegador y dispositivo, a través de cookies (ver sección de cookies).</td>
+                  <td>Datos técnicos que se generan al visitar cualquier sitio web, como dirección IP, tipo de navegador y dispositivo.</td>
+                  <td>Los procesa el proveedor de hospedaje. No los usamos para identificarte ni para crear perfiles.</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p class="mb-0">
             <strong>No recabamos datos personales sensibles</strong> (como salud, origen étnico, creencias religiosas,
-            ideología política u orientación sexual) ni datos financieros o bancarios. Este sitio no realiza ventas en línea.
+            ideología política u orientación sexual) ni datos bancarios, como números de tarjeta o de cuenta.
+            Este sitio no realiza ventas en línea.
           </p>
         </section>
 
@@ -85,21 +101,17 @@
           <h3 class="h6 fw-semibold">Finalidades necesarias</h3>
           <p class="text-secondary small mb-2">Sin ellas no podemos darte el servicio solicitado.</p>
           <ul class="mb-4">
-            <li>Atender y responder tus solicitudes de cotización.</li>
-            <li>Contactarte por teléfono o correo para dar seguimiento a tu cotización o pedido.</li>
-            <li>Permitirte consultar el estado de tu pedido mediante tu código.</li>
+            <li>Recibir tu solicitud de cotización, atenderla y contactarte por teléfono o correo para darle seguimiento.</li>
+            <li>Verificar tu compra y emitir tu factura con los datos fiscales que nos proporcionas, y enviártela al correo que indicaste.</li>
+            <li>Conservar un historial de las facturas emitidas, como lo exigen las disposiciones fiscales.</li>
+            <li>Publicar tu reseña en la sección de reseñas del sitio, visible para cualquier visitante.</li>
+            <li>Permitir el acceso seguro del administrador al panel de control.</li>
           </ul>
 
           <h3 class="h6 fw-semibold">Finalidades adicionales</h3>
-          <p class="text-secondary small mb-2">Requieren tu consentimiento y puedes negarte sin que afecte el servicio principal.</p>
-          <ul class="mb-3">
-            <li>Publicar tu reseña y calificación en el sitio.</li>
-            <li>Elaborar estadísticas generales de uso para mejorar el sitio.</li>
-          </ul>
           <p class="mb-0">
-            Si no deseas que tus datos se usen para las finalidades adicionales, escríbenos a
-            <a href="mailto:[CORREO]" class="link-dark">[CORREO]</a> indicándolo.
-            Si en el futuro usamos tus datos para una finalidad distinta, te lo informaremos y pediremos tu consentimiento.
+            No usamos tus datos para mercadotecnia, publicidad, elaboración de perfiles ni estadísticas de comportamiento.
+            Si en el futuro los usamos para una finalidad distinta, te lo informaremos y pediremos tu consentimiento.
           </p>
         </section>
 
@@ -126,16 +138,22 @@
             <li>Un documento que acredite tu identidad (o la de tu representante).</li>
             <li>Una descripción clara de los datos y del derecho que deseas ejercer.</li>
           </ul>
-          <p class="mb-0">
+          <p class="mb-3">
             Te responderemos en un plazo máximo de [20] días hábiles contados desde la recepción de tu solicitud.
             Si procede, la haremos efectiva dentro de los [15] días hábiles siguientes a la respuesta.
+          </p>
+          <p class="mb-0">
+            <strong>Reseñas:</strong> si quieres que retiremos o corrijamos una reseña que publicaste, escríbenos indicando tu nombre y la fecha aproximada.
+            <strong>Datos fiscales:</strong> algunos datos de facturación deben conservarse por el plazo que marcan las leyes fiscales,
+            por lo que la cancelación podrá aplicarse una vez concluido ese plazo.
           </p>
         </section>
 
         <section class="py-4 border-top">
           <h2 class="h4 fw-semibold mb-3">Consentimiento y revocación</h2>
           <p class="mb-0">
-            Al enviar un formulario en este sitio, aceptas el tratamiento de tus datos conforme a este aviso.
+            Al enviar un formulario en este sitio (cotización, factura o reseña) aceptas el tratamiento de tus datos conforme a este aviso.
+            En el formulario de facturación, además, te pedimos que marques una casilla de aceptación antes de enviarlo.
             Puedes revocar tu consentimiento en cualquier momento por el mismo medio de contacto. La revocación no tiene efectos
             retroactivos y, en algunos casos, puede impedir que continuemos atendiendo tu solicitud.
           </p>
@@ -148,47 +166,61 @@
             proveedores de servicios tecnológicos que procesan información por cuenta nuestra:
           </p>
           <ul class="mb-3">
-            <li><strong>Supabase</strong>: base de datos y autenticación del panel administrativo.</li>
+            <li><strong>Supabase</strong>: base de datos, almacenamiento privado de archivos (como tickets y facturas emitidas) y autenticación del panel administrativo.</li>
             <li><strong>Netlify</strong>: hospedaje del sitio.</li>
           </ul>
-          <p class="mb-0">
+          <p>
             Estos proveedores pueden almacenar la información en servidores ubicados fuera de México. Nos comprometemos a que
             traten tus datos únicamente para prestarnos el servicio y con medidas de seguridad adecuadas.
-            Fuera de estos casos, solo compartiremos tus datos si una autoridad competente lo exige conforme a la ley.
+          </p>
+          <p class="mb-0">
+            <strong>Servicio de Administración Tributaria (SAT):</strong> para emitir tu factura, capturamos tus datos fiscales en el
+            portal del SAT. Esta comunicación es necesaria para cumplir una obligación legal. Fuera de estos casos, solo compartiremos
+            tus datos si una autoridad competente lo exige conforme a la ley.
           </p>
         </section>
 
         <section class="py-4 border-top">
-          <h2 class="h4 fw-semibold mb-3">Cookies</h2>
+          <h2 class="h4 fw-semibold mb-3">Cookies y tecnologías de rastreo</h2>
+          <p>
+            <strong>Este sitio no utiliza cookies ni herramientas de rastreo, analítica o publicidad.</strong>
+            Tu navegador puede guardar preferencias de funcionamiento, como el tema claro u oscuro; en el caso del administrador,
+            también la sesión iniciada. No se usan para identificarte ni para seguir tu actividad.
+          </p>
           <p class="mb-0">
-            [OPCIÓN A: Este sitio no utiliza cookies de rastreo ni herramientas de analítica o publicidad.]<br>
-            [OPCIÓN B: Este sitio utiliza cookies y tecnologías similares, como [NOMBRE DE LA HERRAMIENTA, EJ. GOOGLE ANALYTICS],
-            para conocer cómo se usa el sitio. Puedes deshabilitarlas desde la configuración de tu navegador.]
+            Para mostrar el sitio cargamos recursos de terceros, como tipografías, librerías de diseño y un mapa de Google Maps con
+            nuestra ubicación. Esos proveedores pueden recibir datos técnicos, como tu dirección IP, y Google Maps puede usar sus propias cookies,
+            conforme a sus políticas de privacidad.
           </p>
         </section>
 
         <section class="py-4 border-top">
           <h2 class="h4 fw-semibold mb-3">Cuánto tiempo conservamos tus datos</h2>
-          <p class="mb-0">
-            Conservamos los datos de cotizaciones y pedidos durante [PLAZO, EJ. 2 años] después de concluida la relación o la última
-            comunicación. Las reseñas se mantienen publicadas hasta que solicites su eliminación. Al terminar el plazo, los datos se
-            bloquean y se suprimen de forma segura.
-          </p>
+          <ul class="mb-3">
+            <li><strong>Cotizaciones:</strong> durante [PLAZO, EJ. 2 años] después de concluida la relación o la última comunicación.</li>
+            <li><strong>Solicitudes de factura y facturas emitidas:</strong> durante el plazo que exijan las disposiciones fiscales aplicables (por lo general, cinco años).</li>
+            <li><strong>Reseñas:</strong> se mantienen publicadas hasta que solicites su eliminación.</li>
+            <li><strong>Cuenta de administrador:</strong> mientras la persona conserve ese cargo.</li>
+          </ul>
+          <p class="mb-0">Al terminar cada plazo, los datos se bloquean y se suprimen de forma segura.</p>
         </section>
 
         <section class="py-4 border-top">
           <h2 class="h4 fw-semibold mb-3">Seguridad</h2>
           <p class="mb-0">
             Aplicamos medidas administrativas, técnicas y físicas razonables para proteger tus datos contra pérdida, uso o acceso
-            no autorizado. El acceso al panel administrativo está restringido al titular o encargado mediante autenticación.
+            no autorizado. La conexión con el sitio es cifrada, los archivos que subes (como tu ticket) se guardan en almacenamiento privado,
+            y las solicitudes, facturas y archivos solo pueden consultarse desde el panel administrativo, al que se accede
+            con correo y contraseña. La contraseña se guarda cifrada y no es visible para nosotros.
           </p>
         </section>
 
         <section class="py-4 border-top">
           <h2 class="h4 fw-semibold mb-3">Enlaces a otros sitios</h2>
           <p class="mb-0">
-            Este sitio incluye un botón que te lleva al portal del SAT para generar facturas. No recabamos datos fiscales a través
-            de nuestro sitio, y el SAT tiene sus propias políticas de privacidad.
+            El panel administrativo incluye un enlace directo al portal del SAT, que usamos para emitir tus facturas.
+            Ese portal tiene sus propias políticas de privacidad. Este sitio también puede incluir enlaces a redes sociales
+            y WhatsApp, cuyas plataformas se rigen por sus propios avisos.
           </p>
         </section>
 
@@ -216,14 +248,15 @@
        <div class="container">
            <div class="container d-flex flex-wrap justify-content-between gap-2 small text-secondary">
                 <p class="text-center text-white-50 small mb-0">© 2026 Maderería y Carpintería Hermanos Barrientos. Todos los derechos reservados.</p>
-                <a class="link-secondary" href="index.html">Inicio</a>
+                <a class="link-secondary link-underline-opacity-0 link-underline-opacity-100-hover"
+                  href="index.html"
+                  onclick="if (document.referrer && history.length > 1) { history.back(); return false; }">
+                  Volver
+                </a>
             </div>
            <hr class="border-secondary my-4">
        </div>
     </footer>
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

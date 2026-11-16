@@ -31,10 +31,12 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">Explora</a>
                         <ul class="dropdown-menu shadow-lg rounded border-0">
-                            <li><a class="dropdown-item" href="index.html#catalogo">Catalogo</a></li>
-                            <li><a class="dropdown-item" href="index.html#cotizacion">Cotización</a></li>
-                            <li><a class="dropdown-item" href="index.html#contacto">Contacto</a></li>
-                            <li><a class="dropdown-item" href="index.html#galeria">Galeria</a></li>
+                            <li><a class="dropdown-item" href="catalogo.html">Catalogo</a></li>
+                            <li><a class="dropdown-item" href="cotizacion.html">Cotización</a></li>
+                            <li><a class="dropdown-item" href="index.html#galeria">Galería</a></li>
+                            <li><a class="dropdown-item" href="index.html#resenas">Reseñas</a></li>
+                            <li><a class="dropdown-item" href="index.html#ubicacion">Contacto</a></li>
+                            <li><a class="dropdown-item" href="facturacion.html">Solicitar Factura</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -86,8 +88,8 @@
             <a href="#cotizaciones" class="nav-link">
                 <i class="fa-regular fa-file-lines fa-fw"></i> Cotizaciones
             </a>
-            <a href="https://cfdiau.sat.gob.mx/nidp/wsfed/ep?id=SATUPCFDiCon&sid=0&option=credential&sid=0" class="nav-link">
-                <i class="fa-regular fa-file-lines fa-fw"></i> Facturación
+            <a href="#facturacion" class="nav-link">
+                <i class="fa-solid fa-file-invoice fa-fw"></i> Facturación
             </a>
         </nav>
 
@@ -122,26 +124,33 @@
             <a href="#agregar" class="btn btn-dark btn-sm"><i class="fa-solid fa-plus me-1"></i> Agregar producto</a>
 
             <div class="row g-3 mt-2">
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-3">
                     <div class="border rounded p-3 h-100">
                         <div class="fs-3 fw-semibold" id="statProductos">0</div>
                         <div class="fw-medium">Productos registrados</div>
                         <div class="small text-secondary">Productos en tu catálogo</div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-3">
                     <div class="border rounded p-3 h-100">
                         <div class="fs-3 fw-semibold" id="statResenas">0</div>
                         <div class="fw-medium">Reseñas registradas</div>
                         <div class="small text-secondary">Opiniones de los clientes</div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6 col-lg-3">
                     <div class="border rounded p-3 h-100">
                         <div class="fs-3 fw-semibold" id="statCotizaciones">0</div>
                         <div class="fw-medium">Cotizaciones pendientes</div>
                         <div class="small text-secondary">Solicitudes por revisar</div>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="border rounded p-3 h-100">
+                    <div class="fs-3 fw-semibold" id="statFacturas">0</div>
+                    <div class="fw-medium">Facturas por emitir</div>
+                    <div class="small text-secondary" id="statFacturasDetalle">Solicitudes por atender</div>
                 </div>
             </div>
         </section>
@@ -356,6 +365,66 @@
             </div>
         </div>
 
+        <hr>
+
+        <section id="facturacion" class="mb-5">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+                <div>
+                    <h2 class="h4 fw-bold">Facturación</h2>
+                    <p class="text-secondary">Solicitudes de factura de tus clientes. Emítelas y adjunta el resultado para dejarlas en el historial.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" id="filtroFacturas" aria-label="Filtrar solicitudes de factura">
+                        <option value="pendiente" selected>Pendientes</option>
+                        <option value="en_proceso">En proceso</option>
+                        <option value="finalizada">Finalizadas (historial)</option>
+                        <option value="todas">Todas</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnRefrescarFac" title="Actualizar">
+                        <i class="fa-solid fa-rotate"></i>
+                    </button>
+                    <a href="https://cfdiau.sat.gob.mx/nidp/wsfed/ep?id=SATUPCFDiCon&sid=0&option=credential&sid=0"
+                    target="_blank" rel="noopener" class="btn btn-outline-secondary btn-sm text-nowrap">
+                        <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Portal del SAT
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive border rounded">
+                <table class="table align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Folio</th>
+                            <th>Cliente</th>
+                            <th>Compra</th>
+                            <th>Solicitud</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyFacturas">
+                        <tr><td colspan="6" class="text-center text-secondary py-5">Cargando…</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Modal detalle de factura -->
+        <div class="modal fade" id="modalFactura" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5">Solicitud de factura</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body" id="facDetalle"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer class="border-top pt-3 small text-secondary d-flex justify-content-between">
             <span>© 2026 Carpintería Barrientos</span>
             <span>Panel de administración</span>
@@ -374,6 +443,7 @@
     <script src="js/productos-admin.js"></script>
     <script src="js/cotizaciones-admin.js"></script>
     <script src="js/resenas-admin.js"></script>
+    <script src="js/facturacion-admin.js"></script>
 
 </body>
 </html>
