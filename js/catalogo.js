@@ -28,7 +28,6 @@
                         <span class="placeholder col-8 mb-2" style="height:1.5rem"></span>
                         <span class="placeholder col-12 mb-1"></span>
                         <span class="placeholder col-9 mb-3"></span>
-                        <span class="placeholder col-12 mt-auto" style="height:2.4rem"></span>
                     </div>
                 </div>
             </div>`).join('');
@@ -88,23 +87,32 @@
         }
 
         // --i = posición de la card (1, 2, 3...). El CSS calcula el animation-delay con ella.
+        // Toda la card abre el modal (data-bs-toggle + data-id).
         grid.innerHTML = lista.map((p, i) => `
             <div class="col-6 col-xl-3">
-                <div class="card h-100 shadow-sm card-animada" style="--i:${i + 1}">
+                <div class="card h-100 shadow-sm card-animada card-clickable" style="--i:${i + 1}"
+                     role="button" tabindex="0"
+                     data-bs-toggle="modal" data-bs-target="#modalProducto"
+                     data-id="${p.id}">
                     <img src="${p.imagenes[0]}" class="card-img-top imagen-producto" alt="${esc(p.nombre)}" loading="lazy" decoding="async">
                     <div class="card-body d-flex flex-column">
                         <span class="badge text-bg-light border align-self-start mb-2">${esc(p.categoria)}</span>
                         <h5 class="card-title">${esc(p.nombre)}</h5>
-                        <p class="card-text text-body-secondary"
+                        <p class="card-text text-body-secondary mb-0"
                            style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">
                             ${esc(p.descripcion)}</p>
-                        <button type="button" class="btn btn-primary w-100 mt-auto"
-                                data-bs-toggle="modal" data-bs-target="#modalProducto"
-                                data-id="${p.id}">Consultar</button>
                     </div>
                 </div>
             </div>`).join('');
     }
+
+    // Abrir la card con teclado (Enter / Espacio)
+    grid.addEventListener('keydown', e => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('card-clickable')) {
+            e.preventDefault();
+            e.target.click();
+        }
+    });
 
     /* =========================================================
        MODAL + MAGNIFIER + ZOOM
@@ -232,20 +240,6 @@
             if (icon) {
                 icon.classList.remove('bi-heart-fill');
                 icon.classList.add('bi-heart');
-            }
-        }
-    });
-
-    /* ---------- Favorito ---------- */
-    document.addEventListener('click', e => {
-        if (e.target.closest('#btnFavorito')) {
-            const btn = $('btnFavorito');
-            if (!btn) return;
-            btn.classList.toggle('active');
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.classList.toggle('bi-heart');
-                icon.classList.toggle('bi-heart-fill');
             }
         }
     });

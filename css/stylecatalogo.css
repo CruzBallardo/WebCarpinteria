@@ -74,11 +74,12 @@
     animation-delay: calc(var(--i, 1) * 0.05s);
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.4s ease,
-                border-color 0.35s ease;
+                border-color 0.35s ease,
+                background-color 0.25s ease;
     overflow: hidden;
     border-radius: 1rem;
     border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-body-bg);
+    background-color: var(--bs-card-bg, var(--bs-body-bg));
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     height: 100%;
     display: flex;
@@ -94,8 +95,9 @@
 
 .imagen-producto {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    height: auto;
+    aspect-ratio: 1 / 1;      /* más alta; prueba 4 / 5 si la quieres aún más */
+    object-fit: contain;      /* la imagen se ve completa, sin cortarse */
     background: var(--bs-secondary-bg);
     transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -174,7 +176,7 @@
 
 /* ---------- SKELETONS ---------- */
 .sk-img {
-    height: 220px;
+    aspect-ratio: 1 / 1;      /* mismo tamaño que la imagen real */
     width: 100%;
     background: var(--bs-secondary-bg);
     border-radius: 1rem 1rem 0 0;
@@ -738,6 +740,7 @@ body::before {
     --bs-btn-active-border-color: #1D4ED8;
     --bs-btn-focus-shadow-rgb: 37, 99, 235;
 }
+
 /* ===== Botón WhatsApp ===== */
 .btn-whatsapp {
     --bs-btn-color: #fff; --bs-btn-bg: #075E54; --bs-btn-border-color: #075E54;
@@ -761,4 +764,19 @@ body::before {
 @media (max-width: 767.98px) {
     .modal-fullscreen-md-down { margin: 0 !important; }
     .modal-producto { border-radius: 0; }
+}
+
+/* ===== Card interactiva, abre modal cuando doy click ===== */
+.card-clickable {
+    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 94%, black);
+    cursor: pointer;
+}
+
+.card-clickable:hover {
+    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 88%, black);
+}
+
+.card-clickable:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
 }
