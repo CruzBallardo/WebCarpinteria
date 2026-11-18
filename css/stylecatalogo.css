@@ -1,12 +1,94 @@
-/* ---------- ANIMACIONES GENERALES ---------- */
-.busqueda-animada {
-    animation: aparecerAbajo 0.7s ease-out;
+/* ==========================================================
+   stylecatalogo.css
+
+   ÍNDICE
+   1. Variables y botones (azul global)
+   2. Transiciones globales
+   3. Animaciones
+   4. Navbar
+   5. Fondos
+   6. Buscador y filtros
+   7. Títulos del catálogo
+   8. Tarjetas de producto + skeletons
+   9. Modal de producto
+   10. Botón WhatsApp
+   11. Accesibilidad y pantallas táctiles
+   12. Responsive
+   ========================================================== */
+
+
+/* ==========================================================
+   1. VARIABLES Y BOTONES (AZUL GLOBAL #2563EB)
+   Ojo: el bloque dark debe ir DESPUÉS del claro (misma especificidad)
+   ========================================================== */
+:root,
+[data-bs-theme="light"] {
+    --bs-primary: #2563EB;
+    --bs-primary-rgb: 37, 99, 235;
+    --bs-link-color: #2563EB;
+    --bs-link-color-rgb: 37, 99, 235;
+    --bs-link-hover-color: #1D4ED8;
+    --bs-link-hover-color-rgb: 29, 78, 216;
 }
 
-.menu-animado {
-    animation: aparecerAbajo 0.8s ease-out;
+[data-bs-theme="dark"] {
+    --bs-primary: #3B82F6;
+    --bs-primary-rgb: 59, 130, 246;
+    --bs-link-color: #60A5FA;
+    --bs-link-color-rgb: 96, 165, 250;
+    --bs-link-hover-color: #93C5FD;
+    --bs-link-hover-color-rgb: 147, 197, 253;
 }
 
+.btn-primary {
+    --bs-btn-bg: #2563EB;
+    --bs-btn-border-color: #2563EB;
+    --bs-btn-hover-bg: #1D4ED8;
+    --bs-btn-hover-border-color: #1D4ED8;
+    --bs-btn-active-bg: #1E40AF;
+    --bs-btn-active-border-color: #1E40AF;
+    --bs-btn-disabled-bg: #2563EB;
+    --bs-btn-disabled-border-color: #2563EB;
+    --bs-btn-focus-shadow-rgb: 37, 99, 235;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: #2563EB;
+    --bs-btn-border-color: #2563EB;
+    --bs-btn-hover-bg: #2563EB;
+    --bs-btn-hover-border-color: #2563EB;
+    --bs-btn-active-bg: #1D4ED8;
+    --bs-btn-active-border-color: #1D4ED8;
+    --bs-btn-focus-shadow-rgb: 37, 99, 235;
+}
+
+
+/* ==========================================================
+   2. TRANSICIONES GLOBALES
+   Van ANTES de los componentes para que las transiciones propias
+   de cada uno (cards, buscador...) no sean pisadas por esta regla.
+   ========================================================== */
+body,
+nav,
+header,
+main,
+footer,
+.card,
+.container,
+.form-control,
+.btn,
+.dropdown-menu {
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* ==========================================================
+   3. ANIMACIONES
+   ========================================================== */
 @keyframes aparecerAbajo {
     from {
         opacity: 0;
@@ -18,7 +100,79 @@
     }
 }
 
-/* ---------- BUSCADOR ---------- */
+.busqueda-animada {
+    animation: aparecerAbajo 0.7s ease-out;
+}
+
+.menu-animado {
+    animation: aparecerAbajo 0.8s ease-out;
+}
+
+
+/* ==========================================================
+   4. NAVBAR
+   ========================================================== */
+.navbar.navbar-glass.navbar-grande {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.navbar-grande .navbar-brand {
+    font-size: 1.4rem;
+}
+
+.navbar-grande .nav-link {
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: 0.6rem 1.1rem;
+}
+
+
+/* ==========================================================
+   5. FONDOS
+   ========================================================== */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.12;
+    -webkit-mask-image:
+        linear-gradient(to right, #000 0%, transparent 18%),
+        linear-gradient(to left,  #000 0%, transparent 18%);
+    mask-image:
+        linear-gradient(to right, #000 0%, transparent 18%),
+        linear-gradient(to left,  #000 0%, transparent 18%);
+}
+
+[data-bs-theme="dark"] body::before {
+    opacity: 0.18;
+}
+
+.catalogo-fondo {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.catalogo-fondo::before {
+    content: "";
+    position: absolute;
+    inset: -30px;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.28;
+}
+
+[data-bs-theme="dark"] .catalogo-fondo::before {
+    opacity: 0.22;
+}
+
+
+/* ==========================================================
+   6. BUSCADOR Y FILTROS
+   ========================================================== */
 .search-wrapper {
     position: relative;
 }
@@ -55,7 +209,103 @@
     color: var(--bs-primary);
 }
 
-/* ---------- TÍTULOS DEL CATÁLOGO ---------- */
+/* Botón "Filtros" */
+#btnFiltros {
+    position: relative;
+    left: auto !important;
+    width: auto;
+    height: 52px;
+    padding: 0 1.1rem;
+    gap: 0.5rem;
+    border-radius: 50rem;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    transition: all 0.25s ease;
+    z-index: 10;
+}
+
+#btnFiltros:hover {
+    background-color: var(--bs-secondary-bg);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.11);
+}
+
+#btnFiltros:not(.collapsed) {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(var(--bs-primary-rgb), 0.35);
+}
+
+/* Icono: hamburguesa cerrado / X abierto */
+#btnFiltros .bi-list,
+#btnFiltros .bi-x-lg {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+#btnFiltros .bi-x-lg { display: none; }
+#btnFiltros:not(.collapsed) .bi-list { display: none; }
+#btnFiltros:not(.collapsed) .bi-x-lg { display: inline; }
+
+#btnFiltros:not(.collapsed) .bi-x-lg,
+#btnFiltros:not(.collapsed) .bi-list {
+    color: #fff;
+}
+
+/* Panel desplegable */
+.filtros-panel {
+    width: 100%;
+    padding-top: 12px;
+}
+
+.filtros-panel > .bg-body {
+    background-color: var(--bs-tertiary-bg) !important;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+}
+
+/* Lista de categorías */
+#filtroCategorias {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+#filtroCategorias .form-check {
+    margin: 0;
+    padding-left: 1.9em;
+    min-height: auto;
+}
+
+#filtroCategorias .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.15em;
+    cursor: pointer;
+}
+
+#filtroCategorias .form-check-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding-left: 0.25rem;
+    padding-top: 0.15rem;
+    cursor: pointer;
+}
+
+#filtroCategorias .form-check-label:hover {
+    color: var(--bs-primary);
+}
+
+
+/* ==========================================================
+   7. TÍTULOS DEL CATÁLOGO
+   ========================================================== */
 .catalog-title {
     letter-spacing: -0.02em;
     font-size: 1.75rem;
@@ -65,25 +315,29 @@
     font-size: 0.95rem;
 }
 
-/* ---------- TARJETAS DE PRODUCTO ---------- */
+
+/* ==========================================================
+   8. TARJETAS DE PRODUCTO + SKELETONS
+   ========================================================== */
 .card-animada {
-    opacity: 0;
-    animation: aparecerAbajo 0.7s ease-out forwards;
-    /* Debe ir DESPUÉS del shorthand "animation", si no lo sobrescribe.
-       --i lo asigna catalogo.js según la posición de la card */
-    animation-delay: calc(var(--i, 1) * 0.05s);
+    /* "backwards": la card aparece animada y al terminar vuelve a sus estilos
+       normales, así el :hover (translateY) sí funciona.
+       --i lo asigna catalogo.js según la posición de la card. */
+    animation: aparecerAbajo 0.7s ease-out backwards;
+    animation-delay: calc(var(--i, 1) * 0.05s); /* debe ir DESPUÉS del shorthand */
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.4s ease,
                 border-color 0.35s ease,
-                background-color 0.25s ease;
+                background-color 0.25s ease,
+                color 0.4s ease;
     overflow: hidden;
     border-radius: 1rem;
     border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-card-bg, var(--bs-body-bg));
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* El color de fondo lo toma Bootstrap de --bs-card-bg */
 }
 
 .card-animada:hover {
@@ -93,11 +347,27 @@
     z-index: 3;
 }
 
+/* Card clickable (abre el modal): un poco más oscura que el fondo */
+.card-clickable {
+    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 94%, black);
+    cursor: pointer;
+}
+
+.card-clickable:hover {
+    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 88%, black);
+}
+
+.card-clickable:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+/* Imagen: completa (sin cortarse), pegada a los bordes de la card */
 .imagen-producto {
     width: 100%;
     height: auto;
-    aspect-ratio: 1 / 1;      /* más alta; prueba 4 / 5 si la quieres aún más */
-    object-fit: contain;      /* la imagen se ve completa, sin cortarse */
+    aspect-ratio: 1 / 1;      /* más alta: prueba 4 / 5 */
+    object-fit: contain;      /* "cover" si prefieres que llene sin franjas */
     background: var(--bs-secondary-bg);
     transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -113,9 +383,6 @@
 
 .card-animada .card-body {
     padding: 1.25rem 1.3rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
 }
 
 .card-animada .card-title {
@@ -129,9 +396,9 @@
 
 .card-animada .card-text {
     font-size: 0.9rem;
-    color: var(--bs-secondary-color);
-    margin-bottom: 0.85rem;
     line-height: 1.5;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -139,20 +406,14 @@
     flex-grow: 1;
 }
 
-.card-animada .badge,
-.card-animada .text-bg-light,
-.card-animada .badge.rounded-pill {
+.card-animada .badge {
     font-weight: 500;
     font-size: 0.78rem;
     letter-spacing: 0.01em;
     padding: 0.35em 0.75em;
-    margin-bottom: 0.6rem;
-    align-self: flex-start;
 }
 
-.card-animada .precio,
-.card-animada .text-primary.fw-semibold,
-.card-animada p.fw-semibold {
+.card-animada .precio {
     font-size: 1.05rem;
     font-weight: 600;
     margin-top: auto;
@@ -160,21 +421,7 @@
     color: var(--bs-primary);
 }
 
-.card-animada .btn {
-    margin-top: 0.85rem;
-    border-radius: 50rem;
-    font-weight: 500;
-    font-size: 0.9rem;
-    padding: 0.45rem 1.15rem;
-    transition: all 0.25s ease;
-}
-
-.card-animada .btn-outline-primary:hover,
-.card-animada .btn-primary:hover {
-    transform: translateY(-1px);
-}
-
-/* ---------- SKELETONS ---------- */
+/* Skeletons */
 .sk-img {
     aspect-ratio: 1 / 1;      /* mismo tamaño que la imagen real */
     width: 100%;
@@ -187,47 +434,10 @@
     opacity: .25;
 }
 
-#imagenesCarrusel img {
-    background: var(--bs-secondary-bg);
-    min-height: 220px;
-    object-fit: cover;
-}
 
-/* ---------- PANEL DE FILTROS ---------- */
-.filtros-panel {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1019;
-}
-
-#btnFiltros .bi-x-lg { display: none; }
-#btnFiltros:not(.collapsed) .bi-list { display: none; }
-#btnFiltros:not(.collapsed) .bi-x-lg { display: inline; }
-
-#btnFiltros:not(.collapsed) {
-    background-color: var(--bs-secondary-bg);
-}
-
-.filtros-panel .form-check-label {
-    cursor: pointer;
-}
-
-#filtroCategorias .form-check {
-    margin-bottom: 0;
-}
-
-#filtroCategorias .form-check-input {
-    cursor: pointer;
-}
-
-#filtroCategorias .form-check-label {
-    font-size: 0.925rem;
-    padding-left: 0.25rem;
-}
-
-/* ---------- MODAL PRODUCTO (NUEVO DISEÑO) ---------- */
+/* ==========================================================
+   9. MODAL DE PRODUCTO
+   ========================================================== */
 .modal-producto {
     border-radius: 1.25rem;
     overflow: hidden;
@@ -237,6 +447,15 @@
 
 .modal-producto .modal-body {
     padding: 0;
+}
+
+/* Textos */
+.modal-product-category {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
 }
 
 .modal-product-title {
@@ -253,6 +472,7 @@
     margin-bottom: 0;
 }
 
+/* Galería */
 .product-gallery {
     background-color: var(--bs-secondary-bg);
     user-select: none;
@@ -275,12 +495,12 @@
     display: block;
     width: 100%;
     height: 100%;
-    min-height: 0 !important;
+    min-height: 0 !important;   /* pisa el min-height inline del HTML */
     object-fit: contain;
     transition: opacity 0.25s ease;
 }
 
-/* Magnifier */
+/* Lupa (magnifier) */
 .magnifier-lens {
     position: absolute;
     width: 140px;
@@ -318,6 +538,10 @@
     border-radius: 10px;
 }
 
+.thumbnails-row:empty {
+    display: none;
+}
+
 .thumbnail-item {
     flex: 0 0 auto;
     width: 72px;
@@ -349,37 +573,22 @@
     box-shadow: 0 0 0 1px var(--bs-primary);
 }
 
-.thumbnails-row:empty {
-    display: none;
+/* Pie del modal: botón Cotizar */
+.modal-acciones {
+    gap: 0.5rem;
+    border-top: 1px solid var(--bs-border-color);
+    background: var(--bs-body-bg);
 }
 
-/* Opciones */
-.product-options .btn {
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-}
-
-.product-options .btn.active,
-.product-options .btn-dark {
-    background-color: #1a1a1a;
-    border-color: #1a1a1a;
-    color: #fff;
-}
-
-[data-bs-theme="dark"] .product-options .btn-dark {
-    background-color: #f8f9fa;
-    border-color: #f8f9fa;
-    color: #1a1a1a;
-}
-
-/* Botón Cotizar (más grande + azul nuevo) */
-#btnCotizar {
-    padding: 0.4rem 1rem;
-    font-size: 0.85rem;
+.modal-acciones .btn {
+    min-height: 48px;
+    padding: 0.5rem 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
-    min-height: 36px;
-    border-radius: 0.5rem;
+    border-radius: 8px;
+}
+
+#btnCotizar {
     letter-spacing: 0.01em;
     background-color: #2563EB;
     border-color: #2563EB;
@@ -399,6 +608,11 @@
     border-color: #1E40AF;
 }
 
+.modal-acciones #btnCotizar {
+    flex: 1 1 auto;
+}
+
+/* Botón favorito (opcional: solo si existe #btnFavorito en el HTML) */
 #btnFavorito {
     transition: all 0.2s ease;
 }
@@ -418,15 +632,7 @@
     background-color: rgba(225, 29, 72, 0.15);
 }
 
-#linkVerDetalles {
-    transition: color 0.2s ease;
-}
-
-#linkVerDetalles:hover {
-    color: var(--bs-primary) !important;
-}
-
-/* Zoom fullscreen */
+/* Zoom a pantalla completa */
 .zoom-overlay {
     position: fixed;
     inset: 0;
@@ -483,29 +689,29 @@
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* ---------- TRANSICIONES GLOBALES ---------- */
-body,
-nav,
-header,
-main,
-footer,
-.card,
-.container,
-.form-control,
-.btn,
-.dropdown-menu {
-    transition:
-        background-color 0.4s ease,
-        color 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
+
+/* ==========================================================
+   10. BOTÓN WHATSAPP
+   ========================================================== */
+.btn-whatsapp {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #075E54;
+    --bs-btn-border-color: #075E54;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #054C44;
+    --bs-btn-hover-border-color: #054C44;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #043C36;
+    --bs-btn-active-border-color: #043C36;
 }
 
-/* ---------- ACCESIBILIDAD ---------- */
+
+/* ==========================================================
+   11. ACCESIBILIDAD Y PANTALLAS TÁCTILES
+   ========================================================== */
 @media (prefers-reduced-motion: reduce) {
     .card-animada {
         animation: none;
-        opacity: 1;
         transition: none;
     }
     .card-animada:hover {
@@ -522,148 +728,30 @@ footer,
     }
 }
 
-/* ---------- BOTÓN FILTROS ---------- */
-#btnFiltros {
-    position: relative;
-    left: auto !important;
-    width: auto;
-    height: 52px;
-    padding: 0 1.1rem;
-    gap: 0.5rem;
-    border-radius: 50rem;
-    white-space: nowrap;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-body-bg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-    transition: all 0.25s ease;
-    z-index: 10;
+/* Sin mouse no hay "hover": evita que la card se quede levantada/oscura tras tocarla */
+@media (hover: none) {
+    .card-animada:hover {
+        transform: none;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+    }
+    .card-animada:hover .imagen-producto {
+        transform: none;
+    }
+    .card-clickable:hover {
+        --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 94%, black);
+    }
 }
 
-#btnFiltros:hover {
-    background-color: var(--bs-secondary-bg);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.11);
+
+/* ==========================================================
+   12. RESPONSIVE (de pantalla grande a pequeña)
+   ========================================================== */
+@media (min-width: 992px) {
+    .modal-acciones #btnCotizar {
+        flex: 0 0 auto;
+    }
 }
 
-#btnFiltros:not(.collapsed) {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(var(--bs-primary-rgb), 0.35);
-}
-
-#btnFiltros:not(.collapsed) .bi-x-lg,
-#btnFiltros:not(.collapsed) .bi-list {
-    color: #fff;
-}
-
-#btnFiltros .bi-list,
-#btnFiltros .bi-x-lg {
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
-.filtros-panel {
-    position: static;
-    width: 100%;
-    padding-top: 12px;
-}
-
-.filtros-panel > .bg-body {
-    background-color: var(--bs-tertiary-bg) !important;
-    border: 1px solid var(--bs-border-color);
-    border-radius: 14px;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
-}
-
-#filtroCategorias {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-#filtroCategorias .form-check {
-    margin: 0;
-    padding-left: 1.9em;
-    min-height: auto;
-}
-
-#filtroCategorias .form-check-input {
-    width: 1.2em;
-    height: 1.2em;
-    margin-top: 0.15em;
-    cursor: pointer;
-}
-
-#filtroCategorias .form-check-label {
-    font-size: 0.95rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding-top: 0.15rem;
-}
-
-#filtroCategorias .form-check-label:hover {
-    color: var(--bs-primary);
-}
-
-/* ---------- NAVBAR ---------- */
-.navbar.navbar-glass.navbar-grande {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.navbar-grande .navbar-brand {
-    font-size: 1.4rem;
-}
-
-.navbar-grande .nav-link {
-    font-size: 1.05rem;
-    font-weight: 500;
-    padding: 0.6rem 1.1rem;
-}
-
-/* ---------- FONDOS ---------- */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.12;
-    -webkit-mask-image:
-        linear-gradient(to right, #000 0%, transparent 18%),
-        linear-gradient(to left,  #000 0%, transparent 18%);
-    mask-image:
-        linear-gradient(to right, #000 0%, transparent 18%),
-        linear-gradient(to left,  #000 0%, transparent 18%);
-}
-
-[data-bs-theme="dark"] body::before {
-    opacity: 0.18;
-}
-
-.catalogo-fondo {
-    position: relative;
-    overflow: hidden;
-    isolation: isolate;
-}
-
-.catalogo-fondo::before {
-    content: "";
-    position: absolute;
-    inset: -30px;
-    z-index: -1;
-    filter: blur(10px);
-    opacity: 0.28;
-}
-
-[data-bs-theme="dark"] .catalogo-fondo::before {
-    opacity: 0.22;
-}
-
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 991.98px) {
     .modal-product-title {
         font-size: 1.45rem;
@@ -680,103 +768,64 @@ body::before {
     }
 }
 
+@media (max-width: 767.98px) {
+    .modal-fullscreen-md-down {
+        margin: 0 !important;
+    }
+    .modal-producto {
+        border-radius: 0;
+    }
+}
+
 @media (max-width: 575.98px) {
+    /* Filtros: solo el icono */
     #btnFiltros span.fw-semibold { display: none; }
     #btnFiltros { padding: 0 0.9rem; }
 
-    .modal-dialog {
-        margin: 0.5rem;
+    /* Catálogo: 2 columnas compactas */
+    #gridProductos {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 0.75rem;
     }
-    .modal-producto {
-        border-radius: 1rem;
+
+    .catalog-title { font-size: 1.4rem; }
+    .catalog-subtitle { font-size: 0.85rem; }
+
+    .card-animada { border-radius: 0.85rem; }
+
+    .card-animada > img.imagen-producto,
+    .card-animada .card-img-top,
+    .sk-img {
+        border-radius: 0.85rem 0.85rem 0 0;
     }
+
+    .card-animada .card-body {
+        padding: 0.7rem 0.75rem 0.85rem;
+    }
+
+    .card-animada .card-title {
+        font-size: 0.95rem;
+        line-height: 1.25;
+        margin-bottom: 0.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    .card-animada .card-text {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .card-animada .badge {
+        font-size: 0.68rem;
+        padding: 0.3em 0.6em;
+        max-width: 100%;
+        white-space: normal;
+        text-align: left;
+    }
+
+    /* Modal */
     .thumbnail-item {
         width: 60px;
         height: 60px;
     }
-}
-
-/* =====================================================
-   NUEVO AZUL GLOBAL (#2563EB)
-   Mantener SIEMPRE al final del archivo
-   ===================================================== */
-:root,
-[data-bs-theme="light"] {
-    --bs-primary: #2563EB;
-    --bs-primary-rgb: 37, 99, 235;
-    --bs-link-color: #2563EB;
-    --bs-link-color-rgb: 37, 99, 235;
-    --bs-link-hover-color: #1D4ED8;
-    --bs-link-hover-color-rgb: 29, 78, 216;
-}
-
-[data-bs-theme="dark"] {
-    --bs-primary: #3B82F6;
-    --bs-primary-rgb: 59, 130, 246;
-    --bs-link-color: #60A5FA;
-    --bs-link-color-rgb: 96, 165, 250;
-    --bs-link-hover-color: #93C5FD;
-    --bs-link-hover-color-rgb: 147, 197, 253;
-}
-
-.btn-primary {
-    --bs-btn-bg: #2563EB;
-    --bs-btn-border-color: #2563EB;
-    --bs-btn-hover-bg: #1D4ED8;
-    --bs-btn-hover-border-color: #1D4ED8;
-    --bs-btn-active-bg: #1E40AF;
-    --bs-btn-active-border-color: #1E40AF;
-    --bs-btn-disabled-bg: #2563EB;
-    --bs-btn-disabled-border-color: #2563EB;
-    --bs-btn-focus-shadow-rgb: 37, 99, 235;
-}
-
-.btn-outline-primary {
-    --bs-btn-color: #2563EB;
-    --bs-btn-border-color: #2563EB;
-    --bs-btn-hover-bg: #2563EB;
-    --bs-btn-hover-border-color: #2563EB;
-    --bs-btn-active-bg: #1D4ED8;
-    --bs-btn-active-border-color: #1D4ED8;
-    --bs-btn-focus-shadow-rgb: 37, 99, 235;
-}
-
-/* ===== Botón WhatsApp ===== */
-.btn-whatsapp {
-    --bs-btn-color: #fff; --bs-btn-bg: #075E54; --bs-btn-border-color: #075E54;
-    --bs-btn-hover-color: #fff; --bs-btn-hover-bg: #054C44; --bs-btn-hover-border-color: #054C44;
-    --bs-btn-active-color: #fff; --bs-btn-active-bg: #043C36; --bs-btn-active-border-color: #043C36;
-}
-
-/* ===== Modal: categoría y pie de acciones ===== */
-.modal-product-category {
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--bs-secondary-color);
-}
-.modal-acciones {
-    gap: 0.5rem;
-    border-top: 1px solid var(--bs-border-color);
-    background: var(--bs-body-bg);
-}
-.modal-acciones .btn { min-height: 48px; padding: 0.5rem 1.4rem; font-size: 1rem; font-weight: 600; border-radius: 8px; }
-.modal-acciones #btnCotizar { flex: 1 1 auto; min-height: 48px; padding: 0.5rem 1.4rem; font-size: 1rem; border-radius: 8px; }
-@media (min-width: 992px) { .modal-acciones #btnCotizar { flex: 0 0 auto; } }
-@media (max-width: 767.98px) {
-    .modal-fullscreen-md-down { margin: 0 !important; }
-    .modal-producto { border-radius: 0; }
-}
-
-/* ===== Card interactiva, abre modal cuando doy click ===== */
-.card-clickable {
-    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 94%, black);
-    cursor: pointer;
-}
-
-.card-clickable:hover {
-    --bs-card-bg: color-mix(in srgb, var(--bs-body-bg) 88%, black);
-}
-
-.card-clickable:focus-visible {
-    outline: 2px solid var(--bs-primary);
-    outline-offset: 2px;
 }
