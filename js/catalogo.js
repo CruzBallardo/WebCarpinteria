@@ -175,14 +175,14 @@
         });
 
         wrapper.addEventListener('mouseleave', () => {
-            if (lens) lens.classList.remove('active');
+            lens.classList.remove('active');
         });
     }
 
     /* ---------- Modal ---------- */
     $('modalProducto').addEventListener('show.bs.modal', e => {
         const id = e.relatedTarget && e.relatedTarget.dataset.id;
-        const p = productos.find(x => x.id === id);
+        const p = productos.find(x => String(x.id) === String(id));
         if (!p) return;
 
         // Datos del producto
@@ -194,6 +194,18 @@
         $('precioModal').textContent = p.precio != null
             ? `$${p.precio.toLocaleString('es-MX')}`
             : 'Precio a cotizar';
+
+        // Botón "Cotizar producto": siempre se reescribe con el producto actual
+        const btnCotizar = $('btnCotizar');
+        if (btnCotizar) {
+            btnCotizar.href = `cotizacion.html?producto=${encodeURIComponent(p.nombre)}`;
+        }
+
+        // Botón de WhatsApp del producto (solo si existe en el HTML)
+        const btnWaProducto = $('btnWhatsAppProducto');
+        if (btnWaProducto && window.catalogoWa) {
+            btnWaProducto.href = window.catalogoWa(`Hola, me interesa el producto "${p.nombre}" del catálogo.`);
+        }
 
         // Imagen principal
         const imgPrincipal = $('imagenPrincipalModal');
@@ -315,26 +327,19 @@
         initMagnifier();
     })();
 })();
+
+/* wasap mensaje automatico boton cotizar y eso xd */
 (() => {
-    // COMPLETAR: lada del país + número, sin "+" ni espacios. Ejemplo México: 522941234567
+    // Lada del país + número, sin "+" ni espacios. Ejemplo México: 522941234567
     const WHATSAPP = '522881365234';
     const wa = msg => `https://wa.me/${WHATSAPP}` + (msg ? `?text=${encodeURIComponent(msg)}` : '');
+
+    // Se expone para que el listener del modal (arriba) pueda usarlo
+    window.catalogoWa = wa;
 
     document.querySelectorAll('[data-wa]').forEach(a => {
         a.href = wa('Hola, quiero información sobre sus muebles.');
         a.target = '_blank';
         a.rel = 'noopener';
-    });
-
-    // Al abrir un producto: pasa su nombre a Cotizar y a WhatsApp
-    const modal = document.getElementById('modalProducto');
-    modal.addEventListener('shown.bs.modal', () => {
-        const nombre = document.getElementById('tituloModalProducto').textContent.trim();
-        const cot = document.getElementById('btnCotizar');
-        const url = new URL(cot.getAttribute('href'), location.href);
-        if (!url.searchParams.has('producto')) url.searchParams.set('producto', nombre);
-        cot.href = url.href;
-        document.getElementById('btnWhatsAppProducto').href =
-            wa(`Hola, me interesa el producto "${nombre}" del catálogo.`);
     });
 })();

@@ -28,6 +28,31 @@
     alerta.hidden = true;
     btnEnviar.insertAdjacentElement('afterend', alerta);
 
+    // ====== Click a cotizar para abrir cotizar y se muestre en la descripcion el producto ======
+    const productoParam = (new URLSearchParams(location.search).get('producto') || '').trim();
+    const ETIQUETA_MEDIDAS = 'Medidas / detalles: ';
+
+    function precargarProducto() {
+        if (!productoParam) return;
+        descripcion.value = `Producto: ${productoParam}\n${ETIQUETA_MEDIDAS}`.slice(0, 800);
+        contador.textContent = descripcion.value.length;
+    }
+
+    // Quita la línea del producto y la etiqueta para saber cuánto escribió el cliente
+    function textoEscrito() {
+        let v = descripcion.value;
+        if (productoParam) {
+            v = v.replace(/^Producto:.*$/m, '').replace('Medidas / detalles:', '');
+        }
+        return v.trim();
+    }
+
+    precargarProducto();
+    if (productoParam) {
+        descripcion.focus({ preventScroll: true });
+        descripcion.setSelectionRange(descripcion.value.length, descripcion.value.length);
+    }
+
     // ====== CONTADOR ======
     descripcion.addEventListener('input', () => {
         contador.textContent = descripcion.value.length;
@@ -52,7 +77,7 @@
         return marcar(correo, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
     };
     const validarDescripcion = () => {
-        const ok = descripcion.value.trim().length >= 10;
+        const ok = textoEscrito().length >= 10;
         marcar(descripcion, ok);
         errorDesc.hidden = ok;
         return ok;
