@@ -1,23 +1,4 @@
 /* ==========================================================
-   stylecatalogo.css
-
-   ÍNDICE
-   1. Variables y botones (azul global)
-   2. Transiciones globales
-   3. Animaciones
-   4. Navbar
-   5. Fondos
-   6. Buscador y filtros
-   7. Títulos del catálogo
-   8. Tarjetas de producto + skeletons
-   9. Modal de producto
-   10. Botón WhatsApp
-   11. Accesibilidad y pantallas táctiles
-   12. Responsive
-   ========================================================== */
-
-
-/* ==========================================================
    1. VARIABLES Y BOTONES (AZUL GLOBAL #2563EB)
    Ojo: el bloque dark debe ir DESPUÉS del claro (misma especificidad)
    ========================================================== */

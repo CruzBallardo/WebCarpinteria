@@ -1,8 +1,55 @@
 /* ==========================================================
    productos-admin.js – Panel: alta, edición y baja de productos
-   (antes era el admin.js del compañero)
    Usa CatalogoDB de productos-db.js (Supabase).
    ========================================================== */
+
+/* ========== Skeletons (tablas y estadísticas) ========== */
+(function () {
+    const sk = (cls = '', style = '') =>
+        `<span class="sk ${cls}" ${style ? `style="${style}"` : ''}></span>`;
+
+    function tableRows(tbodyId, cols, rows = 4) {
+        const tb = document.getElementById(tbodyId);
+        if (!tb) return;
+        const widths = ['70%', '85%', '55%', '60%', '45%', '50%'];
+        tb.innerHTML = Array.from({ length: rows }, () =>
+            `<tr>${Array.from({ length: cols }, (_, i) =>
+                `<td>${i === cols - 1 ? sk('sk-btn') : sk('sk-line', `width:${widths[i % widths.length]}`)}</td>`
+            ).join('')}</tr>`
+        ).join('');
+    }
+
+    function statNumbers() {
+        ['statProductos', 'statResenas', 'statCotizaciones', 'statFacturas'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.classList.add('sk');
+            const done = () => { el.classList.remove('sk'); obs.disconnect(); clearTimeout(t); };
+            const obs = new MutationObserver(done);
+            obs.observe(el, { childList: true, characterData: true, subtree: true });
+            const t = setTimeout(done, 8000);
+        });
+    }
+
+    window.Skeleton = { tableRows };
+
+    // Skeleton al refrescar o filtrar cotizaciones y facturas
+    const on = (id, ev, fn) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener(ev, fn);
+    };
+    on('btnRefrescarCot', 'click',  () => tableRows('tbodyCotizaciones', 5));
+    on('filtroCotizaciones', 'change', () => tableRows('tbodyCotizaciones', 5));
+    on('btnRefrescarFac', 'click',  () => tableRows('tbodyFacturas', 6));
+    on('filtroFacturas', 'change',  () => tableRows('tbodyFacturas', 6));
+
+    statNumbers();
+    tableRows('tbodyResenas', 5);
+    tableRows('tbodyCotizaciones', 5);
+    tableRows('tbodyFacturas', 6);
+})();
+
+/* ========== Productos ========== */
 (() => {
     const $ = id => document.getElementById(id);
 
@@ -181,6 +228,23 @@
     });
 
     /* ---------- Listado "Mis productos" ---------- */
+    function pintarSkeleton(n = 6) {
+        $('listaProductos').innerHTML = `<div class="row g-3">${Array.from({ length: n }, () => `
+            <div class="col-12 col-md-6 col-xl-4">
+                <div class="border rounded p-2 d-flex gap-3 align-items-center h-100">
+                    <span class="sk" style="width:80px;height:80px;flex-shrink:0"></span>
+                    <div class="flex-grow-1">
+                        <span class="sk sk-line mb-2" style="width:70%"></span>
+                        <span class="sk sk-line mb-2" style="width:40%"></span>
+                        <div class="d-flex gap-1 mt-2">
+                            <span class="sk sk-btn" style="width:5rem;height:2rem"></span>
+                            <span class="sk sk-btn" style="width:2.5rem;height:2rem"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>`).join('')}</div>`;
+    }
+
     function pintarListado() {
         const texto = $('buscarAdmin').value.trim().toLowerCase();
         const cat = $('filtroCategoriaAdmin').value;
@@ -257,18 +321,27 @@
     $('buscarAdmin').addEventListener('input', pintarListado);
     $('filtroCategoriaAdmin').addEventListener('change', pintarListado);
 
-    async function cargarProductos() {
-        productos = await CatalogoDB.obtenerTodos();
+    async function cargarProductos(conSkeleton = false) {
+        if (conSkeleton) pintarSkeleton();
+        try {
+            productos = await CatalogoDB.obtenerTodos();
+        } finally {
+            $('statProductos').classList.remove('sk');
+        }
         $('statProductos').textContent = productos.length;
         pintarListado();
     }
 
     /* ---------- Inicio ---------- */
     limpiarFormulario();
-    cargarProductos().catch(e => {
-        console.error(e);
-        mostrarAlerta('No se pudo cargar el catálogo: ' + (e.message || 'error desconocido'), 'danger');
-    });
+    form.classList.add('is-loading');
+    cargarProductos(true)
+        .catch(e => {
+            console.error(e);
+            pintarListado();
+            mostrarAlerta('No se pudo cargar el catálogo: ' + (e.message || 'error desconocido'), 'danger');
+        })
+        .finally(() => form.classList.remove('is-loading'));
 })();
 
 /* ========== Navegación por pestañas del panel admin ========== */

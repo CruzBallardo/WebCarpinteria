@@ -822,6 +822,72 @@ label[for="foto1"]::after {
     to   { transform: scaleX(0); }
 }
 
+/* ========== Skeletons ========== */
+.sk {
+    display: block;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--bs-body-color) 7%, transparent) 25%,
+        color-mix(in srgb, var(--bs-body-color) 14%, transparent) 50%,
+        color-mix(in srgb, var(--bs-body-color) 7%, transparent) 75%);
+    background-size: 200% 100%;
+    animation: skShimmer 1.4s ease-in-out infinite;
+    color: transparent !important;
+    user-select: none;
+    pointer-events: none;
+}
+
+.sk-line { height: 0.9rem; }
+.sk-btn  { height: 2.2rem; width: 6rem; border-radius: var(--r-md); }
+
+#inicio .fs-3.sk {
+    display: inline-block;
+    width: 4.5rem;
+    height: 3rem;
+    margin: 1.4rem 0 0.6rem;
+}
+
+@keyframes skShimmer {
+    from { background-position: 200% 0; }
+    to   { background-position: -200% 0; }
+}
+
+/* Skeleton del formulario de producto */
+#formProducto.is-loading .form-control,
+#formProducto.is-loading .form-select,
+#formProducto.is-loading .input-group-text,
+#formProducto.is-loading .photo-upload,
+#formProducto.is-loading .btn,
+#formProducto.is-loading .form-label,
+#formProducto.is-loading .h6,
+#formProducto.is-loading p.small,
+#formProducto.is-loading .form-text {
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--bs-body-color) 7%, transparent) 25%,
+        color-mix(in srgb, var(--bs-body-color) 14%, transparent) 50%,
+        color-mix(in srgb, var(--bs-body-color) 7%, transparent) 75%) 0 0 / 200% 100%;
+    animation: skShimmer 1.4s ease-in-out infinite;
+    color: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none;
+    user-select: none;
+}
+
+#formProducto.is-loading .form-label,
+#formProducto.is-loading .h6,
+#formProducto.is-loading .form-text,
+#formProducto.is-loading p.small {
+    width: fit-content;
+    border-radius: 0.4rem;
+}
+
+#formProducto.is-loading ::placeholder { color: transparent; }
+#formProducto.is-loading .photo-upload > * { visibility: hidden; }
+#formProducto.is-loading label[for="foto1"]::after,
+#formProducto.is-loading .btn::before { display: none; }
+#formProducto.is-loading label::after { display: none; }
+
 /* Respeta usuarios con animaciones reducidas */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
