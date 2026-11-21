@@ -132,22 +132,3 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => el.classList.add('visible'));
     }
 });
-/* ===== Menú móvil: se cierra al navegar o al tocar fuera ===== */
-(function () {
-    const menu = document.getElementById('navbarMain');
-    if (!menu || typeof bootstrap === 'undefined') return;
-
-    const cerrar = () => {
-        if (menu.classList.contains('show')) {
-            bootstrap.Collapse.getOrCreateInstance(menu, { toggle: false }).hide();
-        }
-    };
-
-    menu.addEventListener('click', e => {
-        if (e.target.closest('a.nav-link:not(.dropdown-toggle), a.dropdown-item, button.dropdown-item')) cerrar();
-    });
-
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.navbar')) cerrar();
-    });
-})();
