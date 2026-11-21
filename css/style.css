@@ -300,13 +300,16 @@ body,
 section[id], #inicio { scroll-margin-top: 56px; }
 
 /* Zonas táctiles de al menos 44px */
-#theme-toggle, #btn-login-modal {
+#theme-toggle,
+#btn-login-modal:not([hidden]):not(.d-none) {
     min-width: 44px;
     min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
+
+#btn-login-modal[hidden] { display: none !important; }
 
 /* Galería: en pantallas táctiles no existe hover, así que el nombre se muestra siempre */
 @media (hover: none) {
@@ -323,14 +326,8 @@ section[id], #inicio { scroll-margin-top: 56px; }
 @media (max-width: 991.98px) {
     .navbar-glass { background-color: rgba(var(--bs-body-bg-rgb), 0.94); }
 
-    /* El menú desplegado hace scroll si no cabe (celular en horizontal) */
-    .navbar-collapse {
-        max-height: calc(100vh - 64px);
-        max-height: calc(100dvh - 64px);
-        overflow-y: auto;
-        padding-bottom: 0.5rem;
-    }
-
+    /* El menú de Admin se muestra dentro del menú, sin flotar ni recortarse */
+ 
     .navbar .nav-link,
     .navbar .dropdown-item { padding-top: 0.7rem; padding-bottom: 0.7rem; }
 
