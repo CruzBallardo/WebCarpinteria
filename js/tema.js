@@ -4,7 +4,7 @@
         navidad:     { nombre: 'Navideña',     desc: 'Nieve y estrellas',       emoji: '🎄', colores: ['#c0392b', '#1e8449', '#f4d03f'], particulas: ['❄', '❅', '❆', '✦', '⭐'], cantidad: 35 },
         halloween:   { nombre: 'Halloween',    desc: 'Calabazas y murciélagos', emoji: '🎃', colores: ['#e67e22', '#6c3483', '#212529'], particulas: ['🎃', '🦇', '👻', '🕸️'], cantidad: 22 },
         sanvalentin: { nombre: 'San Valentín', desc: 'Corazones y rosas',       emoji: '💖', colores: ['#e84393', '#fd79a8', '#fff0f6'], particulas: ['💗', '💖', '🌹', '✨'], cantidad: 25 },
-        independencia: { nombre: 'Independencia', desc: 'Bandera y fuegos artificiales', emoji: 'MX', colores: ['#c0392b', '#27ae60', '#f4d03f'], particulas: ['🌮', '🌯', '🥑', '🌶️', '🌽', '🦅', '🎉', '🇲🇽'], cantidad: 30 }
+        independencia: { nombre: 'Independencia', desc: 'Bandera y fuegos artificiales', emoji: 'MX', colores: ['#c0392b', '#27ae60', '#f4d03f'], particulas: ['🌮', '🌯', '🥑', '🌶️', '🌽', '🦅', '🎉', ''], cantidad: 30 }
     };
 
     const TABLA = 'personalizacion';
