@@ -1,0 +1,82 @@
+/* ===== Partículas ===== */
+.tema-particulas {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    pointer-events: none;
+    overflow: hidden;
+}
+.tema-particulas span {
+    position: absolute;
+    top: -3rem;
+    animation: temaCaer linear infinite;
+    will-change: transform;
+    user-select: none;
+}
+@keyframes temaCaer {
+    from { transform: translate3d(0, 0, 0) rotate(0deg); }
+    to   { transform: translate3d(var(--dx), 110vh, 0) rotate(360deg); }
+}
+
+/* ===== Navideña ===== */
+[data-tema="navidad"] {
+    --bs-primary: #c0392b;
+    --bs-primary-rgb: 192, 57, 43;
+    --bs-link-color: #c0392b;
+    --bs-link-hover-color: #922b21;
+}
+[data-tema="navidad"] .btn-dark {
+    --bs-btn-bg: #c0392b; --bs-btn-border-color: #c0392b;
+    --bs-btn-hover-bg: #922b21; --bs-btn-hover-border-color: #922b21;
+    --bs-btn-active-bg: #922b21; --bs-btn-active-border-color: #922b21;
+}
+[data-tema="navidad"] #main-navbar {
+    border-bottom: 4px solid transparent !important;
+    border-image: repeating-linear-gradient(90deg,
+        #c0392b 0 24px, #f4d03f 24px 48px, #1e8449 48px 72px, #fff 72px 96px) 1;
+}
+
+/* ===== Halloween ===== */
+[data-tema="halloween"] {
+    --bs-primary: #e67e22;
+    --bs-primary-rgb: 230, 126, 34;
+    --bs-link-color: #e67e22;
+    --bs-link-hover-color: #ca6f1e;
+}
+[data-tema="halloween"] .btn-dark {
+    --bs-btn-bg: #e67e22; --bs-btn-border-color: #e67e22;
+    --bs-btn-hover-bg: #ca6f1e; --bs-btn-hover-border-color: #ca6f1e;
+}
+[data-tema="halloween"] #main-navbar { border-bottom: 4px solid #6c3483 !important; }
+
+/* ===== San Valentín ===== */
+[data-tema="sanvalentin"] {
+    --bs-primary: #e84393;
+    --bs-primary-rgb: 232, 67, 147;
+    --bs-link-color: #e84393;
+    --bs-link-hover-color: #c2185b;
+}
+[data-tema="sanvalentin"] .btn-dark {
+    --bs-btn-bg: #e84393; --bs-btn-border-color: #e84393;
+    --bs-btn-hover-bg: #c2185b; --bs-btn-hover-border-color: #c2185b;
+}
+[data-tema="sanvalentin"] #main-navbar { border-bottom: 4px solid #fd79a8 !important; }
+
+/* ===== Independencia ===== */
+/* ===== Independencia de México ===== */
+[data-tema="independencia"] {
+    --bs-primary: #006847;
+    --bs-primary-rgb: 0, 104, 71;
+    --bs-link-color: #006847;
+    --bs-link-hover-color: #004d34;
+}
+[data-tema="independencia"] .btn-dark {
+    --bs-btn-bg: #006847; --bs-btn-border-color: #006847;
+    --bs-btn-hover-bg: #ce1126; --bs-btn-hover-border-color: #ce1126;
+    --bs-btn-active-bg: #ce1126; --bs-btn-active-border-color: #ce1126;
+}
+[data-tema="independencia"] #main-navbar {
+    border-bottom: 4px solid transparent !important;
+    border-image: linear-gradient(90deg,
+        #006847 0 33.33%, #ffffff 33.33% 66.66%, #ce1126 66.66% 100%) 1;
+}

@@ -1194,3 +1194,101 @@ label[for="foto1"]::after {
     .sidebar .nav { position: static; }
     #formProducto > .d-flex.justify-content-end { position: static; }
 }
+/* ========== Personalización: desplegable de temas ========== */
+.sidebar .nav-link:nth-child(7) { animation-delay: 0.47s; }
+
+.tema-dropdown { max-width: 460px; }
+
+.tema-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.tema-toggle:hover,
+.tema-toggle.show {
+    border-color: var(--bs-body-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--bs-body-color) 10%, transparent);
+}
+.tema-toggle > span:nth-child(2) { flex: 1; }
+.tema-toggle .fa-chevron-down { font-size: 0.8rem; transition: transform 0.25s var(--ease); }
+.tema-toggle.show .fa-chevron-down { transform: rotate(180deg); }
+#temaToggleEmoji { font-size: 1.5rem; line-height: 1; }
+
+.tema-dropdown .dropdown-menu {
+    width: 100%;
+    margin-top: 0.4rem !important;
+    padding: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--lift);
+}
+
+.tema-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 0.6rem;
+    white-space: normal;
+    cursor: pointer;
+}
+.tema-item.selected { background: var(--ok-soft); }
+.tema-item-emoji { font-size: 1.7rem; line-height: 1; }
+.tema-item-texto { flex: 1; display: flex; flex-direction: column; line-height: 1.25; }
+.tema-item-texto small { color: var(--bs-secondary-color); }
+.tema-item-colores { display: flex; gap: 0.25rem; }
+
+.tema-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    display: inline-block;
+}
+
+/* Vista previa */
+.tema-preview {
+    margin-top: 1.5rem;
+    max-width: 460px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--bs-body-bg);
+    overflow: hidden;
+}
+.tema-preview-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 1.1rem;
+    border-bottom: 4px solid var(--bs-border-color);
+    font-weight: 600;
+}
+.tema-preview-cuerpo { padding: 1.1rem; display: grid; gap: 0.8rem; }
+.tema-preview-fila { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.tema-preview-etiqueta { font-size: 0.8rem; color: var(--bs-secondary-color); min-width: 5.5rem; }
+#temaPreviewParticulas { font-size: 1.3rem; letter-spacing: 0.1rem; }
+
+/* La barra de la vista previa toma el borde de cada temporada */
+[data-tema="navidad"] .tema-preview-nav {
+    border-bottom: 4px solid transparent;
+    border-image: repeating-linear-gradient(90deg,
+        #c0392b 0 24px, #f4d03f 24px 48px, #1e8449 48px 72px, #fff 72px 96px) 1;
+}
+[data-tema="halloween"] .tema-preview-nav { border-bottom-color: #6c3483; }
+[data-tema="sanvalentin"] .tema-preview-nav { border-bottom-color: #fd79a8; }
+[data-tema="independencia"] .tema-preview-nav {
+    border-bottom: 4px solid transparent;
+    border-image: linear-gradient(90deg,
+        #006847 0 33.33%, #ffffff 33.33% 66.66%, #ce1126 66.66% 100%) 1;
+}
