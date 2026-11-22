@@ -385,3 +385,26 @@ document.addEventListener('DOMContentLoaded', function () {
         window.showSection('inicio');
     }
 });
+document.getElementById('btnNuevoProducto').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Ocultar las secciones actuales
+    document.querySelectorAll('.main-content > section').forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // Mostrar el formulario de agregar producto
+    const agregar = document.getElementById('agregar');
+    agregar.classList.add('active');
+
+    // Actualizar navegación del sidebar (si aplica)
+    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+
+    // Desplazarse al formulario
+    agregar.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+});
