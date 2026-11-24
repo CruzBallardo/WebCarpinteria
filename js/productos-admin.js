@@ -419,3 +419,38 @@ document.querySelectorAll('.card-link').forEach(card => {
         }
     });
 });
+/* ===== Historial de pestañas ===== */
+let restaurando = false;
+
+function abrirPestana(hash) {
+    const link = document.querySelector(`.sidebar .nav-link[href="${hash}"]`);
+    if (link) link.click();
+}
+
+// Cada clic en el menú lateral queda registrado en el historial
+document.querySelectorAll('.sidebar .nav-link[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => {
+        if (restaurando) return;
+        const hash = link.getAttribute('href');
+        if (location.hash !== hash) history.pushState(null, '', hash);
+    });
+});
+
+// Botón atrás / adelante
+window.addEventListener('popstate', () => {
+    restaurando = true;
+    abrirPestana(location.hash || '#inicio');
+    restaurando = false;
+});
+
+// Al cargar o recargar la página, abre la pestaña de la URL
+if (location.hash) abrirPestana(location.hash);
+
+/* ===== Tarjetas del inicio ===== */
+document.querySelectorAll('.card-link').forEach(card => {
+    card.addEventListener('click', e => {
+        e.preventDefault();
+        abrirPestana(card.getAttribute('href'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
