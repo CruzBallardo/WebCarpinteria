@@ -2,6 +2,11 @@
    1. VARIABLES Y BOTONES (AZUL GLOBAL #2563EB)
    Ojo: el bloque dark debe ir DESPUÉS del claro (misma especificidad)
    ========================================================== */
+:root {
+    --tono-oscuro: color-mix(in srgb, var(--bs-body-bg) 94%, black);
+    --tono-oscuro-hover: color-mix(in srgb, var(--bs-body-bg) 88%, black);
+}
+
 :root,
 [data-bs-theme="light"] {
     --bs-primary: #2563EB;
@@ -161,16 +166,22 @@ body::before {
 .search-input {
     border-radius: 50rem;
     border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-body-bg);
+    background-color: var(--tono-oscuro);
     padding-left: 1.25rem;
     padding-right: 3.25rem;
     height: 52px;
     font-size: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.search-input:hover {
+    background-color: var(--tono-oscuro-hover);
 }
 
 .search-input:focus {
+    background-color: var(--tono-oscuro);
+    color: var(--bs-body-color);
     border-color: var(--bs-primary);
     box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
     outline: none;
@@ -204,18 +215,22 @@ body::before {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--bs-border-color);
-    background-color: var(--bs-body-bg);
+    background-color: var(--tono-oscuro);
+    color: var(--bs-body-color);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     transition: all 0.25s ease;
     z-index: 10;
 }
 
 #btnFiltros:hover {
-    background-color: var(--bs-secondary-bg);
+    background-color: var(--tono-oscuro-hover);
+    border-color: var(--bs-border-color);
+    color: var(--bs-body-color);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.11);
 }
 
-#btnFiltros:not(.collapsed) {
+#btnFiltros:not(.collapsed),
+#btnFiltros:not(.collapsed):hover {
     background-color: var(--bs-primary);
     border-color: var(--bs-primary);
     color: #fff;
@@ -282,7 +297,6 @@ body::before {
 #filtroCategorias .form-check-label:hover {
     color: var(--bs-primary);
 }
-
 
 /* ==========================================================
    7. TÍTULOS DEL CATÁLOGO

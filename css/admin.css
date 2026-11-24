@@ -1292,3 +1292,37 @@ label[for="foto1"]::after {
     border-image: linear-gradient(90deg,
         #006847 0 33.33%, #ffffff 33.33% 66.66%, #ce1126 66.66% 100%) 1;
 }
+.admin-layout {
+    --tono-oscuro: color-mix(in srgb, var(--bs-tertiary-bg) 94%, black);
+    --tono-oscuro-hover: color-mix(in srgb, var(--bs-tertiary-bg) 88%, black);
+}
+
+/* Buscador y filtro de categoría */
+#productos #buscarAdmin,
+#productos #filtroCategoriaAdmin {
+    background-color: var(--tono-oscuro);
+    color: var(--bs-body-color);
+    border: 1px solid var(--bs-border-color);
+}
+
+#productos #buscarAdmin:hover,
+#productos #filtroCategoriaAdmin:hover {
+    background-color: var(--tono-oscuro-hover);
+    border-color: var(--bs-border-color);
+}
+
+#productos #buscarAdmin:focus,
+#productos #filtroCategoriaAdmin:focus {
+    background-color: var(--tono-oscuro);
+    color: var(--bs-body-color);
+    border-color: var(--bs-body-color);
+}
+
+/* Tarjetas de la lista (no afecta el mensaje "Aún no hay productos") */
+#listaProductos .border.rounded:not(.p-5) {
+    background: var(--tono-oscuro);
+}
+
+#listaProductos .border.rounded:not(.p-5):hover {
+    background: var(--tono-oscuro-hover);
+}
