@@ -408,3 +408,14 @@ document.getElementById('btnNuevoProducto').addEventListener('click', function (
         block: 'start'
     });
 });
+document.querySelectorAll('.card-link').forEach(card => {
+    card.addEventListener('click', e => {
+        e.preventDefault();
+        const destino = card.getAttribute('href');           // ej. "#productos"
+        const enlace = document.querySelector(`.sidebar .nav-link[href="${destino}"]`);
+        if (enlace) {
+            enlace.click();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+});

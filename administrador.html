@@ -119,51 +119,58 @@
     </aside>
 
     <!-- Contenido principal -->
-    <main class="main-content">
+   <main class="main-content">
 
-        <!-- Bienvenida -->
-        <section id="inicio" class="mb-5">
-            <h1 class="h3 fw-bold">Bienvenido, Administrador</h1>
-            <p class="text-secondary mb-3">
-                Gestiona tus productos, revisa las opiniones de tus clientes y
-                mantén el control de las solicitudes de cotización.
-            </p>
-           
+    <!-- Bienvenida -->
+    <section id="inicio" class="mb-5">
+        <h1 class="h3 fw-bold">Bienvenido, Administrador</h1>
+        <p class="text-secondary mb-3">
+            Gestiona tus productos, revisa las opiniones de tus clientes y
+            mantén el control de las solicitudes de cotización.
+        </p>
 
-            <div class="row g-3 mt-2">
-                <div class="col-md-6 col-lg-3">
-                    <div class="border rounded p-3 h-100">
-                        <div class="fs-3 fw-semibold" id="statProductos">0</div>
-                        <div class="fw-medium">Productos registrados</div>
-                        <div class="small text-secondary">Productos en tu catálogo</div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="border rounded p-3 h-100">
-                        <div class="fs-3 fw-semibold" id="statResenas">0</div>
-                        <div class="fw-medium">Reseñas registradas</div>
-                        <div class="small text-secondary">Opiniones de los clientes</div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="border rounded p-3 h-100">
-                        <div class="fs-3 fw-semibold" id="statCotizaciones">0</div>
-                        <div class="fw-medium">Cotizaciones pendientes</div>
-                        <div class="small text-secondary">Solicitudes por revisar</div>
-                    </div>
-                </div>
-            </div>
+        <div class="row g-3 mt-2">
+
+            <!-- Productos -->
             <div class="col-md-6 col-lg-3">
-                <div class="border rounded p-3 h-100">
+                <a href="#productos" class="card-link border rounded p-3 h-100 d-block text-decoration-none text-reset">
+                    <div class="fs-3 fw-semibold" id="statProductos">0</div>
+                    <div class="fw-medium">Productos registrados</div>
+                    <div class="small text-secondary">Productos en tu catálogo</div>
+                </a>
+            </div>
+
+            <!-- Reseñas -->
+            <div class="col-md-6 col-lg-3">
+                <a href="#resenas" class="card-link border rounded p-3 h-100 d-block text-decoration-none text-reset">
+                    <div class="fs-3 fw-semibold" id="statResenas">0</div>
+                    <div class="fw-medium">Reseñas registradas</div>
+                    <div class="small text-secondary">Opiniones de los clientes</div>
+                </a>
+            </div>
+
+            <!-- Cotizaciones -->
+            <div class="col-md-6 col-lg-3">
+                <a href="#cotizaciones" class="card-link border rounded p-3 h-100 d-block text-decoration-none text-reset">
+                    <div class="fs-3 fw-semibold" id="statCotizaciones">0</div>
+                    <div class="fw-medium">Cotizaciones pendientes</div>
+                    <div class="small text-secondary">Solicitudes por revisar</div>
+                </a>
+            </div>
+
+            <!-- Facturas -->
+            <div class="col-md-6 col-lg-3">
+                <a href="#facturacion" class="card-link border rounded p-3 h-100 d-block text-decoration-none text-reset">
                     <div class="fs-3 fw-semibold" id="statFacturas">0</div>
                     <div class="fw-medium">Facturas por emitir</div>
                     <div class="small text-secondary" id="statFacturasDetalle">Solicitudes por atender</div>
-                </div>
+                </a>
             </div>
-        </section>
 
-        <hr>
+        </div> <!-- cierre del row -->
+    </section>
 
+    <hr>
         <!-- Agregar producto -->
         <section id="agregar" class="mb-5">
             <h2 class="h4 fw-bold" id="tituloFormulario">Agregar producto</h2>
