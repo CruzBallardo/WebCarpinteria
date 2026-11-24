@@ -364,3 +364,28 @@ section[id], #inicio { scroll-margin-top: 56px; }
     footer { text-align: center; }
     footer .d-flex { justify-content: center; }
 }
+html, body { overflow-x: hidden; }
+
+/* Zonas táctiles cómodas en el footer */
+footer ul li a { display: inline-block; padding: .35rem 0; }
+footer .fs-4 a { padding: .4rem; }
+
+@media (max-width: 991.98px) {
+    /* Menú colapsado: elementos repartidos a lo ancho */
+    #navbarMain .d-flex { justify-content: space-between; }
+}
+
+@media (max-width: 767.98px) {
+    /* Indicadores sin tapar los botones del hero */
+    .carousel-indicators { margin-bottom: .75rem; }
+
+    /* Botones del hero y de la galería más fáciles de tocar */
+    .hero-content .btn,
+    #galeria .btn { width: 100%; max-width: 320px; }
+
+    /* Texto de "Nosotros" más cómodo de leer */
+    #conocenos .lead { font-size: 1.05rem; }
+
+    /* Botones de reseñas apilados */
+    #resenas .btn { display: block; width: 100%; margin: 0 0 .75rem !important; }
+}
