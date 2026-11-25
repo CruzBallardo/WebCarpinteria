@@ -441,20 +441,21 @@
         </div>
 
 <!-- SECCION DE NUESTROS TRABAJOS -->
+ <section id="trabajos67" class="mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+        <div>
+            <h2 class="h4 fw-bold">Nuestros Trabajos</h2>
+            <p class="text-secondary mb-0">Administra la galería de proyectos que se muestra en la página principal.</p>
+        </div>
+        <button type="button" class="btn btn-dark btn-sm" id="btnNuevoTrabajo">
+            <i class="fa-solid fa-plus me-1"></i> Nuevo trabajo
+        </button>
+    </div>
 
-        <section id="trabajos67" class="mb-5">
-            <h2 class="h4 fw-bold" id="tituloFormulario">Nuestros Trabajos</h2>
-            <p class="text-secondary">Muestra una galería de tus proyectos y trabajos realizados, destacando la calidad y variedad de tus muebles y servicios.</p>
-
-            <div class="row g-3 mt-2" id="galeriaTrabajos">
-                <div class="col-12 text-center text-secondary py-5">Cargando…</div>
-            </div>
-        </section>
-
-
-
-
-
+    <div class="row g-3 mt-2" id="galeriaTrabajos">
+        <div class="col-12 text-center text-secondary py-5">Cargando…</div>
+    </div>
+</section>
 
 
 <!-- SECCION DE PERSONALIZACION -->
@@ -480,6 +481,37 @@
 </section>
 
 
+<div class="modal fade" id="modalTrabajo" tabindex="-1" aria-labelledby="modalTrabajoTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title h5" id="modalTrabajoTitulo">Nuevo trabajo</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formTrabajo" novalidate>
+                    <div class="mb-3">
+                        <label for="trabajoTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="trabajoTitulo" maxlength="80" placeholder="Ej. Mueble para baño">
+                        <div class="form-text">Es el texto que aparece al pasar el cursor sobre la foto.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="trabajoFoto" class="form-label">Fotografía</label>
+                        <input type="file" class="form-control" id="trabajoFoto" accept="image/jpeg,image/png,image/webp">
+                        <div class="form-text" id="trabajoFotoAyuda">Obligatoria · JPG, PNG o WEBP.</div>
+                        <img id="trabajoPreview" class="d-none rounded-3 border mt-3 w-100" style="max-height:260px;object-fit:cover" alt="Vista previa">
+                    </div>
+                    <div id="trabajoAlerta" class="alert alert-danger small py-2 mb-0" role="alert" hidden></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-sm btn-success" id="btnGuardarTrabajo">Publicar trabajo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/script.js"></script>
@@ -492,6 +524,7 @@
     <script src="js/cotizaciones-admin.js"></script>
     <script src="js/resenas-admin.js"></script>
     <script src="js/facturacion-admin.js"></script>
+    <script src="js/trabajos-admin.js"></script>
 
 </body>
 </html>

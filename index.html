@@ -210,33 +210,14 @@ En Maderería y Carpintería Hermanos Barrientos, respaldamos cada proyecto con 
         <div class="container mt-5">
             <h2 class="fw-bold mb-4 reveal">Nuestros trabajos</h2>
 
-            <div class="row g-3">
-                <div class="col-12 col-sm-6 col-lg-4 reveal">
-                    <div class="galeria-item position-relative overflow-hidden rounded-4 shadow">
-                        <img src="img/mueble-1.jpg" alt="Cocina integral" loading="lazy" class="w-100 d-block">
-                        <div class="galeria-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white">
-                            <span class="fw-semibold fs-5">Tocador de sala</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="row g-3" id="listaTrabajos">
+                <div class="col-12 text-center text-body-secondary py-4">Cargando trabajos…</div>
+            </div>
 
-                <div class="col-12 col-sm-6 col-lg-4 reveal reveal-delay-1">
-                    <div class="galeria-item position-relative overflow-hidden rounded-4 shadow">
-                        <img src="img/mueble-2.jpg" alt="Closet empotrado" loading="lazy" class="w-100 d-block">
-                        <div class="galeria-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white">
-                            <span class="fw-semibold fs-5">Mueble para gatos</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-4 reveal reveal-delay-2">
-                    <div class="galeria-item position-relative overflow-hidden rounded-4 shadow">
-                        <img src="img/mueble-3.jpg" alt="Puerta de madera" loading="lazy" class="w-100 d-block">
-                        <div class="galeria-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white">
-                            <span class="fw-semibold fs-5">Mueble para Baños</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center mt-4 d-none" id="trabajosMasWrap">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4" id="btnVerMasTrabajos" aria-expanded="false">
+                    <i class="bi bi-chevron-down me-1"></i> Ver más trabajos
+                </button>
             </div>
 
             <div class="text-center mt-5 reveal">
@@ -539,6 +520,7 @@ En Maderería y Carpintería Hermanos Barrientos, respaldamos cada proyecto con 
     <script src="js/resenas.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/trabajos.js"></script>
     
 </body>
 </html>
