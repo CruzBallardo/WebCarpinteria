@@ -389,3 +389,70 @@ footer .fs-4 a { padding: .4rem; }
     /* Botones de reseñas apilados */
     #resenas .btn { display: block; width: 100%; margin: 0 0 .75rem !important; }
 }
+
+/* ===== Sección Nosotros minimalista ===== */
+#conocenos {
+    --about-card-bg: rgba(var(--bs-body-bg-rgb), 0.72);
+    --about-card-border: rgba(var(--bs-emphasis-color-rgb), 0.1);
+    --about-icon-bg: rgba(139, 90, 43, 0.12);
+}
+
+[data-bs-theme="dark"] #conocenos {
+    --about-card-bg: rgba(255, 255, 255, 0.03);
+    --about-card-border: rgba(255, 255, 255, 0.09);
+    --about-icon-bg: rgba(196, 138, 82, 0.16);
+}
+
+#conocenos .tracking-label {
+    letter-spacing: 0.08em;
+}
+
+#conocenos .text-wood {
+    color: var(--accent-wood);
+}
+
+[data-bs-theme="dark"] #conocenos .text-wood {
+    color: #c98d52;
+}
+
+#conocenos .about-photo-frame {
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--about-card-border);
+}
+
+#conocenos .about-card {
+    background: var(--about-card-bg);
+    border: 1px solid var(--about-card-border);
+    transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.4s ease;
+}
+
+#conocenos .about-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(139, 90, 43, 0.35);
+}
+
+#conocenos .about-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: var(--accent-wood);
+    background: var(--about-icon-bg);
+}
+
+[data-bs-theme="dark"] #conocenos .about-icon {
+    color: #c98d52;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #conocenos .about-card {
+        transition: none;
+    }
+
+    #conocenos .about-card:hover {
+        transform: none;
+    }
+}
