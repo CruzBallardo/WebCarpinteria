@@ -10,6 +10,11 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Sticky (navbar y sidebar): ningún ancestro puede ser contenedor de scroll.
+   `overflow-x: hidden` en html/body (típico en style.css o temas.css) lo rompe.
+   `clip` evita igual el scroll horizontal, pero sin crear contenedor de scroll. */
+html, body { overflow-x: clip !important; }
+
 :root {
     --nav-h: 57px;
     --r-lg: 1.15rem;
@@ -44,6 +49,7 @@ body {
 /* ========== Layout ========== */
 .admin-layout {
     display: flex;
+    align-items: flex-start; /* el sidebar sticky no se estira ni se despega */
     min-height: calc(100vh - var(--nav-h));
     background: var(--bs-tertiary-bg);
 }
@@ -55,13 +61,17 @@ body {
     position: sticky;
     top: var(--nav-h);
     height: calc(100vh - var(--nav-h));
+    max-height: calc(100vh - var(--nav-h));
     align-self: flex-start;
     display: flex;
     flex-direction: column;
     padding: 2rem 1.25rem 1.5rem;
     background: var(--bs-body-bg);
     border-right: 1px solid var(--line);
+    overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: 100;
 }
 
 .sidebar .nav::before {
@@ -331,13 +341,25 @@ body {
 }
 
 /* ========== Contenido ========== */
+/* El área principal ocupa solo el espacio que deja el sidebar.
+   Sin overflow propio: el scroll horizontal vive dentro de cada tabla
+   (ver "Tablas"), así no se rompe el sticky ni se recortan los menús.
+   Si quieres un tope de ancho, define --main-max (p. ej. 1400px). */
 .main-content {
-    flex: 1;
+    flex: 1 1 0;
     min-width: 0;
-    max-width: 1240px;
-    padding: 2.75rem 3.25rem 3.5rem;
+    max-width: var(--main-max, none);
+    padding: 2.75rem clamp(1rem, 3vw, 3.25rem) 3.5rem;
     font-size: 1.05rem;
+    overflow-wrap: break-word;
 }
+
+.main-content img,
+.main-content video,
+.main-content canvas { max-width: 100%; }
+
+/* Hijos elásticos de filas flex (tarjetas, cabeceras): deben poder encogerse */
+.main-content .d-flex > .flex-grow-1 { min-width: 0; }
 
 .main-content > section { display: none; opacity: 0; }
 
@@ -651,8 +673,17 @@ label[for="foto1"]::after {
     padding: 4rem 1.5rem !important;
 }
 
-/* ========== Tabla ========== */
-#cotizaciones .table-responsive { overflow: hidden; }
+/* ========== Tablas ==========
+   Política única para TODAS las tablas del panel: si no caben, el scroll
+   horizontal ocurre dentro de su propio recuadro y nunca ensancha la página.
+   --tabla-min define a partir de qué ancho la tabla deja de comprimirse. */
+.main-content .table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.main-content .table-responsive > .table { min-width: var(--tabla-min, 40rem); }
+#facturacion { --tabla-min: 46rem; } /* 6 columnas */
 
 #cotizaciones .table {
     font-size: 1rem;
@@ -898,7 +929,9 @@ label[for="foto1"]::after {
 
 /* ========== Responsive ========== */
 @media (max-width: 991.98px) {
-    .admin-layout { flex-direction: column; }
+    /* En columna, stretch es imprescindible: con flex-start el main y las
+       pestañas tomaban el ancho de su contenido y desbordaban la pantalla. */
+    .admin-layout { flex-direction: column; align-items: stretch; }
 
     .sidebar {
         width: 100%;
@@ -965,7 +998,11 @@ label[for="foto1"]::after {
 /* ===== Tableta y móvil (≤ 991.98px) ===== */
 @media (max-width: 991.98px) {
 
-    .admin-layout { overflow-x: clip; }
+    /* clip solo en X; visible en Y para no romper position:sticky del menú */
+    .admin-layout {
+        overflow-x: clip;
+        overflow-y: visible;
+    }
 
     /* El aside deja de ser una caja: su nav y su bloque de cuenta se ordenan por separado */
     .sidebar { display: contents; }
@@ -1327,7 +1364,7 @@ label[for="foto1"]::after {
     background: var(--tono-oscuro-hover);
 }
 /* ==============================
-   Reseñas de clientes (agregar AL FINAL de tu CSS)
+   Reseñas de clientes
    Todo está limitado a #resenas: no afecta otros apartados.
    ============================== */
 
@@ -1540,18 +1577,23 @@ label[for="foto1"]::after {
 
 #resenas .res-resumen { margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--bs-secondary-color); }
 
-/* ---------- Tabla ---------- */
+/* ---------- Tabla ----------
+   El scroll horizontal lo gestiona la regla global
+   `.main-content .table-responsive` (ver sección "Tablas"): aquí solo
+   va el aspecto. Sin table-layout fijo, para que las columnas no se aplasten. */
 #resenas .res-tabla {
     background: var(--bs-body-bg);
-    border-color: var(--line) !important;
-    border-radius: var(--r-lg) !important;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
 }
+
 #resenas .res-tabla .table {
     --bs-table-bg: transparent;
     --bs-table-border-color: var(--line);
-    min-width: 720px;
+    margin-bottom: 0;
     font-size: 1rem;
 }
+
 #resenas .res-tabla .table thead th {
     padding: 1rem 1.2rem;
     font-size: 0.85rem;
@@ -1561,13 +1603,46 @@ label[for="foto1"]::after {
     background: transparent;
     border-bottom: 1px solid var(--line);
 }
-#resenas .res-tabla .table td { padding: 1rem 1.2rem; vertical-align: middle; }
-#resenas .res-tabla .table tbody tr { transition: background-color 0.2s var(--ease); }
-#resenas .res-tabla .table tbody tr:hover { background: var(--bs-tertiary-bg); }
 
-#resenas .res-cliente { min-width: 150px; font-weight: 600; }
-#resenas .res-comentario { min-width: 260px; max-width: 480px; overflow-wrap: anywhere; line-height: 1.5; }
-#resenas .res-fecha { white-space: nowrap; color: var(--bs-secondary-color); font-size: 0.95rem; }
+#resenas .res-tabla .table td {
+    padding: 1rem 1.2rem;
+    vertical-align: middle;
+}
+
+#resenas .res-tabla .table tbody tr {
+    transition: background-color 0.2s var(--ease);
+}
+
+#resenas .res-tabla .table tbody tr:hover {
+    background: var(--bs-tertiary-bg);
+}
+
+/* El comentario usa el espacio libre y nunca se aplasta; Acción ocupa lo justo */
+#resenas .res-tabla .table th:nth-child(3),
+#resenas .res-tabla .table td:nth-child(3) { min-width: 14rem; }
+#resenas .res-tabla .table th:last-child,
+#resenas .res-tabla .table td:last-child { width: 1%; white-space: nowrap; }
+
+#resenas .res-cliente {
+    min-width: 0;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#resenas .res-comentario {
+    min-width: 0;
+    max-width: none;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.5;
+}
+
+#resenas .res-fecha {
+    white-space: nowrap;
+    color: var(--bs-secondary-color);
+    font-size: 0.95rem;
+}
 
 #resenas .res-stars { white-space: nowrap; font-size: 0.9rem; letter-spacing: 0.1rem; color: var(--warn); }
 #resenas .res-stars .off { color: var(--bs-border-color); }
