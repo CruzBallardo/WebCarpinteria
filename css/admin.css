@@ -1769,3 +1769,147 @@ label[for="foto1"]::after {
     #resenas .res-pie { flex-direction: column; align-items: stretch; }
     #resenas .res-pie-der { justify-content: space-between; }
 }
+#cotizaciones .cot-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+}
+
+#cotizaciones .cot-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.95rem 1.1rem 0.9rem;
+    text-align: left;
+    color: var(--bs-body-color);
+    background: var(--bs-body-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease),
+                transform 0.2s var(--ease);
+}
+#cotizaciones .cot-stat:hover { background: var(--bs-tertiary-bg); transform: translateY(-2px); }
+#cotizaciones .cot-stat.activo { background: var(--bs-tertiary-bg); border-color: var(--bs-body-color); }
+#cotizaciones .cot-stat:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--bs-body-color) 25%, transparent);
+    outline-offset: 2px;
+}
+
+#cotizaciones .cot-stat-label { font-size: 0.85rem; font-weight: 500; color: var(--bs-secondary-color); }
+#cotizaciones .cot-stat-valor {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+}
+#cotizaciones .cot-stat-nota { font-size: 0.78rem; color: var(--bs-secondary-color); }
+
+/* Barra de búsqueda */
+#cotizaciones .cot-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+}
+#cotizaciones .cot-search { position: relative; flex: 1 1 280px; min-width: 0; }
+#cotizaciones .cot-search > i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color);
+    pointer-events: none;
+}
+#cotizaciones .cot-toolbar .form-control,
+#cotizaciones .cot-toolbar .form-select {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: var(--bs-body-color);
+    background-color: var(--tono-oscuro);
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--r-md);
+}
+#cotizaciones .cot-search .form-control { padding-left: 2.6rem; }
+#cotizaciones .cot-toolbar .form-select { width: auto; flex: 0 1 190px; padding-right: 2.2rem; }
+#cotizaciones .cot-toolbar .form-control:hover,
+#cotizaciones .cot-toolbar .form-select:hover { background-color: var(--tono-oscuro-hover); }
+#cotizaciones .cot-toolbar .form-control:focus,
+#cotizaciones .cot-toolbar .form-select:focus {
+    background-color: var(--tono-oscuro);
+    border-color: var(--bs-body-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--bs-body-color) 10%, transparent);
+}
+
+/* Chips */
+#cotizaciones .cot-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+#cotizaciones .cot-chip {
+    min-height: 36px;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+#cotizaciones .cot-chip:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
+#cotizaciones .cot-chip.activo {
+    background: var(--bs-body-color);
+    border-color: var(--bs-body-color);
+    color: var(--bs-body-bg);
+}
+#cotizaciones .cot-chip:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--bs-body-color) 25%, transparent);
+    outline-offset: 2px;
+}
+
+/* Botón Rechazar */
+#cotizaciones .cot-btn-rechazar {
+    margin-left: 0.4rem;
+    background: var(--bad-soft);
+    border-color: transparent;
+    color: var(--bad);
+}
+#cotizaciones .cot-btn-rechazar:hover:not(:disabled) {
+    background: var(--bad);
+    border-color: var(--bad);
+    color: #fff;
+}
+#cotizaciones .cot-btn-rechazar:disabled { opacity: 0.5; cursor: not-allowed; }
+#cotizaciones td:last-child { white-space: nowrap; }
+
+/* Sin resultados */
+#cotizaciones .cot-vacio {
+    margin-top: 1rem;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--bs-secondary-color);
+    border: 2px dashed var(--line);
+    border-radius: var(--r-lg);
+}
+#cotizaciones .cot-vacio[hidden] { display: none; }
+#cotizaciones .cot-vacio i { font-size: 1.6rem; margin-bottom: 0.6rem; }
+#cotizaciones .cot-vacio p { margin: 0; }
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    #cotizaciones .cot-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767.98px) {
+    #cotizaciones .cot-stat { padding: 0.8rem 0.9rem; }
+    #cotizaciones .cot-stat-valor { font-size: 1.7rem; }
+    #cotizaciones .cot-stat-nota { display: none; }
+    #cotizaciones .cot-toolbar .form-select { flex: 1 1 calc(50% - 0.4rem); }
+    #cotizaciones .cot-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: none; }
+    #cotizaciones .cot-chips::-webkit-scrollbar { display: none; }
+    #cotizaciones .cot-chip { flex-shrink: 0; min-height: 40px; }
+}
+@media (max-width: 359.98px) {
+    #cotizaciones .cot-stats { grid-template-columns: 1fr; }
+}

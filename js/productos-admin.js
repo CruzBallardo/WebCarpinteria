@@ -454,3 +454,262 @@ document.querySelectorAll('.card-link').forEach(card => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
+(() => {
+    const $ = id => document.getElementById(id);
+    const tbody = $('tbodyCotizaciones');
+    if (!tbody) return;
+
+    /* ---- CONFIGURACIÓN: cambia solo esto si hace falta ---- */
+    const TABLA = 'cotizaciones';   // nombre de tu tabla en Supabase
+
+    const ESTADOS = {
+        pendiente: /pendiente/i,
+        proceso:   /proceso|revisi[oó]n|gesti[oó]n/i,
+        aceptada:  /acept|atendid/i,
+        rechazada: /rechaz/i
+    };
+
+    const MESES = { ene: 0, feb: 1, mar: 2, abr: 3, may: 4, jun: 5, jul: 6, ago: 7, sep: 8, set: 8, oct: 9, nov: 10, dic: 11 };
+
+    /* ---- Cliente de Supabase (se detecta solo) ---- */
+    function getDB() {
+        const candidatos = [];
+        try { if (typeof supabaseClient !== 'undefined') candidatos.push(supabaseClient); } catch {}
+        try { if (typeof supabase !== 'undefined') candidatos.push(supabase); } catch {}
+        try { if (typeof sb !== 'undefined') candidatos.push(sb); } catch {}
+        try { if (typeof db !== 'undefined') candidatos.push(db); } catch {}
+        try { if (typeof clienteSupabase !== 'undefined') candidatos.push(clienteSupabase); } catch {}
+        candidatos.push(window.supabaseClient, window.supabase, window.sb, window.db,
+                        window._supabase, window.CatalogoDB?.client, window.CatalogoDB?.supabase);
+        return candidatos.find(c => c && typeof c.from === 'function') || null;
+    }
+
+    /* ---- Id de la fila: busca en cualquier atributo ---- */
+    function idDeFila(fila) {
+        const els = [fila, ...fila.querySelectorAll('*')];
+        for (const el of els) {
+            for (const a of el.attributes) {
+                const n = a.name.toLowerCase(), v = a.value;
+                if (n.startsWith('data-') && /^\d+$/.test(v)) return v;
+                if (n === 'onclick' && /(\d+)/.test(v)) return v.match(/(\d+)/)[1];
+                if (n === 'href' && /[?&#/=-]id[=-]?(\d+)/i.test(v)) return v.match(/id[=-]?(\d+)/i)[1];
+            }
+        }
+        const m = (fila.id || '').match(/(\d+)/);
+        return m ? m[1] : null;
+    }
+
+    /* ---- Rechazadas (se guardan en la columna "rechazada") ---- */
+    const rechazadasIds = new Set();
+
+    async function cargarRechazadas() {
+        const cliente = getDB();
+        if (!cliente) return;
+        const { data, error } = await cliente.from(TABLA).select('id').eq('rechazada', true);
+        if (error) { console.warn('No se pudieron leer las rechazadas:', error.message); return; }
+        rechazadasIds.clear();
+        (data || []).forEach(r => rechazadasIds.add(String(r.id)));
+        aplicar();
+    }
+
+    /* ---- Utilidades ---- */
+    const normalizar = t => String(t ?? '').normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+    const estadoDe = fila => {
+        const texto = fila.cells[3]?.textContent || '';
+        return Object.keys(ESTADOS).find(k => ESTADOS[k].test(texto)) || null;
+    };
+
+    function fechaDe(fila) {
+        const crudo = (fila.dataset.fecha || fila.cells[2]?.textContent || '').trim();
+        const txt = normalizar(crudo);
+        let y, mo, d, m;
+
+        if ((m = txt.match(/^(\d{4})-(\d{2})-(\d{2})/))) {
+            [y, mo, d] = [+m[1], +m[2] - 1, +m[3]];
+        } else if ((m = txt.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4}|\d{2})\b/))) {
+            [d, mo, y] = [+m[1], +m[2] - 1, m[3].length === 2 ? 2000 + +m[3] : +m[3]];
+        } else if ((m = txt.match(/(\d{1,2})\s*(?:de\s+)?([a-z]{3,})\.?,?\s*(?:de\s+)?(\d{4})/)) &&
+                   MESES[m[2].slice(0, 3)] !== undefined) {
+            [d, mo, y] = [+m[1], MESES[m[2].slice(0, 3)], +m[3]];
+        } else {
+            const f = new Date(crudo);
+            return isNaN(f) ? null : f;
+        }
+
+        let h = 0, min = 0;
+        const t = txt.match(/(\d{1,2}):(\d{2})/);
+        if (t) {
+            h = +t[1]; min = +t[2];
+            if (/p\.?\s?m/.test(txt) && h < 12) h += 12;
+            if (/a\.?\s?m/.test(txt) && h === 12) h = 0;
+        }
+        return new Date(y, mo, d, h, min);
+    }
+
+    /* ---- Filtros: arranca en "Pendientes" ---- */
+    const filtros = { estado: 'pendiente', texto: '', fecha: 'todas', orden: 'recientes' };
+
+    const OPCIONES_OBS = { childList: true, subtree: true, characterData: true };
+    const obs = new MutationObserver(() => aplicar());
+
+    const ordenOriginal = new WeakMap();
+    let contador = 0;
+
+    const filasDatos = () => [...tbody.rows]
+        .filter(r => !r.querySelector('td[colspan]') && !r.querySelector('.sk'))
+        .map(f => { if (!ordenOriginal.has(f)) ordenOriginal.set(f, contador++); return f; });
+
+    function aplicar() {
+        obs.disconnect();
+        const filas = filasDatos();
+
+        filas.forEach(f => {
+            const celdaEstado = f.cells[3];
+            const celda = f.cells[4];
+            if (!celdaEstado || !celda) return;
+
+            // Marca como "Rechazada" las filas guardadas como rechazadas
+            const id = idDeFila(f);
+            if (id && rechazadasIds.has(id) && !ESTADOS.rechazada.test(celdaEstado.textContent)) {
+                const el = celdaEstado.querySelector('.badge, span') || celdaEstado;
+                el.textContent = 'Rechazada';
+            }
+
+            const estado = estadoDe(f);
+            const yaTiene = celda.querySelector('.cot-btn-rechazar');
+
+            // Botón X solo en pendientes
+            if (estado === 'pendiente' && !yaTiene) {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'btn btn-sm cot-btn-rechazar';
+                b.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                b.title = 'Rechazar cotización';
+                b.setAttribute('aria-label', 'Rechazar cotización');
+                celda.appendChild(b);
+            } else if (estado !== 'pendiente' && yaTiene) {
+                yaTiene.remove();
+            }
+
+            // En las rechazadas se oculta el botón "Listo"
+            if (estado === 'rechazada') {
+                [...celda.children].forEach(c => { if (!c.classList.contains('cot-btn-rechazar')) c.hidden = true; });
+            }
+        });
+
+        // Estadísticas (todas las filas cargadas, sin importar filtros)
+        const cuentas = { pendiente: 0, proceso: 0, aceptada: 0, rechazada: 0 };
+        filas.forEach(f => { const e = estadoDe(f); if (e) cuentas[e]++; });
+        document.querySelectorAll('#cotStats [data-cuenta]').forEach(el => {
+            el.textContent = cuentas[el.dataset.cuenta];
+        });
+
+        // Filtros
+        const q = normalizar(filtros.texto.trim());
+        const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+        let visibles = 0;
+
+        filas.forEach(f => {
+            let ok = true;
+            if (filtros.estado !== 'todas') ok = estadoDe(f) === filtros.estado;
+            if (ok && q) ok = normalizar(f.textContent + ' ' + (f.dataset.telefono || '')).includes(q);
+            if (ok && filtros.fecha !== 'todas') {
+                const d = fechaDe(f);
+                if (!d) ok = false;
+                else {
+                    const dias = (hoy - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5;
+                    ok = filtros.fecha === 'hoy' ? dias === 0 : dias >= 0 && dias <= +filtros.fecha;
+                }
+            }
+            f.hidden = !ok;
+            if (ok) visibles++;
+        });
+
+        // Orden
+        const recientes = filtros.orden === 'recientes';
+        const items = filas.map(f => ({ f, o: ordenOriginal.get(f), d: fechaDe(f)?.getTime() ?? null }));
+        const hayFechas = items.some(x => x.d !== null);
+        items.sort((a, b) => {
+            if (hayFechas) {
+                const diff = (a.d ?? 0) - (b.d ?? 0);
+                if (diff) return recientes ? -diff : diff;
+            }
+            return recientes ? a.o - b.o : b.o - a.o;
+        });
+        items.forEach(x => tbody.appendChild(x.f));
+
+        // Estado vacío
+        const cargando = !filas.length && tbody.querySelector('td[colspan], .sk');
+        $('cotVacio').hidden = !!cargando || visibles > 0;
+
+        // Marcas visuales activas
+        document.querySelectorAll('#cotChips .cot-chip, #cotStats .cot-stat').forEach(b =>
+            b.classList.toggle('activo', b.dataset.estado === filtros.estado));
+
+        obs.observe(tbody, OPCIONES_OBS);
+    }
+
+    function setEstado(e) {
+        filtros.estado = filtros.estado === e && e !== 'todas' ? 'todas' : e;
+        aplicar();
+    }
+
+    $('cotChips').addEventListener('click', e => {
+        const b = e.target.closest('[data-estado]'); if (b) setEstado(b.dataset.estado);
+    });
+    $('cotStats').addEventListener('click', e => {
+        const b = e.target.closest('[data-estado]'); if (b) setEstado(b.dataset.estado);
+    });
+    $('cotBuscar').addEventListener('input', e => { filtros.texto = e.target.value; aplicar(); });
+    $('cotFecha').addEventListener('change', e => { filtros.fecha = e.target.value; aplicar(); });
+    $('cotOrden').addEventListener('change', e => { filtros.orden = e.target.value; aplicar(); });
+
+    /* ---- Botón Rechazar ---- */
+    tbody.addEventListener('click', async e => {
+        const btn = e.target.closest('.cot-btn-rechazar');
+        if (!btn) return;
+        const fila = btn.closest('tr');
+        const id = idDeFila(fila);
+
+        if (!id) {
+            console.log('Fila sin id detectable:', fila.outerHTML);
+            alert('No pude encontrar el id de esta cotización. Abre la consola (F12), copia el HTML de la fila que aparece ahí y pásamelo.');
+            return;
+        }
+        if (!confirm('¿Rechazar esta cotización?')) return;
+
+        const cliente = getDB();
+        if (!cliente) {
+            alert('No encontré tu cliente de Supabase. Dime cómo se llama la variable que usa createClient.');
+            return;
+        }
+
+        btn.disabled = true;
+        try {
+            const { error } = await cliente.from(TABLA)
+                .update({ rechazada: true, atendida: false })
+                .eq('id', Number(id));
+            if (error) throw error;
+            rechazadasIds.add(String(id));
+            aplicar();
+        } catch (err) {
+            console.error(err);
+            alert('No se pudo rechazar: ' + (err.message || 'error desconocido'));
+            btn.disabled = false;
+        }
+    });
+
+    $('btnRefrescarCot')?.addEventListener('click', () => setTimeout(cargarRechazadas, 600));
+
+    // Carga todas las cotizaciones para que las cifras sean reales
+    const sel = $('filtroCotizaciones');
+    if (sel && sel.value !== 'todas') {
+        sel.value = 'todas';
+        sel.dispatchEvent(new Event('change'));
+    }
+
+    aplicar();
+    cargarRechazadas();
+})();

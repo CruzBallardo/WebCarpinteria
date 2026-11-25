@@ -439,41 +439,97 @@
         <hr>
 
         <!-- Cotizaciones -->
-        <section id="cotizaciones" class="mb-5">
-            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                <div>
-                    <h2 class="h4 fw-bold">Cotizaciones</h2>
-                    <p class="text-secondary">Revisa las solicitudes de tus clientes.</p>
-                </div>
-                <div class="d-flex gap-2">
-                    <select class="form-select form-select-sm" id="filtroCotizaciones" aria-label="Filtrar cotizaciones">
-                        <option value="pendiente" selected>Pendientes</option>
-                        <option value="atendida">Atendidas</option>
-                        <option value="todas">Todas</option>
-                    </select>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" id="btnRefrescarCot" title="Actualizar">
-                        <i class="fa-solid fa-rotate"></i>
-                    </button>
-                </div>
-            </div>
+<section id="cotizaciones" class="mb-5">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+        <div>
+            <h2 class="h4 fw-bold">Cotizaciones</h2>
+            <p class="text-secondary">Revisa las solicitudes de tus clientes.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <!-- Se conserva oculto: el script existente lo sigue usando -->
+            <select class="form-select form-select-sm d-none" id="filtroCotizaciones" aria-label="Filtrar cotizaciones">
+                <option value="pendiente">Pendientes</option>
+                <option value="atendida">Atendidas</option>
+                <option value="todas" selected>Todas</option>
+            </select>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="btnRefrescarCot" title="Actualizar">
+                <i class="fa-solid fa-rotate"></i>
+            </button>
+        </div>
+    </div>
 
-            <div class="table-responsive border rounded">
-                <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Cliente</th>
-                            <th>Proyecto</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodyCotizaciones">
-                        <tr><td colspan="5" class="text-center text-secondary py-5">Cargando…</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <!-- Estadísticas -->
+    <div class="cot-stats" id="cotStats">
+        <button type="button" class="cot-stat" data-estado="pendiente">
+            <span class="cot-stat-label">Pendientes</span>
+            <span class="cot-stat-valor" data-cuenta="pendiente">0</span>
+            <span class="cot-stat-nota">Sin atender</span>
+        </button>
+        <button type="button" class="cot-stat" data-estado="proceso">
+            <span class="cot-stat-label">En proceso</span>
+            <span class="cot-stat-valor" data-cuenta="proceso">0</span>
+            <span class="cot-stat-nota">En revisión</span>
+        </button>
+        <button type="button" class="cot-stat" data-estado="aceptada">
+            <span class="cot-stat-label">Aceptadas</span>
+            <span class="cot-stat-valor" data-cuenta="aceptada">0</span>
+            <span class="cot-stat-nota">Atendidas</span>
+        </button>
+        <button type="button" class="cot-stat" data-estado="rechazada">
+            <span class="cot-stat-label">Rechazadas</span>
+            <span class="cot-stat-valor" data-cuenta="rechazada">0</span>
+            <span class="cot-stat-nota">Descartadas</span>
+        </button>
+    </div>
+
+    <!-- Búsqueda y filtros -->
+    <div class="cot-toolbar">
+        <div class="cot-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" class="form-control" id="cotBuscar" autocomplete="off"
+                   placeholder="Buscar por cliente, proyecto o teléfono…" aria-label="Buscar cotizaciones">
+        </div>
+        <select class="form-select" id="cotFecha" aria-label="Filtrar por fecha">
+            <option value="todas">Cualquier fecha</option>
+            <option value="hoy">Hoy</option>
+            <option value="7">Últimos 7 días</option>
+            <option value="30">Últimos 30 días</option>
+        </select>
+        <select class="form-select" id="cotOrden" aria-label="Ordenar">
+            <option value="recientes">Más recientes</option>
+            <option value="antiguas">Más antiguas</option>
+        </select>
+    </div>
+
+    <div class="cot-chips" id="cotChips" role="tablist">
+    <button type="button" class="cot-chip activo" data-estado="pendiente">Pendientes</button>
+    <button type="button" class="cot-chip" data-estado="todas">Todas</button>
+    <button type="button" class="cot-chip" data-estado="aceptada">Aceptadas</button>
+    <button type="button" class="cot-chip" data-estado="rechazada">Rechazadas</button>
+    </div>
+
+    <div class="table-responsive border rounded">
+        <table class="table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Proyecto</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody id="tbodyCotizaciones">
+                <tr><td colspan="5" class="text-center text-secondary py-5">Cargando…</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="cot-vacio" id="cotVacio" hidden>
+        <i class="fa-regular fa-folder-open"></i>
+        <p>No se encontraron cotizaciones</p>
+    </div>
+</section>
 
         <!-- Modal detalle de cotización -->
         <div class="modal fade" id="modalCotizacion" tabindex="-1" aria-hidden="true">
