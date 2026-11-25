@@ -312,7 +312,106 @@
             <h2 class="h4 fw-bold">Reseñas de clientes</h2>
             <p class="text-secondary">Consulta las opiniones recibidas. Puedes ocultar o eliminar las que no quieras mostrar.</p>
 
-            <div class="table-responsive border rounded">
+            <!-- Estadísticas (se calculan con los datos reales) -->
+            <div class="row g-3 res-stats">
+                <div class="col-6 col-lg-3">
+                    <div class="res-stat">
+                        <div class="res-stat-ico"><i class="fa-regular fa-comments"></i></div>
+                        <div class="res-stat-label">Total de reseñas</div>
+                        <div class="res-stat-valor sk" id="statTotal">0</div>
+                        <div class="res-stat-nota" id="statTotalNota">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="res-stat">
+                        <div class="res-stat-ico"><i class="fa-regular fa-star"></i></div>
+                        <div class="res-stat-label">Calificación promedio</div>
+                        <div class="res-stat-valor sk" id="statPromedio">0</div>
+                        <div class="res-stat-nota" id="statPromedioNota">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="res-stat">
+                        <div class="res-stat-ico"><i class="fa-regular fa-thumbs-up"></i></div>
+                        <div class="res-stat-label">Reseñas positivas</div>
+                        <div class="res-stat-valor sk" id="statPositivas">0</div>
+                        <div class="res-stat-nota" id="statPositivasNota">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <div class="res-stat">
+                        <div class="res-stat-ico"><i class="fa-regular fa-thumbs-down"></i></div>
+                        <div class="res-stat-label">Reseñas negativas</div>
+                        <div class="res-stat-valor sk" id="statNegativas">0</div>
+                        <div class="res-stat-nota" id="statNegativasNota">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buscador + desplegables -->
+            <div class="res-toolbar">
+                <div class="res-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="search" id="resBuscar" class="form-control"
+                           placeholder="Buscar por cliente o comentario..." autocomplete="off"
+                           aria-label="Buscar reseñas">
+                </div>
+
+                <div class="res-filtros">
+                    <div class="dropdown" data-res-dd="vis">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-filter"></i><span class="res-dd-titulo">Filtros</span><span class="res-dd-valor" hidden></span>
+                        </button>
+                        <div class="dropdown-menu"><div data-res-items></div></div>
+                    </div>
+
+                    <div class="dropdown" data-res-dd="cal">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-regular fa-star"></i><span class="res-dd-titulo">Calificación</span><span class="res-dd-valor" hidden></span>
+                        </button>
+                        <div class="dropdown-menu"><div data-res-items></div></div>
+                    </div>
+
+                    <div class="dropdown" data-res-dd="fecha">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <i class="fa-regular fa-calendar"></i><span class="res-dd-titulo">Fecha</span><span class="res-dd-valor" hidden></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <div data-res-items></div>
+                            <div class="res-fecha-custom" id="resFechaCustom" hidden>
+                                <label class="form-label" for="resDesde">Desde</label>
+                                <input type="date" class="form-control form-control-sm" id="resDesde">
+                                <label class="form-label" for="resHasta">Hasta</label>
+                                <input type="date" class="form-control form-control-sm" id="resHasta">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dropdown" data-res-dd="orden">
+                        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-arrow-down-wide-short"></i><span class="res-dd-titulo">Ordenar</span><span class="res-dd-valor" hidden></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end"><div data-res-items></div></div>
+                    </div>
+
+                    <button type="button" class="btn res-limpiar" id="resLimpiar" disabled>
+                        <i class="fa-solid fa-rotate-left"></i><span>Limpiar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtros rápidos (usan el mismo estado que los desplegables) -->
+            <div class="res-chips" id="resChips">
+                <button type="button" class="res-chip" data-k="cal" data-v="5">5 estrellas <i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="res-chip" data-k="cal" data-v="pos">4+ estrellas <i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="res-chip" data-k="cal" data-v="neg">1–2 estrellas <i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="res-chip" data-k="fecha" data-v="mes">Este mes <i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="res-chip" data-k="conComentarios" data-v="true">Con comentarios <i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="res-resumen" id="resResumen" aria-live="polite"></div>
+
+            <div class="table-responsive border rounded res-tabla">
                 <table class="table align-middle mb-0">
                     <thead>
                         <tr><th>Cliente</th><th>Calificación</th><th>Comentario</th><th>Fecha</th><th>Acción</th></tr>
@@ -321,6 +420,19 @@
                         <tr><td colspan="5" class="text-center text-secondary py-5">Cargando…</td></tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="res-pie" id="resPie" hidden>
+                <div class="res-info" id="resInfo"></div>
+                <div class="res-pie-der">
+                    <select id="resPorPagina" class="form-select" aria-label="Reseñas por página">
+                        <option value="10">10 por página</option>
+                        <option value="25">25 por página</option>
+                        <option value="50">50 por página</option>
+                    </select>
+                    <nav aria-label="Paginación de reseñas"><ul class="pagination pagination-sm mb-0" id="resPaginacion"></ul></nav>
+                </div>
             </div>
         </section>
 

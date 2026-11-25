@@ -1326,3 +1326,371 @@ label[for="foto1"]::after {
 #listaProductos .border.rounded:not(.p-5):hover {
     background: var(--tono-oscuro-hover);
 }
+/* ==============================
+   Reseñas de clientes (agregar AL FINAL de tu CSS)
+   Todo está limitado a #resenas: no afecta otros apartados.
+   ============================== */
+
+/* ---------- Estadísticas ---------- */
+#resenas .res-stats { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+
+#resenas .res-stat {
+    position: relative;
+    height: 100%;
+    padding: 1.2rem 1.25rem 1.1rem;
+    background: var(--bs-body-bg);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
+                border-color 0.3s var(--ease);
+}
+#resenas .res-stat:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--lift);
+    border-color: var(--bs-secondary-color);
+}
+
+#resenas .res-stat-ico {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-secondary-color);
+    font-size: 0.95rem;
+    transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+#resenas .res-stat:hover .res-stat-ico {
+    background: var(--bs-body-color);
+    color: var(--bs-body-bg);
+}
+
+#resenas .res-stat-label {
+    padding-right: 3rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--bs-secondary-color);
+}
+#resenas .res-stat-valor {
+    margin: 0.7rem 0 0.4rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+}
+#resenas .res-stat-valor small {
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--bs-secondary-color);
+}
+#resenas .res-stat-valor.sk { display: inline-block; width: 3.5rem; height: 2.2rem; }
+#resenas .res-stat-nota { font-size: 0.85rem; color: var(--bs-secondary-color); }
+#resenas .res-stat-nota .ok { color: var(--ok); font-weight: 600; }
+
+/* ---------- Barra de herramientas ---------- */
+/* z-index: evita que la tabla (animada) tape los menús desplegables */
+#resenas .res-toolbar {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
+}
+
+#resenas .res-search { position: relative; flex: 1 1 280px; min-width: 0; }
+#resenas .res-search > i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    color: var(--bs-secondary-color);
+    pointer-events: none;
+}
+#resenas .res-search .form-control {
+    padding: 0.8rem 1rem 0.8rem 2.6rem;
+    font-size: 1rem;
+    color: var(--bs-body-color);
+    background-color: var(--tono-oscuro);
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--r-md);
+    transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease),
+                box-shadow 0.2s var(--ease);
+}
+#resenas .res-search .form-control:hover { background-color: var(--tono-oscuro-hover); }
+#resenas .res-search .form-control:focus {
+    background-color: var(--tono-oscuro);
+    border-color: var(--bs-body-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--bs-body-color) 10%, transparent);
+}
+
+#resenas .res-filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+#resenas .res-filtros > .dropdown > .btn,
+#resenas .res-limpiar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.75rem 1.05rem;
+    font-size: 0.98rem;
+    color: var(--bs-body-color);
+    background-color: var(--tono-oscuro);
+    border: 1px solid var(--bs-border-color);
+}
+#resenas .res-filtros > .dropdown > .btn:hover,
+#resenas .res-limpiar:hover:not(:disabled) {
+    background-color: var(--tono-oscuro-hover);
+    color: var(--bs-body-color);
+    border-color: var(--bs-border-color);
+}
+#resenas .res-filtros > .dropdown > .btn.show,
+#resenas .res-filtros > .dropdown > .btn.activo { border-color: var(--bs-body-color); }
+#resenas .res-limpiar:disabled { opacity: 0.45; cursor: not-allowed; }
+#resenas .res-filtros .btn > i { font-size: 0.85rem; color: var(--bs-secondary-color); }
+
+#resenas .res-dd-valor {
+    padding: 0.12rem 0.55rem;
+    border-radius: 999px;
+    background: var(--bs-body-color);
+    color: var(--bs-body-bg);
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Menús */
+#resenas .dropdown-menu {
+    --bs-dropdown-link-active-bg: var(--bs-tertiary-bg);
+    --bs-dropdown-link-active-color: var(--bs-body-color);
+    min-width: 15rem;
+    padding: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    box-shadow: var(--lift);
+}
+#resenas .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+}
+#resenas .dropdown-item .fa-check { font-size: 0.78rem; opacity: 0; }
+#resenas .dropdown-item.selected { font-weight: 600; background: var(--bs-tertiary-bg); }
+#resenas .dropdown-item.selected .fa-check { opacity: 1; }
+
+#resenas .res-fecha-custom {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+    padding: 0.7rem 0.75rem 0.4rem;
+    border-top: 1px solid var(--line);
+}
+#resenas .res-fecha-custom[hidden] { display: none; }
+#resenas .res-fecha-custom .form-label {
+    margin: 0.3rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--bs-secondary-color);
+}
+
+/* ---------- Filtros rápidos ---------- */
+#resenas .res-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
+
+#resenas .res-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 36px;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s var(--ease), color 0.2s var(--ease),
+                border-color 0.2s var(--ease);
+}
+#resenas .res-chip:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
+#resenas .res-chip .fa-xmark { display: none; font-size: 0.72rem; }
+#resenas .res-chip.activo {
+    background: var(--bs-body-color);
+    border-color: var(--bs-body-color);
+    color: var(--bs-body-bg);
+}
+#resenas .res-chip.activo .fa-xmark { display: inline; }
+#resenas .res-chip:focus-visible,
+#resenas .res-filtros .btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--bs-body-color) 25%, transparent);
+    outline-offset: 2px;
+}
+
+#resenas .res-resumen { margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--bs-secondary-color); }
+
+/* ---------- Tabla ---------- */
+#resenas .res-tabla {
+    background: var(--bs-body-bg);
+    border-color: var(--line) !important;
+    border-radius: var(--r-lg) !important;
+}
+#resenas .res-tabla .table {
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--line);
+    min-width: 720px;
+    font-size: 1rem;
+}
+#resenas .res-tabla .table thead th {
+    padding: 1rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--bs-secondary-color);
+    background: transparent;
+    border-bottom: 1px solid var(--line);
+}
+#resenas .res-tabla .table td { padding: 1rem 1.2rem; vertical-align: middle; }
+#resenas .res-tabla .table tbody tr { transition: background-color 0.2s var(--ease); }
+#resenas .res-tabla .table tbody tr:hover { background: var(--bs-tertiary-bg); }
+
+#resenas .res-cliente { min-width: 150px; font-weight: 600; }
+#resenas .res-comentario { min-width: 260px; max-width: 480px; overflow-wrap: anywhere; line-height: 1.5; }
+#resenas .res-fecha { white-space: nowrap; color: var(--bs-secondary-color); font-size: 0.95rem; }
+
+#resenas .res-stars { white-space: nowrap; font-size: 0.9rem; letter-spacing: 0.1rem; color: var(--warn); }
+#resenas .res-stars .off { color: var(--bs-border-color); }
+
+#resenas .res-vermas {
+    display: inline;
+    margin-left: 0.25rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--bs-body-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+#resenas .res-vermas:hover { color: var(--bs-secondary-color); }
+
+/* Reseñas ocultas */
+#resenas tr.res-oculta { background: var(--bs-tertiary-bg); }
+#resenas tr.res-oculta > td:not(:last-child) { opacity: 0.6; }
+#resenas .res-badge-oculta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: 0.5rem;
+    padding: 0.12rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bs-secondary-bg);
+    color: var(--bs-secondary-color);
+    font-size: 0.72rem;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+/* Acciones */
+#resenas .res-acciones { display: flex; gap: 0.4rem; }
+#resenas .res-acciones .btn {
+    min-width: 42px;
+    padding: 0.5rem 0.75rem;
+    border-color: transparent;
+    font-size: 0.95rem;
+}
+#resenas .res-acciones .btn:disabled { opacity: 0.5; }
+
+#resenas .res-btn-ocultar { background: var(--warn-soft); color: var(--warn); }
+#resenas .res-btn-ocultar:hover:not(:disabled) { background: var(--warn); border-color: var(--warn); color: #fff; }
+
+#resenas .res-btn-mostrar { background: var(--ok-soft); color: var(--ok); }
+#resenas .res-btn-mostrar:hover:not(:disabled) { background: var(--ok); border-color: var(--ok); color: #fff; }
+
+#resenas .res-btn-eliminar { background: var(--bad-soft); color: var(--bad); }
+#resenas .res-btn-eliminar:hover:not(:disabled) { background: var(--bad); border-color: var(--bad); color: #fff; }
+
+/* ---------- Paginación ---------- */
+#resenas .res-pie {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+#resenas .res-pie[hidden] { display: none; }
+#resenas .res-info { font-size: 0.92rem; color: var(--bs-secondary-color); }
+#resenas .res-pie-der { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+
+#resenas .res-pie .form-select {
+    width: auto;
+    padding: 0.5rem 2.2rem 0.5rem 0.9rem;
+    font-size: 0.92rem;
+    color: var(--bs-body-color);
+    background-color: var(--tono-oscuro);
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--r-md);
+}
+#resenas .res-pie .form-select:focus {
+    border-color: var(--bs-body-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--bs-body-color) 10%, transparent);
+}
+
+#resenas .pagination {
+    --bs-pagination-color: var(--bs-body-color);
+    --bs-pagination-bg: var(--tono-oscuro);
+    --bs-pagination-border-color: var(--bs-border-color);
+    --bs-pagination-hover-color: var(--bs-body-color);
+    --bs-pagination-hover-bg: var(--tono-oscuro-hover);
+    --bs-pagination-hover-border-color: var(--bs-border-color);
+    --bs-pagination-focus-color: var(--bs-body-color);
+    --bs-pagination-focus-bg: var(--tono-oscuro-hover);
+    --bs-pagination-focus-box-shadow: 0 0 0 3px color-mix(in srgb, var(--bs-body-color) 15%, transparent);
+    --bs-pagination-active-color: var(--bs-body-bg);
+    --bs-pagination-active-bg: var(--bs-body-color);
+    --bs-pagination-active-border-color: var(--bs-body-color);
+    --bs-pagination-disabled-color: var(--bs-secondary-color);
+    --bs-pagination-disabled-bg: var(--tono-oscuro);
+    --bs-pagination-disabled-border-color: var(--bs-border-color);
+    --bs-pagination-padding-x: 0.8rem;
+    --bs-pagination-padding-y: 0.4rem;
+    --bs-pagination-border-radius: 0.5rem;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 767.98px) {
+    #resenas .res-stat { padding: 1rem; }
+    #resenas .res-stat-label { padding-right: 0; font-size: 0.85rem; }
+    #resenas .res-stat-valor { margin: 0.5rem 0 0.3rem; font-size: 1.8rem; }
+    #resenas .res-stat-nota { font-size: 0.78rem; }
+    #resenas .res-stat-ico { display: none; }
+
+    #resenas .res-filtros { width: 100%; }
+    #resenas .res-filtros > .dropdown { flex: 1 1 calc(50% - 0.25rem); min-width: 0; }
+    #resenas .res-filtros > .dropdown > .btn { width: 100%; min-height: 46px; }
+    #resenas .res-limpiar { flex: 1 1 100%; justify-content: center; min-height: 46px; }
+    #resenas .dropdown-menu { min-width: min(15rem, calc(100vw - 2rem)); }
+
+    #resenas .res-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 0.25rem; scrollbar-width: none; }
+    #resenas .res-chips::-webkit-scrollbar { display: none; }
+    #resenas .res-chip { flex-shrink: 0; min-height: 40px; }
+
+    #resenas .res-acciones .btn { min-height: 44px; min-width: 44px; }
+    #resenas .res-pie { flex-direction: column; align-items: stretch; }
+    #resenas .res-pie-der { justify-content: space-between; }
+}
